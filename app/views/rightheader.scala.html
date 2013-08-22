@@ -1,0 +1,67 @@
+@(content: Html)(activemenu: Integer)
+
+@contentfull = {
+
+	<div class="span9">
+				<h1 class="page-title">
+					<i class="icon-home"></i>
+					Nossos Politicos					
+				</h1>
+				
+				<div class="stat-container">
+										
+					<div class="stat-holder">						
+						<div class="stat">							
+							<span>513</span>							
+							Deputados Federais							
+						</div> <!-- /stat -->						
+					</div> <!-- /stat-holder -->
+					
+					<div class="stat-holder">						
+						<div class="stat">							
+							<span>81</span>							
+							Senadores							
+						</div> <!-- /stat -->						
+					</div> <!-- /stat-holder -->
+					
+					<div class="stat-holder">						
+						<div class="stat">							
+							<span>26+1</span>							
+							Estados							
+						</div> <!-- /stat -->						
+					</div> <!-- /stat-holder -->
+					
+					<div class="stat-holder">						
+						<div class="stat">							
+							<span>100+</span>							
+							Estatísticas							
+						</div> <!-- /stat -->						
+					</div> <!-- /stat-holder -->
+					
+				</div> <!-- /stat-container -->
+				
+				<div class="widget">
+
+					<div class="widget-header">
+						<i class="icon-search"></i>
+						<h3>Busca</h3>
+					</div> <!-- /widget-header -->
+					<div class="widget-content">
+						<div class="faq-container">
+							<form class="faq-search" method="post" action="@routes.Search.search()">
+								<input type="text" name="q" placeholder="Digite o nome do político (deputado ou senador)">
+							</form>
+						</div>
+							
+										
+					</div> <!-- /widget-content -->
+					
+				</div>
+				
+				@content
+				
+			</div>
+
+}
+
+@leftmenu(contentfull)(activemenu)

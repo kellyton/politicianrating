@@ -1,0 +1,145 @@
+@(deputados: List[DeputadoFederal])(depMelhores: List[DeputadoFederal])(depPiores: List[DeputadoFederal])
+
+@content = {
+
+				<div class="row">
+					
+					<div class="span5">
+				
+						<!-- Lista dos politicos -->
+						<div class="widget widget-table">
+
+							<div class="widget-header">
+								<i class="icon-th-list"></i>
+								<h3>@deputados.size() políticos encontrados</h3>
+							</div> <!-- /widget-header -->
+
+							<div class="widget-content">
+		
+								<table class="table table-striped table-bordered">
+									<thead>
+										<tr>
+											<th>Nome</th>
+											<th>Partido</th>
+											<th>UF</th>
+											<th>R$/dia</th>
+											<th>Indice</th>
+										</tr>
+									</thead>
+		
+									<tbody>
+										@for((dep, index) <- deputados.zipWithIndex){
+										<tr>
+											<td>@dep.getNomeParlamentar()</td>
+											<td>@dep.getPartido()</td>
+											<td>@dep.getUf()</td>
+											<td>@dep.getGastoPorDiaFormated()</td>
+											<td>@dep.getIndice()</td>
+										</tr>
+										}
+									</tbody>
+								</table>
+							
+							</div> <!-- /widget-content -->
+					
+						</div> <!-- /span5 - Terminou a tabela. Parte da esquerda -->
+					</div> <!-- /span4-->
+
+					<div class="span4">
+						<!-- 5 PIORES -->
+						<div class="row">
+			
+								<div class="span4">
+			
+									<!-- Lista dos politicos -->
+									<div class="widget widget-table">
+			
+										<div class="widget-header">
+											<i class="icon-th-list"></i>
+											<h3>Os que gastaram MENOS</h3>
+										</div> <!-- /widget-header -->
+			
+										<div class="widget-content">
+					
+											<table class="table table-striped table-bordered">
+												<thead>
+													<tr>
+														<th>Nome</th>
+														<th>Partido</th>
+														<th>UF</th>
+														<th>R$/dia</th>
+														<th>Indice</th>
+													</tr>
+												</thead>
+					
+												<tbody>
+													@for((dep, index) <- depMelhores.zipWithIndex){
+													<tr>
+														<td>@dep.getNomeParlamentar()</td>
+														<td>@dep.getPartido()</td>
+														<td>@dep.getUf()</td>
+														<td>@dep.getGastoPorDiaFormated()</td>
+														<td>@dep.getIndice()</td>
+													</tr>
+													}
+												</tbody>
+											</table>
+										
+										</div> <!-- /widget-content -->
+									</div><!-- widget-table -->
+			
+								</div> <!-- /span4 -->
+			
+							</div><!-- /5 PIORES -->
+							<!-- /5 piores -->
+							<div class="row">
+			
+								<div class="span4">
+			
+									<!-- Lista dos politicos -->
+									<div class="widget widget-table">
+			
+										<div class="widget-header">
+											<i class="icon-th-list"></i>
+											<h3>Os que gastaram MAIS</h3>
+										</div> <!-- /widget-header -->
+			
+										<div class="widget-content">
+					
+											<table class="table table-striped table-bordered">
+												<thead>
+													<tr>
+														<th>Nome</th>
+														<th>Partido</th>
+														<th>UF</th>
+														<th>R$/dia</th>
+														<th>Indice</th>
+													</tr>
+												</thead>
+					
+												<tbody>
+													@for((dep, index) <- depPiores.zipWithIndex){
+													<tr>
+														<td>@dep.getNomeParlamentar()</td>
+														<td>@dep.getPartido()</td>
+														<td>@dep.getUf()</td>
+														<td>@dep.getGastoPorDiaFormated()</td>
+														<td>@dep.getIndice()</td>
+													</tr>
+													}
+												</tbody>
+											</table>
+										
+										</div> <!-- /widget-content -->
+									</div><!-- widget-table -->
+			
+								</div> <!-- /span4 -->
+			
+							</div><!-- /5 piores -->
+						
+					</div> <!-- /span4 -->
+					
+				</div> <!-- row -->
+}
+
+@rightheader(content)(2)
