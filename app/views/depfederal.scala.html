@@ -34,7 +34,8 @@
 											<td>@dep.getPartido()</td>
 											<td>@dep.getUf()</td>
 											<td>@dep.getGastoPorDiaFormated()</td>
-											<td>@dep.getIndice()</td>
+											<!--  <td>@dep.getIndice()</td> -->
+											<td><canvas id="indice-@index" width="30" height="30"></canvas></td>
 										</tr>
 										}
 									</tbody>
@@ -46,7 +47,7 @@
 					</div> <!-- /span4-->
 
 					<div class="span4">
-						<!-- 5 PIORES -->
+						<!-- 5 Melhores -->
 						<div class="row">
 			
 								<div class="span4">
@@ -79,7 +80,8 @@
 														<td>@dep.getPartido()</td>
 														<td>@dep.getUf()</td>
 														<td>@dep.getGastoPorDiaFormated()</td>
-														<td>@dep.getIndice()</td>
+														<!--  <td>@dep.getIndice()</td> -->
+														<td><canvas id="indicem-@index" width="30" height="30"></canvas></td>
 													</tr>
 													}
 												</tbody>
@@ -124,7 +126,9 @@
 														<td>@dep.getPartido()</td>
 														<td>@dep.getUf()</td>
 														<td>@dep.getGastoPorDiaFormated()</td>
-														<td>@dep.getIndice()</td>
+														<!--  <td><td>@dep.getIndice()</td> -->
+														<td><canvas id="indicep-@index" width="30" height="30"></canvas></td>
+														
 													</tr>
 													}
 												</tbody>
@@ -140,6 +144,87 @@
 					</div> <!-- /span4 -->
 					
 				</div> <!-- row -->
+				
+
+<script type="text/javascript">
+@for((dep, index) <- deputados.zipWithIndex){
+	var pieData = [
+			{ 	value: 100-@dep.getIndice(),
+				color:"#090"
+			},
+			{ 	value : @dep.getIndice(),
+				color : "#900"
+			}
+		];
+	
+	var myPie = new Chart(document.getElementById("indice-@index").getContext("2d")).Pie(pieData);
+}
+
+@for((dep, index) <- depMelhores.zipWithIndex){
+	var pieData = [
+			{ 	value: 100-@dep.getIndice(),
+				color:"#090"
+			},
+			{ 	value : @dep.getIndice(),
+				color : "#900"
+			}
+		];
+	
+	var myPie = new Chart(document.getElementById("indicem-@index").getContext("2d")).Pie(pieData);
+}
+
+@for((dep, index) <- depPiores.zipWithIndex){
+	var pieData = [
+			{ 	value: 100-@dep.getIndice(),
+				color:"#090"
+			},
+			{ 	value : @dep.getIndice(),
+				color : "#900"
+			}
+		];
+	
+	var myPie = new Chart(document.getElementById("indicep-@index").getContext("2d")).Pie(pieData);
+}
+</script>
+				
+<!--
+How to use morris.js
+<div id="indice-index" style="height: 100px;"></div>
+<br>
+<div id="indice-index2" style="height: 70px;"></div>					
+<script type="text/javascript">
+new Morris.Line({
+	  // ID of the element in which to draw the chart.
+	  element: 'indice-index',
+	  // Chart data records -- each entry in this array corresponds to a point on
+	  // the chart.
+	  data: [
+	    { year: '2008', value: 20 },
+	    { year: '2009', value: 10 },
+	    { year: '2010', value: 5 },
+	    { year: '2011', value: 5 },
+	    { year: '2012', value: 20 }
+	  ],
+	  // The name of the data record attribute that contains x-values.
+	  xkey: 'year',
+	  // A list of names of data record attributes that contain y-values.
+	  ykeys: ['value'],
+	  // Labels for the ykeys -- will be displayed when you hover over the
+	  // chart.
+	  labels: ['Value']
+	});
+	
+new Morris.Donut({
+	  element: 'indice-index2',
+	  data: [
+	    {value: 70, label: ''},
+	    {value: 30, label: ''}
+	  ]
+	});	
+	
+</script>
+<-->
+				
 }
 
 @rightheader(content)(2)

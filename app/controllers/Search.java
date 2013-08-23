@@ -30,6 +30,7 @@ public class Search extends Controller {
 			
 			for (int i = 0; i < parts.length; i++){
 				query += " UPPER(nome) like UPPER('%" + parts[i] + "%') OR";
+				query += " UPPER(nomeParlamentar) like UPPER('%" + parts[i] + "%') OR";
 			}
 			
 			query = query.substring(0, query.length() - 3);

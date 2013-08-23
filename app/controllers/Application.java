@@ -62,7 +62,7 @@ public class Application extends Controller {
     	List<DeputadoFederal> depList = JPA.em().createQuery("FROM DeputadoFederal ORDER BY nomeParlamentar").getResultList();
 
     	// TODO Probably get once and then get 5 best and worst is faster
-    	List<DeputadoFederal> depMelhores = JPA.em().createQuery("FROM DeputadoFederal ORDER BY gastopordia").setMaxResults(5).getResultList();
+    	List<DeputadoFederal> depMelhores = JPA.em().createQuery("FROM DeputadoFederal ORDER BY gastopordia asc").setMaxResults(5).getResultList();
     	
     	List<DeputadoFederal> depPiores = JPA.em().createQuery("FROM DeputadoFederal ORDER BY gastopordia desc").setMaxResults(5).getResultList();
     	
@@ -156,7 +156,7 @@ public class Application extends Controller {
     	for (DeputadoFederal dep: depList){
     		gasto = dep.getGastoPorDia();
     		
-    		depTempIndice = 100 - (100 * gasto / maxGasto);
+    		depTempIndice = (100 * gasto / maxGasto);
     		
     		dep.setIndice(depTempIndice.intValue());
     		
