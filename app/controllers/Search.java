@@ -16,12 +16,10 @@ public class Search extends Controller {
   
 	@Transactional
 	public static Result search(){
-
-		List<DeputadoFederal> depList = new ArrayList<DeputadoFederal>();
-		
 		DynamicForm dynamicForm = form().bindFromRequest();
 		String words = dynamicForm.get("q");
-		
+
+		List<DeputadoFederal> depList = new ArrayList<DeputadoFederal>();
 		
 		if (words != null && words.trim().length() > 0){
 			

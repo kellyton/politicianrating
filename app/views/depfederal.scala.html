@@ -30,7 +30,11 @@
 									<tbody>
 										@for((dep, index) <- deputados.zipWithIndex){
 										<tr>
-											<td>@dep.getNomeParlamentar()</td>
+											<td>
+												<a href="./deputado/@dep.getIdeCadastro()">
+													@dep.getNomeParlamentar()
+												</a>
+											</td>
 											<td>@dep.getPartido()</td>
 											<td>@dep.getUf()</td>
 											<td>@dep.getGastoPorDiaFormated()</td>
@@ -76,7 +80,11 @@
 												<tbody>
 													@for((dep, index) <- depMelhores.zipWithIndex){
 													<tr>
-														<td>@dep.getNomeParlamentar()</td>
+														<td>
+															<a href="./deputado/@dep.getIdeCadastro()">
+																@dep.getNomeParlamentar()
+															</a>
+														</td>
 														<td>@dep.getPartido()</td>
 														<td>@dep.getUf()</td>
 														<td>@dep.getGastoPorDiaFormated()</td>
@@ -122,7 +130,11 @@
 												<tbody>
 													@for((dep, index) <- depPiores.zipWithIndex){
 													<tr>
-														<td>@dep.getNomeParlamentar()</td>
+														<td>
+															<a href="./deputado/@dep.getIdeCadastro()">
+																@dep.getNomeParlamentar()
+															</a>
+														</td>
 														<td>@dep.getPartido()</td>
 														<td>@dep.getUf()</td>
 														<td>@dep.getGastoPorDiaFormated()</td>

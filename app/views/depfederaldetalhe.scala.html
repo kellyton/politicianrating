@@ -1,0 +1,106 @@
+@(deputado: DeputadoFederal)(totaisTipo: List[TotalTipo])(totaisData: List[TotalData])
+
+@content = {
+
+				<div class="row"><!--  Primeira linha = Foto, Profile e Indice -->
+				
+					<div class="span6">
+						<div class="widget">
+							<div class="widget-content">
+								<div class="account-container">
+									<div class="account-avatar">
+										<img src="@routes.Assets.at("images/nophoto.jpg")" alt="" class="thumbnail" />
+									</div> <!-- /account-avatar -->
+									<div class="account-details">
+										<span class="account-name">@deputado.getNomeParlamentar()</span>
+										<span class="account-name">@deputado.getNome()</span>
+										<span class="account-role">Partido: @deputado.getPartido()</span>
+										<span class="account-role">Estado: @deputado.getUf()</span>
+										<span class="account-role">Gastos Totais @deputado.getGastoTotalFormated(): </span>
+										<span class="account-role">Dias em exercício considerado: @deputado.getDiasTrabalhados()</span>
+										<span class="account-role">Gastos por dia em exercício considerado: @deputado.getGastoPorDiaFormated()</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="span3">
+						<div class="widget">
+							<div class="widget-content">
+								Aqui vai entrar o gráfico
+							</div>
+						</div>	
+					</div>
+				
+				</div> <!--  /Primeira linha = Foto, Profile e Indice -->
+				
+				
+				<div class="row">
+					<div class="span9">
+						<div class="widget">
+							<div class="widget-content">
+								Aqui vai entrar os totais
+							</div>
+						</div>	
+					</div>
+				</div>
+				
+				<div class="row"> <!-- Terceira linha: Tabelas  -->
+				
+					<div class="span6"><!-- Tabela de totais por tipo -->
+						<div class="widget">
+							<!--  <div class="widget-content">  -->
+								<table class="table table-striped table-bordered">
+									<thead>
+										<tr>
+											<th>CNPJ / CPF</th>
+											<th>Tipo do gasto</th>
+											<th>Descrição do Gasto</th>
+											<th>Valor</th>
+										</tr>
+									</thead>
+									<tbody>
+										@for((totalt, index) <- totaisTipo.zipWithIndex){
+										<tr>
+											<td>@totalt.getCnpj()</td>
+											<td>@totalt.getDescricao()</td>
+											<td>@totalt.getDetalhe()</td>
+											<td>@totalt.getTotalGastoFormated</td>
+										</tr>
+										}
+									</tbody>
+								</table>
+							<!--  </div> -->
+						</div>	
+					</div>
+					
+					<div class="span3"><!-- Tabela de totais por Mes -->
+						<div class="widget">
+							<!--  <div class="widget-content">  -->
+								<table class="table table-striped table-bordered">
+									<thead>
+										<tr>
+											<th>Ano</th>
+											<th>Mês</th>
+											<th>Valor</th>
+										</tr>
+									</thead>
+									<tbody>
+										@for((totald, index) <- totaisData.zipWithIndex){
+										<tr>
+											<td>@totald.getAno()</td>
+											<td>@totald.getMes()</td>
+											<td>@totald.getTotalGastoFormated</td>
+										</tr>
+										}
+									</tbody>
+								</table>
+							<!--  </div> -->
+						</div>	
+					</div>
+				</div><!-- Terceira linha: Tabelas  -->
+
+}
+
+@rightheader(content)(2)
