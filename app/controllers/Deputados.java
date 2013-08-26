@@ -44,7 +44,7 @@ public class Deputados extends Controller {
 					" sum(vlrDocumento) as TotalGasto" +
 					" from deputadofederalgasto" + 
 					" where nuCarteiraParlamentar = :id" + 
-					" group by txtDescricaoEspecificacao order by 1,2 desc";
+					" group by txtDescricaoEspecificacao order by 2,3,4 desc";
 			
 			resultList = JPA.em().createNativeQuery(query)
 					.setParameter("id", nuCarteiraParlamentar).getResultList();
