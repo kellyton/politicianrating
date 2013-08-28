@@ -1,4 +1,4 @@
-@(deputado: DeputadoFederal)(totaisTipo: List[TotalTipo])(totaisData: List[TotalData])
+@(politico: IPolitico)(totaisTipo: List[TotalTipo])(totaisData: List[TotalData])
 
 @content = {
 
@@ -9,16 +9,20 @@
 							<div class="widget-content">
 								<div class="account-container">
 									<div class="account-avatar">
-										<img src="@routes.Assets.at("images/nophoto.jpg")" alt="" class="thumbnail" />
+										@if((politico.getPhotoURL() == null)||(politico.getPhotoURL().length() > 0)) {
+										<img src="@routes.Assets.at("images/nophoto.jpg")" alt="Sem foto" class="thumbnail" />
+										} else {
+										<img src="politico.getPhotoURL()" alt="" class="thumbnail" />
+										}
 									</div> <!-- /account-avatar -->
 									<div class="account-details">
-										<span class="account-name">@deputado.getNomeParlamentar()</span>
-										<span class="account-name">@deputado.getNome()</span>
-										<span class="account-role">Partido: @deputado.getPartido()</span>
-										<span class="account-role">Estado: @deputado.getUf()</span>
-										<span class="account-role">Gastos Totais @deputado.getGastoTotalFormated(): </span>
-										<span class="account-role">Dias em exercício considerado: @deputado.getDiasTrabalhados()</span>
-										<span class="account-role">Gastos por dia em exercício considerado: @deputado.getGastoPorDiaFormated()</span>
+										<span class="account-name">@politico.getNomeParlamentar()</span>
+										<span class="account-name">@politico.getNome()</span>
+										<span class="account-role">Partido: @politico.getPartido()</span>
+										<span class="account-role">Estado: @politico.getUf()</span>
+										<span class="account-role">Gastos Totais @politico.getGastoTotalFormated(): </span>
+										<span class="account-role">Dias em exercício considerado: @politico.getDiasTrabalhados()</span>
+										<span class="account-role">Gastos por dia em exercício considerado: @politico.getGastoPorDiaFormated()</span>
 									</div>
 								</div>
 							</div>
@@ -115,8 +119,8 @@
 Morris.Donut({
 	  element: 'index_graph',
 	  data: [
-	    {label: "Índice", value: 100 - @deputado.getIndice()},
-	    {label: "Índice", value: @deputado.getIndice()}
+	    {label: "Índice", value: 100 - @politico.getIndice()},
+	    {label: "Índice", value: @politico.getIndice()}
 	  ],
 	    backgroundColor: '#ccc',
 	    labelColor: '#060',
@@ -124,11 +128,11 @@ Morris.Donut({
 	      '#090',
 	      '#900'
 	    ],
-	  formatter: function (x) { return 100 - @deputado.getIndice(); }
+	  formatter: function (x) { return 100 - @politico.getIndice(); }
 	});
 
 </script>
 
 }
 
-@rightheader(content)(2)
+@rightheader(content)(0)

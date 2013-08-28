@@ -16,6 +16,18 @@ import play.mvc.Result;
 
 public class Deputados extends Controller {
 
+    @Transactional
+    public static Result depFederal() {
+    	List<DeputadoFederal> depList = JPA.em().createQuery("FROM DeputadoFederal ORDER BY nomeParlamentar").getResultList();
+
+    	// TODO Probably get once and then get 5 best and worst is faster
+    	List<DeputadoFederal> depMelhores = JPA.em().createQuery("FROM DeputadoFederal ORDER BY gastopordia asc").setMaxResults(5).getResultList();
+    	
+    	List<DeputadoFederal> depPiores = JPA.em().createQuery("FROM DeputadoFederal ORDER BY gastopordia desc").setMaxResults(5).getResultList();
+    	
+    	return ok(views.html.depfederal.render(depList, depMelhores, depPiores, null, null, null));
+    }
+	
 	@Transactional
     public static Result show(String id) {		
 		DeputadoFederal deputado;

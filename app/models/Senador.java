@@ -2,7 +2,6 @@ package models;
 
 import java.text.DecimalFormat;
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,25 +9,11 @@ import javax.persistence.Id;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 
-import play.db.jpa.JPA;
-
-/**
- * O numero da matricula aqui é o NuCarteiraParlamentar nos gastos 
- * @author kellyton
- *
- */
-
 @Entity
-public class DeputadoFederal implements IPolitico{
-
+public class Senador implements IPolitico{
+	
 	@Id
-	private String ideCadastro;
-	
-	@Column(unique = true, nullable = false)
-	private String matricula;
-	
-	@Column(unique = true, nullable = false)
-	private String idParlamentar;
+	private String codParlamentar;
 	
 	@Column(nullable = false)
 	private String nome;
@@ -50,9 +35,6 @@ public class DeputadoFederal implements IPolitico{
 	
 	@Column
 	private String email;
-	
-	@Column
-	private String profissao;
 	
 	@Column
 	private Date nascimento;
@@ -78,23 +60,11 @@ public class DeputadoFederal implements IPolitico{
 	@Column(nullable = true)
 	private Date updatedAt;
 	
-	public String getIdeCadastro() {
-		return ideCadastro;
+	public String getCodParlamentar() {
+		return codParlamentar;
 	}
-	public void setIdeCadastro(String ideCadastro) {
-		this.ideCadastro = ideCadastro;
-	}
-	public String getMatricula() {
-		return matricula;
-	}
-	public void setMatricula(String matricula) {
-		this.matricula = matricula;
-	}
-	public String getIdParlamentar() {
-		return idParlamentar;
-	}
-	public void setIdParlamentar(String idParlamentar) {
-		this.idParlamentar = idParlamentar;
+	public void setCodParlamentar(String codParlamentar) {
+		this.codParlamentar = codParlamentar;
 	}
 	public String getNome() {
 		return nome;
@@ -138,17 +108,17 @@ public class DeputadoFederal implements IPolitico{
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getProfissao() {
-		return profissao;
-	}
-	public void setProfissao(String profissao) {
-		this.profissao = profissao;
-	}
 	public Date getNascimento() {
 		return nascimento;
 	}
 	public void setNascimento(Date nascimento) {
 		this.nascimento = nascimento;
+	}
+	public String getPhotoURL() {
+		return photoURL;
+	}
+	public void setPhotoURL(String photoURL) {
+		this.photoURL = photoURL;
 	}
 	public Date getCreatedAt() {
 		return createdAt;
@@ -198,17 +168,5 @@ public class DeputadoFederal implements IPolitico{
 	public String toString(){
 		return nome + " - " + uf + " - " + partido;
 	}
-	@Override
-	public String getPhotoURL() {
-		return null;
-	}
-	
-	////////////////////////
-    /*public static List<DeputadoFederal> getAll() {
-        List<DeputadoFederal> data = JPA.em()
-            .createQuery("from deputadofederal")
-            .getResultList();
-        return data;
-    }*/
 	
 }

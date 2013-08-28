@@ -51,26 +51,10 @@ public class Application extends Controller {
 	// http://www.camara.gov.br/SitCamaraWS/Deputados.asmx/ObterDetalhesDeputados?ideCadastro=XXXX&numLegislatura=
 	public static final String pathObterDeputadosDetails = "/SitCamaraWS/Deputados.asmx/ObterDetalhesDeputados";
 	
-	public static final String pathObterDeputadosGastos = "./AnoAtual.xml";
+	public static final String pathObterDeputadosGastos = "./data/AnoAtual.xml";
 	
     public static Result index() {
         return ok(views.html.index.render());
-    }
-    
-    @Transactional
-    public static Result depFederal() {
-    	List<DeputadoFederal> depList = JPA.em().createQuery("FROM DeputadoFederal ORDER BY nomeParlamentar").getResultList();
-
-    	// TODO Probably get once and then get 5 best and worst is faster
-    	List<DeputadoFederal> depMelhores = JPA.em().createQuery("FROM DeputadoFederal ORDER BY gastopordia asc").setMaxResults(5).getResultList();
-    	
-    	List<DeputadoFederal> depPiores = JPA.em().createQuery("FROM DeputadoFederal ORDER BY gastopordia desc").setMaxResults(5).getResultList();
-    	
-    	return ok(views.html.depfederal.render(depList, depMelhores, depPiores));
-    }
-    
-    public static Result senador() {
-    	return ok(views.html.senador.render());
     }
     
     public static Result estado() {
@@ -146,8 +130,8 @@ public class Application extends Controller {
     	
     	/**
     	 * Calcula o índice do candidato:
-    	 * 100 - (100.gasto/max)
-    	 * Ou seja: o candidato que gastou MAIS tem valor 0, o candidato que gastou NADA tem valor 100 
+    	 * 100*gasto/max
+    	 * Ou seja: o candidato que gastou MAIS tem valor 100, o candidato que gastou NADA tem valor 0 
     	 */
     	
     	Double maxGasto = (Double)JPA.em().createNativeQuery("Select max(gastoPorDia) FROM DeputadoFederal").getSingleResult();
