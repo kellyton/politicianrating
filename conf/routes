@@ -22,5 +22,7 @@ POST	/search						controllers.Search.search()
 GET		/deputado/:id				controllers.Deputados.show(id: String)
 GET		/senador/:id				controllers.Senadores.show(id: String)
 
+GET		/estado/:id					controllers.Estados.estado(id: String)
+
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

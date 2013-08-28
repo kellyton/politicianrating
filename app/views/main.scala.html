@@ -37,6 +37,97 @@
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+    
+    <style type="text/css">
+		.active { display:inherit; }
+		ul#map {display: block; margin: 0; padding: 0; width: 296px; height: 294px; background-image: url('@routes.Assets.at("images/mapa.jpg")');}
+		ul#map li {display: block; padding: 0; position: absolute;}
+		li#crs {margin-top: 243px; margin-left: 125px;}
+		li#csc {margin-top: 236px; margin-left: 148px;}
+		li#cpr {margin-top: 209px; margin-left: 143px;}
+		li#csp {margin-top: 190px; margin-left: 158px; z-index:9999; }
+		li#cms {margin-top: 169px; margin-left: 118px;}
+		li#crj {margin-top: 201px; margin-left: 210px; z-index:9999; }
+		li#ces {margin-top: 181px; margin-left: 231px; z-index:9999; }
+		li#cmg {margin-top: 152px; margin-left: 169px; z-index:9998; }
+		li#cgo {margin-top: 132px; margin-left: 154px; z-index:9999; }
+		li#cba {margin-top: 98px; margin-left: 197px;}
+		li#cmt {margin-top: 98px; margin-left: 95px;}
+		li#cro {margin-top: 100px; margin-left: 57px; z-index:9998; }
+		li#cac {margin-top: 99px; margin-left: 1px;}
+		li#cam {margin-top: 24px; margin-left: 2px;}
+		li#crr {margin-top: 1px; margin-left: 72px;}
+		li#cpa {margin-top: 22px; margin-left: 114px;}
+		li#cap {margin-top: 11px; margin-left: 146px;}
+		li#cma {margin-top: 53px; margin-left: 191px; z-index:9999;}
+		li#cto {margin-top: 83px; margin-left: 175px;}
+		
+		li#cse {margin-top: 122px; margin-left: 266px;}
+		li#cal {margin-top: 116px; margin-left: 267px;}
+		li#cpe {margin-top: 102px; margin-left: 245px;}
+		li#cpb {margin-top: 96px; margin-left: 265px;}
+		li#crn {margin-top: 85px; margin-left: 265px;}
+		li#cce {margin-top: 68px; margin-left: 245px;}
+		li#cpi {margin-top: 67px; margin-left: 209px; z-index:9997;}
+	
+		ul#map li a {display: block; text-decoration: none; position: absolute;}
+		a#rs {width: 50px; height: 49px; }
+		a#sc {width: 35px; height: 24px; }
+		a#pr {width: 43px; height: 31px; }
+		a#sp {width: 55px; height: 41px; }
+		a#ms {width: 51px; height: 52px; }
+		a#rj {width: 28px; height: 16px; }
+		a#es {width: 18px; height: 24px; }
+		a#mg {width: 79px; height: 63px; }
+		a#go {width: 53px; height: 55px; }
+		a#ba {width: 74px; height: 95px; }
+		a#mt {width: 84px; height: 76px; }
+		a#ro {width: 49px; height: 44px; }
+		a#ac {width: 55px; height: 27px; }
+		a#am {width: 130px; height: 91px;}
+		a#rr {width: 43px; height: 49px; }
+		a#pa {width: 96px; height: 94px; }
+		a#ap {width: 38px; height: 41px; }
+		a#ma {width: 51px; height: 68px; }
+		a#to {width: 34px; height: 62px; }
+		a#se {width: 13px; height: 15px; }
+		a#al {width: 21px; height: 12px; }
+		a#pe {width: 48px; height: 19px; }
+		a#pb {width: 29px; height: 16px; }
+		a#rn {width: 27px; height: 16px; }
+		a#ce {width: 29px; height: 39px; }
+		a#pi {width: 41px; height: 59px; }
+	
+		a#rs:hover, a#rs:active {background-image: url('@routes.Assets.at("images/mapa/rs.png")');}
+		a#sc:hover, a#sc:active {background-image: url('@routes.Assets.at("images/mapa/sc.png")');}
+		a#pr:hover, a#pr:active {background-image: url('@routes.Assets.at("images/mapa/pr.png")');}
+		a#sp:hover, a#sp:active {background-image: url('@routes.Assets.at("images/mapa/sp.gif")');}
+		a#ms:hover, a#ms:active {background-image: url('@routes.Assets.at("images/mapa/ms.gif")');}
+		a#rj:hover, a#rj:active {background-image: url('@routes.Assets.at("images/mapa/rj.gif")');}
+		a#es:hover, a#es:active {background-image: url('@routes.Assets.at("images/mapa/es.gif")');}
+		a#mg:hover, a#mg:active {background-image: url('@routes.Assets.at("images/mapa/mg.gif")');}
+		a#go:hover, a#go:active {background-image: url('@routes.Assets.at("images/mapa/go.gif")');}
+		a#ba:hover, a#ba:active {background-image: url('@routes.Assets.at("images/mapa/ba.gif")');}
+		a#mt:hover, a#mt:active {background-image: url('@routes.Assets.at("images/mapa/mt.gif")');}
+		a#ro:hover, a#ro:active {background-image: url('@routes.Assets.at("images/mapa/ro.gif")');}
+		a#ac:hover, a#ac:active {background-image: url('@routes.Assets.at("images/mapa/ac.gif")');}
+		a#am:hover, a#am:active {background-image: url('@routes.Assets.at("images/mapa/am.gif")');}
+		a#rr:hover, a#rr:active {background-image: url('@routes.Assets.at("images/mapa/rr.gif")');}
+		a#pa:hover, a#pa:active {background-image: url('@routes.Assets.at("images/mapa/pa.gif")');}
+		a#ap:hover, a#ap:active {background-image: url('@routes.Assets.at("images/mapa/ap.gif")');}
+		a#ma:hover, a#ma:active {background-image: url('@routes.Assets.at("images/mapa/ma.gif")');}
+		a#to:hover, a#to:active {background-image: url('@routes.Assets.at("images/mapa/to.gif")');}
+		a#se:hover, a#se:active {background-image: url('@routes.Assets.at("images/mapa/se.gif")');}
+		a#al:hover, a#al:active {background-image: url('@routes.Assets.at("images/mapa/al.gif")');}
+		a#pe:hover, a#pe:active {background-image: url('@routes.Assets.at("images/mapa/pe.gif")');}
+		a#pb:hover, a#pb:active {background-image: url('@routes.Assets.at("images/mapa/pb.gif")');}
+		a#rn:hover, a#rn:active {background-image: url('@routes.Assets.at("images/mapa/rn.gif")');}
+		a#ce:hover, a#ce:active {background-image: url('@routes.Assets.at("images/mapa/ce.gif")');}
+		a#pi:hover, a#pi:active {background-image: url('@routes.Assets.at("images/mapa/pi.gif")');}
+	
+		ul#map li a img {border: 0; width: inherit; height: inherit;}
+	</style>
+    
   </head>
 
 <body>

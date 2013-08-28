@@ -16,6 +16,24 @@ import play.mvc.Result;
 
 public class Deputados extends Controller {
 
+	@Transactional
+	public static List<DeputadoFederal> getMelhores(){
+		List<DeputadoFederal> depMelhores = JPA.em()
+    			.createQuery("FROM DeputadoFederal ORDER BY gastopordia ASC")
+    			.setMaxResults(5)
+    			.getResultList();
+		return depMelhores;
+	}
+	
+	@Transactional
+	public static List<DeputadoFederal> getPiores(){
+		List<DeputadoFederal> depMelhores = JPA.em()
+    			.createQuery("FROM DeputadoFederal ORDER BY gastopordia DESC")
+    			.setMaxResults(5)
+    			.getResultList();
+		return depMelhores;
+	}
+	
     @Transactional
     public static Result depFederal() {
     	List<DeputadoFederal> depList = JPA.em().createQuery("FROM DeputadoFederal ORDER BY nomeParlamentar").getResultList();

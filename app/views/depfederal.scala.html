@@ -6,49 +6,6 @@
 				<div class="row">
 					<div class="span5">
 						
-						@if(deputados != null) {			
-						<!-- Deputados federais -->
-							<div class="widget widget-table">
-	
-								<div class="widget-header">
-									<i class="icon-th-list"></i>
-									<h3>@deputados.size() deputados encontrados</h3>
-								</div> <!-- /widget-header -->
-	
-								<div class="widget-content">
-			
-									<table class="table table-striped table-bordered">
-										<thead>
-											<tr>
-												<th>Nome</th>
-												<th>Partido</th>
-												<th>UF</th>
-												<th>R$/dia</th>
-												<th>Indice</th>
-											</tr>
-										</thead>
-			
-										<tbody>
-											@for((dep, index) <- deputados.zipWithIndex){
-											<tr>
-												<td>
-													<a href="./deputado/@dep.getIdeCadastro()">
-														@dep.getNomeParlamentar()
-													</a>
-												</td>
-												<td>@dep.getPartido()</td>
-												<td>@dep.getUf()</td>
-												<td>@dep.getGastoPorDiaFormated()</td>
-												<!--  <td>@dep.getIndice()</td> -->
-												<td><canvas id="indice-@index" width="30" height="30"></canvas></td>
-											</tr>
-											}
-										</tbody>
-									</table>
-								
-								</div> <!-- /widget-content -->
-							</div>
-						}
 						@if(senadores != null) {
 							<!-- Senadores -->
 							<div class="widget widget-table">
@@ -92,9 +49,156 @@
 						
 							</div> <!-- /span5 - Terminou a tabela.-->
 						}
+						
+						@if(deputados != null) {			
+						<!-- Deputados federais -->
+							<div class="widget widget-table">
+	
+								<div class="widget-header">
+									<i class="icon-th-list"></i>
+									<h3>@deputados.size() deputados encontrados</h3>
+								</div> <!-- /widget-header -->
+	
+								<div class="widget-content">
+			
+									<table class="table table-striped table-bordered">
+										<thead>
+											<tr>
+												<th>Nome</th>
+												<th>Partido</th>
+												<th>UF</th>
+												<th>R$/dia</th>
+												<th>Indice</th>
+											</tr>
+										</thead>
+			
+										<tbody>
+											@for((dep, index) <- deputados.zipWithIndex){
+											<tr>
+												<td>
+													<a href="./deputado/@dep.getIdeCadastro()">
+														@dep.getNomeParlamentar()
+													</a>
+												</td>
+												<td>@dep.getPartido()</td>
+												<td>@dep.getUf()</td>
+												<td>@dep.getGastoPorDiaFormated()</td>
+												<!--  <td>@dep.getIndice()</td> -->
+												<td><canvas id="indice-@index" width="30" height="30"></canvas></td>
+											</tr>
+											}
+										</tbody>
+									</table>
+								
+								</div> <!-- /widget-content -->
+							</div>
+						}
+						
 					</div><!-- Terminou. Vai pra parte da direita -->
 
 					<div class="span4">
+						
+						<!-- 5 Melhores senadores -->
+							@if(senadores != null) {
+							<div class="row">
+			
+								<div class="span4">
+			
+									<!-- Lista dos politicos -->
+									<div class="widget widget-table">
+			
+										<div class="widget-header">
+											<i class="icon-th-list"></i>
+											<h3>Senadores que gastaram MENOS</h3>
+										</div> <!-- /widget-header -->
+			
+										<div class="widget-content">
+					
+											<table class="table table-striped table-bordered">
+												<thead>
+													<tr>
+														<th>Nome</th>
+														<th>Partido</th>
+														<th>UF</th>
+														<th>R$/dia</th>
+														<th>Indice</th>
+													</tr>
+												</thead>
+					
+												<tbody>
+													@for((sen, index) <- senMelhores.zipWithIndex){
+													<tr>
+														<td>
+															<a href="./senador/@sen.getCodParlamentar()">
+																@sen.getNomeParlamentar()
+															</a>
+														</td>
+														<td>@sen.getPartido()</td>
+														<td>@sen.getUf()</td>
+														<td>@sen.getGastoPorDiaFormated()</td>
+														<td><canvas id="indice-sm-@index" width="30" height="30"></canvas></td>
+													</tr>
+													}
+												</tbody>
+											</table>
+										
+										</div> <!-- /widget-content -->
+									</div><!-- widget-table -->
+			
+								</div> <!-- /span4 -->
+			
+							</div><!-- /5 PIORES -->
+							<!-- /5 piores senadores-->
+							<div class="row">
+			
+								<div class="span4">
+			
+									<!-- Lista dos politicos -->
+									<div class="widget widget-table">
+			
+										<div class="widget-header">
+											<i class="icon-th-list"></i>
+											<h3>Senadores que gastaram MAIS</h3>
+										</div> <!-- /widget-header -->
+			
+										<div class="widget-content">
+					
+											<table class="table table-striped table-bordered">
+												<thead>
+													<tr>
+														<th>Nome</th>
+														<th>Partido</th>
+														<th>UF</th>
+														<th>R$/dia</th>
+														<th>Indice</th>
+													</tr>
+												</thead>
+					
+												<tbody>
+													@for((sen, index) <- senPiores.zipWithIndex){
+													<tr>
+														<td>
+															<a href="./senador/@sen.getCodParlamentar()">
+																@sen.getNomeParlamentar()
+															</a>
+														</td>
+														<td>@sen.getPartido()</td>
+														<td>@sen.getUf()</td>
+														<td>@sen.getGastoPorDiaFormated()</td>
+														<td><canvas id="indice-sp-@index" width="30" height="30"></canvas></td>
+														
+													</tr>
+													}
+												</tbody>
+											</table>
+										
+										</div> <!-- /widget-content -->
+									</div><!-- widget-table -->
+			
+								</div> <!-- /span4 -->
+			
+							</div><!-- /5 piores -->
+							}
 						
 						<!-- 5 Melhores sDeputados-->
 						@if(deputados != null) {
@@ -186,107 +290,6 @@
 														<td>@dep.getGastoPorDiaFormated()</td>
 														<!--  <td><td>@dep.getIndice()</td> -->
 														<td><canvas id="indicep-@index" width="30" height="30"></canvas></td>
-														
-													</tr>
-													}
-												</tbody>
-											</table>
-										
-										</div> <!-- /widget-content -->
-									</div><!-- widget-table -->
-			
-								</div> <!-- /span4 -->
-			
-							</div><!-- /5 piores -->
-							}
-							<!-- 5 Melhores senadores -->
-							@if(senadores != null) {
-							<div class="row">
-			
-								<div class="span4">
-			
-									<!-- Lista dos politicos -->
-									<div class="widget widget-table">
-			
-										<div class="widget-header">
-											<i class="icon-th-list"></i>
-											<h3>Senadores que gastaram MENOS</h3>
-										</div> <!-- /widget-header -->
-			
-										<div class="widget-content">
-					
-											<table class="table table-striped table-bordered">
-												<thead>
-													<tr>
-														<th>Nome</th>
-														<th>Partido</th>
-														<th>UF</th>
-														<th>R$/dia</th>
-														<th>Indice</th>
-													</tr>
-												</thead>
-					
-												<tbody>
-													@for((sen, index) <- senMelhores.zipWithIndex){
-													<tr>
-														<td>
-															<a href="./senador/@sen.getCodParlamentar()">
-																@sen.getNomeParlamentar()
-															</a>
-														</td>
-														<td>@sen.getPartido()</td>
-														<td>@sen.getUf()</td>
-														<td>@sen.getGastoPorDiaFormated()</td>
-														<td><canvas id="indice-sm-@index" width="30" height="30"></canvas></td>
-													</tr>
-													}
-												</tbody>
-											</table>
-										
-										</div> <!-- /widget-content -->
-									</div><!-- widget-table -->
-			
-								</div> <!-- /span4 -->
-			
-							</div><!-- /5 PIORES -->
-							<!-- /5 piores senadores-->
-							<div class="row">
-			
-								<div class="span4">
-			
-									<!-- Lista dos politicos -->
-									<div class="widget widget-table">
-			
-										<div class="widget-header">
-											<i class="icon-th-list"></i>
-											<h3>Senadores que gastaram MAIS</h3>
-										</div> <!-- /widget-header -->
-			
-										<div class="widget-content">
-					
-											<table class="table table-striped table-bordered">
-												<thead>
-													<tr>
-														<th>Nome</th>
-														<th>Partido</th>
-														<th>UF</th>
-														<th>R$/dia</th>
-														<th>Indice</th>
-													</tr>
-												</thead>
-					
-												<tbody>
-													@for((sen, index) <- senPiores.zipWithIndex){
-													<tr>
-														<td>
-															<a href="./senador/@sen.getCodParlamentar()">
-																@sen.getNomeParlamentar()
-															</a>
-														</td>
-														<td>@sen.getPartido()</td>
-														<td>@sen.getUf()</td>
-														<td>@sen.getGastoPorDiaFormated()</td>
-														<td><canvas id="indice-sp-@index" width="30" height="30"></canvas></td>
 														
 													</tr>
 													}

@@ -1,3 +1,5 @@
+@(deputados: List[DeputadoFederal])(senadores: List[Senador])
+
 @content = {
 
 	<div class="span9">
@@ -59,16 +61,17 @@
 				
 				<div class="row">
 					
-					<div class="span4">
+					<div class="span5">
 									
 						<div class="widget">
 							
 							<div class="widget-header">
-								<h3>Os melhores e piores</h3>
+								<h3>Orientações</h3>
 							</div> <!-- /widget-header -->
 																
 							<div class="widget-content">
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+								<p>Para saber informações detalhadas sobre os gastos dos digníssimos Senadores e Deputados Federais, apenas coloque o nome ou parte do nome deles (podem ser vários) no campo de busca acima, selecione por estado ao lado direito, ou visualize todos os deputados federais ou todos os senadores no menu do lado esquerdo.<br>
+								</p>
 							</div> <!-- /widget-content -->
 							
 						</div> <!-- /widget -->
@@ -84,7 +87,34 @@
 							</div> <!-- /widget-header -->
 																
 							<div class="widget-content">
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+								<ul id="map">
+							        <li id="crs" estado="rs"><a href="@routes.Estados.estado("rs")" id="rs" title="RS"><img src="@routes.Assets.at("images/null.gif")" alt="RS" /></a></li>
+							        <li id="csc" estado="sc"><a href="@routes.Estados.estado("sc")" id="sc" title="SC"><img src="@routes.Assets.at("images/null.gif")" alt="SC" /></a></li>
+							        <li id="cpr" estado="pr"><a href="@routes.Estados.estado("pr")" id="pr" title="PR"><img src="@routes.Assets.at("images/null.gif")" alt="PR" /></a></li>
+							        <li id="csp" estado="sp"><a href="@routes.Estados.estado("sp")" id="sp" title="SP"><img src="@routes.Assets.at("images/null.gif")" alt="SP" /></a></li>
+							        <li id="cms" estado="ms"><a href="@routes.Estados.estado("ms")" id="ms" title="MS"><img src="@routes.Assets.at("images/null.gif")" alt="MS" /></a></li>
+							        <li id="crj" estado="rj"><a href="@routes.Estados.estado("rj")" id="rj" title="RJ"><img src="@routes.Assets.at("images/null.gif")" alt="RJ" /></a></li>
+							        <li id="ces" estado="es"><a href="@routes.Estados.estado("es")" id="es" title="ES"><img src="@routes.Assets.at("images/null.gif")" alt="ES" /></a></li>
+							        <li id="cmg" estado="mg"><a href="@routes.Estados.estado("mg")" id="mg" title="MG"><img src="@routes.Assets.at("images/null.gif")" alt="MG" /></a></li>
+							        <li id="cgo" estado="go"><a href="@routes.Estados.estado("go")" id="go" title="GO"><img src="@routes.Assets.at("images/null.gif")" alt="GO" /></a></li>
+							        <li id="cba" estado="ba"><a href="@routes.Estados.estado("ba")" id="ba" title="BA"><img src="@routes.Assets.at("images/null.gif")" alt="BA" /></a></li>
+							        <li id="cmt" estado="mt"><a href="@routes.Estados.estado("mt")" id="mt" title="MT"><img src="@routes.Assets.at("images/null.gif")" alt="MT" /></a></li>
+							        <li id="cro" estado="ro"><a href="@routes.Estados.estado("ro")" id="ro" title="RO"><img src="@routes.Assets.at("images/null.gif")" alt="RO" /></a></li>
+							        <li id="cac" estado="ac"><a href="@routes.Estados.estado("ac")" id="ac" title="AC"><img src="@routes.Assets.at("images/null.gif")" alt="AC" /></a></li>
+							        <li id="cam" estado="am"><a href="@routes.Estados.estado("am")" id="am" title="AM"><img src="@routes.Assets.at("images/null.gif")" alt="AM" /></a></li>
+							        <li id="crr" estado="rr"><a href="@routes.Estados.estado("rr")" id="rr" title="RR"><img src="@routes.Assets.at("images/null.gif")" alt="RR" /></a></li>
+							        <li id="cpa" estado="pa"><a href="@routes.Estados.estado("pa")" id="pa" title="PA"><img src="@routes.Assets.at("images/null.gif")" alt="PA" /></a></li>
+							        <li id="cap" estado="ap"><a href="@routes.Estados.estado("ap")" id="ap" title="AP"><img src="@routes.Assets.at("images/null.gif")" alt="AP" /></a></li>
+							        <li id="cma" estado="ma"><a href="@routes.Estados.estado("ma")" id="ma" title="MA"><img src="@routes.Assets.at("images/null.gif")" alt="MA" /></a></li>
+							        <li id="cto" estado="to"><a href="@routes.Estados.estado("to")" id="to" title="TO"><img src="@routes.Assets.at("images/null.gif")" alt="TO" /></a></li>
+							        <li id="cse" estado="se"><a href="@routes.Estados.estado("se")" id="se" title="SE"><img src="@routes.Assets.at("images/null.gif")" alt="SE" /></a></li>
+							        <li id="cal" estado="al"><a href="@routes.Estados.estado("al")" id="al" title="AL"><img src="@routes.Assets.at("images/null.gif")" alt="AL" /></a></li>
+							        <li id="cpe" estado="pe"><a href="@routes.Estados.estado("pe")" id="pe" title="PE"><img src="@routes.Assets.at("images/null.gif")" alt="PE" /></a></li>
+							        <li id="cpb" estado="pb"><a href="@routes.Estados.estado("pb")" id="pb" title="PB"><img src="@routes.Assets.at("images/null.gif")" alt="PB" /></a></li>
+							        <li id="crn" estado="rn"><a href="@routes.Estados.estado("rn")" id="rn" title="RN"><img src="@routes.Assets.at("images/null.gif")" alt="RN" /></a></li>
+							        <li id="cce" estado="ce"><a href="@routes.Estados.estado("ce")" id="ce" title="CE"><img src="@routes.Assets.at("images/null.gif")" alt="CE" /></a></li>
+							        <li id="cpi" estado="pi"><a href="@routes.Estados.estado("pi")" id="pi" title="PI"><img src="@routes.Assets.at("images/null.gif")" alt="PI" /></a></li>
+							    </ul>
 							</div> <!-- /widget-content -->
 							
 						</div> <!-- /widget -->
@@ -93,42 +123,124 @@
 				</div> <!-- /row -->
 				
 				<div class="row">
+				
+				<div class="span5">
+						
+						<div class="widget widget-table">
+							
+							<div class="widget-header">
+								<i class="icon-th-list"></i>
+								<h3>Maiores gastos da Câmara dos Deputados</h3>
+							</div> <!-- /widget-header -->
+																
+							<div class="widget-content">
+								<table class="table table-striped table-bordered">
+										<thead>
+											<tr>
+												<th>Nome</th>
+												<th>Partido</th>
+												<th>UF</th>
+												<th>R$/dia</th>
+												<th>Indice</th>
+											</tr>
+										</thead>
+			
+										<tbody>
+											@for((dep, index) <- deputados.zipWithIndex){
+											<tr>
+												<td>
+													<a href="./deputado/@dep.getIdeCadastro()">
+														@dep.getNomeParlamentar()
+													</a>
+												</td>
+												<td>@dep.getPartido()</td>
+												<td>@dep.getUf()</td>
+												<td>@dep.getGastoPorDiaFormated()</td>
+												<!--  <td>@dep.getIndice()</td> -->
+												<td><canvas id="indice-@index" width="30" height="30"></canvas></td>
+											</tr>
+											}
+										</tbody>
+									</table>
+							</div> <!-- /widget-content -->
+							
+						</div> <!-- /widget -->
+					</div> <!-- /span4 -->
 					
 					<div class="span4">
 									
-						<div class="widget">
+						<div class="widget widget-table">
 							
 							<div class="widget-header">
-								<h3>Noticias Camara dos Deputados</h3>
+								<i class="icon-th-list"></i>
+								<h3>Maiores gastos do Senado</h3>
 							</div> <!-- /widget-header -->
 																
 							<div class="widget-content">
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+								<table class="table table-striped table-bordered">
+										<thead>
+											<tr>
+												<th>Nome</th>
+												<th>Partido</th>
+												<th>UF</th>
+												<th>R$/dia</th>
+												<th>Indice</th>
+											</tr>
+										</thead>
+			
+										<tbody>
+											@for((sen, index) <- senadores.zipWithIndex){
+											<tr>
+												<td>
+													<a href="./senador/@sen.getCodParlamentar()">
+														@sen.getNomeParlamentar()
+													</a>
+												</td>
+												<td>@sen.getPartido()</td>
+												<td>@sen.getUf()</td>
+												<td>@sen.getGastoPorDiaFormated()</td>
+												<td><canvas id="indice-s-@index" width="30" height="30"></canvas></td>
+											</tr>
+											}
+										</tbody>
+									</table>
 							</div> <!-- /widget-content -->
 							
 						</div> <!-- /widget -->
 						
-					</div> <!-- /span4 -->
-		
-					<div class="span4">
-						
-						<div class="widget">
-							
-							<div class="widget-header">
-								<h3>Noticias Senado</h3>
-							</div> <!-- /widget-header -->
-																
-							<div class="widget-content">
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-							</div> <!-- /widget-content -->
-							
-						</div> <!-- /widget -->
 					</div> <!-- /span4 -->
 					
 				</div> <!-- /row -->
 				
 			</div>
 
+<script type="text/javascript">
+@for((dep, index) <- deputados.zipWithIndex){
+	var pieData = [
+			{ 	value: 100-@dep.getIndice(),
+				color:"#090"
+			},
+			{ 	value : @dep.getIndice(),
+				color : "#900"
+			}
+		];
+	
+	var myPie = new Chart(document.getElementById("indice-@index").getContext("2d")).Pie(pieData);
+}
+
+@for((sen, index) <- senadores.zipWithIndex){
+	var pieData = [
+			{ 	value: 100-@sen.getIndice(),
+				color:"#090"
+			},
+			{ 	value : @sen.getIndice(),
+				color : "#900"
+			}
+		];
+	
+	var myPie = new Chart(document.getElementById("indice-s-@index").getContext("2d")).Pie(pieData);
+}
+</script>
 }
 
 @leftmenu(content)(1)

@@ -26,6 +26,7 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import models.DeputadoFederal;
 import models.Senador;
 import models.SenadorGasto;
 import models.TotalData;
@@ -45,6 +46,24 @@ public class Senadores extends Controller {
 	
 	public static final String hostSenado = "http://legis.senado.gov.br/dadosabertos";
 	public static final String pathGetSenadores = "/senador/lista/atual";
+	
+	@Transactional
+	public static List<Senador> getMelhores(){
+    	List<Senador> senMelhores = JPA.em()
+    			.createQuery("FROM Senador ORDER BY gastopordia ASC")
+    			.setMaxResults(5)
+    			.getResultList();
+    	return senMelhores;
+	}
+	
+	@Transactional
+	public static List<Senador> getPiores(){
+		List<Senador> senPiores = JPA.em()
+    			.createQuery("FROM Senador ORDER BY gastopordia DESC")
+    			.setMaxResults(5)
+    			.getResultList();
+		return senPiores;
+	}
 	
 	@Transactional
 	public static Result show(String id){

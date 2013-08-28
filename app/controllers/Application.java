@@ -17,6 +17,7 @@ import java.util.Locale;
 import models.DeputadoFederal;
 import models.DeputadoFederalExercicio;
 import models.DeputadoFederalGasto;
+import models.Senador;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
@@ -53,8 +54,11 @@ public class Application extends Controller {
 	
 	public static final String pathObterDeputadosGastos = "./data/AnoAtual.xml";
 	
+	@Transactional
     public static Result index() {
-        return ok(views.html.index.render());
+    	List<DeputadoFederal> dep = Deputados.getPiores();
+    	List<Senador> sen = Senadores.getPiores();
+        return ok(views.html.index.render(dep, sen));
     }
     
     public static Result estado() {
