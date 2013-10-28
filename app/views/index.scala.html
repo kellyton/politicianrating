@@ -47,10 +47,9 @@
 						<h3>Busca</h3>
 					</div> <!-- /widget-header -->
 					<div class="widget-content">
-						<h3>Busca</h3>
 						<div class="faq-container">
 							<form class="faq-search" method="post" action="@routes.Search.search()">
-								<input type="text" name="q" placeholder="Coloque o nome do político">
+								<input type="text" name="q" placeholder="Digite o nome ou parte do nome de um ou mais políticos (deputados ou senadores)">
 							</form>
 						</div>
 							
@@ -137,11 +136,11 @@
 								<table class="table table-striped table-bordered">
 										<thead>
 											<tr>
-												<th>Nome</th>
+												<th>Gabinete</th>
 												<th>Partido</th>
 												<th>UF</th>
 												<th>R$/dia</th>
-												<th>Indice</th>
+												<th>Gastos</th>
 											</tr>
 										</thead>
 			
@@ -156,8 +155,7 @@
 												<td>@dep.getPartido()</td>
 												<td>@dep.getUf()</td>
 												<td>@dep.getGastoPorDiaFormated()</td>
-												<!--  <td>@dep.getIndice()</td> -->
-												<td><canvas id="indice-@index" width="30" height="30"></canvas></td>
+												<td><div id='indice-@index'></div></td>
 											</tr>
 											}
 										</tbody>
@@ -180,11 +178,11 @@
 								<table class="table table-striped table-bordered">
 										<thead>
 											<tr>
-												<th>Nome</th>
+												<th>Gabinete</th>
 												<th>Partido</th>
 												<th>UF</th>
 												<th>R$/dia</th>
-												<th>Indice</th>
+												<th>Gastos</th>
 											</tr>
 										</thead>
 			
@@ -199,7 +197,8 @@
 												<td>@sen.getPartido()</td>
 												<td>@sen.getUf()</td>
 												<td>@sen.getGastoPorDiaFormated()</td>
-												<td><canvas id="indice-s-@index" width="30" height="30"></canvas></td>
+												
+												<td><div id='indice-s-@index'></div></td>
 											</tr>
 											}
 										</tbody>
@@ -213,32 +212,35 @@
 				</div> <!-- /row -->
 				
 			</div>
+			
+<div id='bigGraph' width="500" height="500"></div>
+
 
 <script type="text/javascript">
+var optionsBar = {
+	    width:60, height:40,
+	    isStacked: true,
+	    colors: ['#B80000','#B8B8B8']
+	  }
+
 @for((dep, index) <- deputados.zipWithIndex){
-	var pieData = [
-			{ 	value: 100-@dep.getIndice(),
-				color:"#090"
-			},
-			{ 	value : @dep.getIndice(),
-				color : "#900"
-			}
-		];
-	
-	var myPie = new Chart(document.getElementById("indice-@index").getContext("2d")).Pie(pieData);
+	var data = google.visualization.arrayToDataTable([
+		['', 'Gasto', 'Maximo'],
+		['Gasto', @dep.getIndice(), 100-@dep.getIndice()]
+	]);
+	                                                
+	new google.visualization.BarChart(document.getElementById('indice-@index')).draw(data, optionsBar);
 }
 
 @for((sen, index) <- senadores.zipWithIndex){
-	var pieData = [
-			{ 	value: 100-@sen.getIndice(),
-				color:"#090"
-			},
-			{ 	value : @sen.getIndice(),
-				color : "#900"
-			}
-		];
-	
-	var myPie = new Chart(document.getElementById("indice-s-@index").getContext("2d")).Pie(pieData);
+    var data = google.visualization.arrayToDataTable([
+        ['', 'Gasto', 'Maximo'],
+        ['Gasto', @sen.getIndice(), 100-@sen.getIndice()]
+      ]);
+      
+      // Create and draw the visualization.
+      new google.visualization.BarChart(document.getElementById('indice-s-@index')).
+          draw(data, optionsBar);
 }
 </script>
 }

@@ -25,19 +25,30 @@
     <link rel="stylesheet" media="screen" href="@routes.Assets.at("css/jquery.pnotify.default.icons.css")" rel="stylesheet"> 
     <link rel="stylesheet" media="screen" href="@routes.Assets.at("css/daterangepicker.css")" rel="stylesheet">
     
+    <!-- Grafico de gauge do google -->
+    <!-- <script type="text/javascript" src="//www.google.com/jsapi"></script> -->
+    <script src="@routes.Assets.at("js/jsapi.js")"></script>
+    <script type="text/javascript">
+      google.load('visualization', '1', {packages: ['gauge']});
+      google.load("visualization", "1", {packages:["corechart"]});
+    </script>
+    <!-- Terminou os graficos do google -->
+    
+    <!-- Grafico para fazer a word cloud -->
+    <!-- <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script> -->
+    <script src="@routes.Assets.at("js/d3.v3.min.js")"></script>
+    <script src="@routes.Assets.at("js/d3.layout.cloud.js")"></script>
+    <!-- Terminou o grafico para fazer a word cloud -->
+    
+    
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
     <script src="@routes.Assets.at("js/Chart.min.js")"></script>
     
-    <!-- To use morris.js -->
+    <!-- To use morris.js 
     <link rel="stylesheet" href="http://cdn.oesmith.co.uk/morris-0.4.3.min.css">
 	<script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
-	<script src="http://cdn.oesmith.co.uk/morris-0.4.3.min.js"></script>
-      
-    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    
+	<script src="http://cdn.oesmith.co.uk/morris-0.4.3.min.js"></script> -->
+         
     <style type="text/css">
 		.active { display:inherit; }
 		ul#map {display: block; margin: 0; padding: 0; width: 296px; height: 294px; background-image: url('@routes.Assets.at("images/mapa.jpg")');}
@@ -136,7 +147,9 @@
 <div id="footer">	
 	<div class="container">				
 		<hr>
-		<p><a class="brand" href="http://kellytonbrito.wordpress.com">&copy; 2013 Kellyton Brito</a></p>
+		<p><a class="brand" href="http://kellytonbrito.wordpress.com">&copy; 2013 Kellyton Brito</a>
+		com contribuições de <a class="brand" href="https://twitter.com/misaelneto"> Misael Neto</a>
+		e <a class="brand" href="https://twitter.com/cristov4m"> Cristovam Segundo</a></p>
 	</div> <!-- /container -->
 </div> <!-- /footer -->
 

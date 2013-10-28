@@ -1,0 +1,81 @@
+@content = {
+				
+Teste antes
+
+<div id="wordcloud"></div>
+
+getTooltip()
+Teste depois
+
+<script type="text/javascript">
+
+function getTooltip() {
+	return blablabla;
+}
+
+var fill = d3.scale.category20();
+
+d3.layout.cloud().size([300, 300])
+	.words([
+		{text: "especial", size: 70},
+		{text: "destinada", size: 70},
+		{text: "lei", size: 40},
+		{text: "parecer", size: 30},
+		{text: "constituição", size: 30},
+		{text: "musicais", size: 30},
+		{text: "proferir", size: 30},
+		{text: "desporto", size: 30},
+		{text: "mercosul", size: 20},
+		{text: "medidas", size: 20},
+		{text: "orçamentárias", size: 20},
+		{text: "copa", size: 20},
+		{text: "poder", size: 20},
+		{text: "acompanhar", size: 20},
+		{text: "subcomissão", size: 20},
+		{text: "projeto", size: 20},
+		{text: "obras", size: 20},
+		{text: "plp", size: 20},
+		{text: "brasileiros", size: 20},
+		{text: "mesa", size: 20},
+		{text: "executivo", size: 20},
+		{text: "turismo", size: 20},
+		{text: "fifa", size: 20},
+		{text: "outras", size: 20},
+		{text: "execução", size: 20},
+		{text: "suportes", size: 10},
+		{text: "representação", size: 10},
+		{text: "videofonograma", size: 10}
+	  	].map(function(d) {
+	  		return {text: d.text, size: d.size};
+	}))
+	.padding(1)
+	.font("Impact")
+	.rotate(function(d) { return ~~(Math.random() * 5) * 30 - 60; })
+	.fontSize(function(d) { return d.size; })
+	.on("end", draw)
+	.start();
+
+function draw(words) {
+	d3.select("#wordcloud").append("svg")
+	  .attr("width", 300)
+	  .attr("height", 300)
+	.append("g")
+	  .attr("transform", "translate(150,150)")
+	.selectAll("text")
+	  .data(words)
+	.enter().append("text")
+	  .style("font-size", function(d) { return d.size + "px"; })
+	  .style("font-family", "Impact")
+	  .style("fill", function(d, i) { return fill(i); })
+	  .attr("text-anchor", "middle")
+	  .attr("transform", function(d) {
+	    return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+	  })
+	  .text(function(d) { return d.text; });
+	}
+
+</script>
+
+}
+
+@rightheader(content)(0)

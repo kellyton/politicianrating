@@ -41,8 +41,8 @@ import play.mvc.Result;
 
 public class Senadores extends Controller {
 
-	//20 seconds timeout
-	private static final Long timeout = 20000L;
+	//30 seconds timeout
+	private static final Long timeout = 30000L;
 	
 	public static final String hostSenado = "http://legis.senado.gov.br/dadosabertos";
 	public static final String pathGetSenadores = "/senador/lista/atual";
@@ -146,7 +146,7 @@ public class Senadores extends Controller {
 			return badRequest("Error getting Deputado  " + id + ". Message: " + e.getMessage() + " - " + e.getLocalizedMessage());
 		}
     	
-    	return ok(views.html.depfederaldetalhe.render(senador, totalTipo, totalData));
+    	return ok(views.html.depfederaldetalhe.render(null, senador, totalTipo, totalData));
 	}
 	
 	@Transactional
@@ -164,11 +164,15 @@ public class Senadores extends Controller {
 	
 	@Transactional
     public static Result getAllData() {
-		
-		
 		try {
 			getProfileData();
+			JPA.em().getTransaction().commit();
+			
+			JPA.em().getTransaction().begin();
 			getExpensesData();
+			JPA.em().getTransaction().commit();
+			
+			JPA.em().getTransaction().begin();
 			getTotalsData();
 			return ok("Success");
 		} catch (Exception e) {
@@ -180,6 +184,7 @@ public class Senadores extends Controller {
 		
 	}
 
+	@Transactional
 	private static void getProfileData() {
 		String url = hostSenado + pathGetSenadores;
 		ArrayList<Senador> senadores = new ArrayList<Senador>();
@@ -189,14 +194,13 @@ public class Senadores extends Controller {
 			Promise<WS.Response> result = WS.url(url).get();
     		InputStream is = new ByteArrayInputStream(result.get(timeout).asByteArray());
 			
-    		System.out.println("Pegou o Stream. Vai processar");
+    		System.out.println("Processando Senadores...");
     		
     		SAXParserFactory factory = SAXParserFactory.newInstance();
 			SAXParser saxParser = factory.newSAXParser();
 		
 			SenadorXMLHandler dhandler = new SenadorXMLHandler(senadores);
 			saxParser.parse(is, dhandler);
-			System.out.println("Terminou de parsear");
 			
 			//For each deputado, get details and insert
 			for(Senador senador: senadores){
@@ -207,6 +211,9 @@ public class Senadores extends Controller {
 					e.printStackTrace();
 				}
 			}
+			
+			System.out.println("Sucesso processando Senadores!");
+			
 		} catch (Exception e){
 			System.out.println("Erro salvando senadores: " + e.getMessage());
 			e.printStackTrace();
@@ -214,7 +221,10 @@ public class Senadores extends Controller {
 		
 	}
 	
+	@Transactional
 	private static void getExpensesData() throws IOException {
+		
+		System.out.println("Processando despesas dos Senadores...");
 		
 		int semData = 0;
 		
@@ -286,11 +296,11 @@ public class Senadores extends Controller {
 				gasto.setValor_reembolsado(Float.valueOf(fields[9].replace(',', '.')));
 				
 				JPA.em().persist(gasto);
-				
 			}
 			System.out.println("Sem data: " + semData);
 			semData = 0;
 		}
+		System.out.println("Sucesso processando despesas dos Senadores!");
 	}
 	
 	/**
@@ -298,13 +308,14 @@ public class Senadores extends Controller {
 	 * TODO: Calcular os dias corretamente, com os afastamentos
 	 * @throws Exception 
 	 */
+	@Transactional
 	private static void getTotalsData() throws Exception {
 
+		System.out.println("Processando totais dos Senadores...");
 		
     	//Pega o último dia com registro
 		Date mostRecentDate = (Date)JPA.em()
     			.createNativeQuery("Select max(data) FROM SenadorGasto WHERE data < NOW()").getSingleResult();
-    	
     	
     	Date olderDate;
     	
@@ -323,7 +334,6 @@ public class Senadores extends Controller {
 			senador.setDiasTrabalhados(days);
     			
     		Object o = JPA.em()
-    				
     				.createNativeQuery("select sum(valor_reembolsado) from SenadorGasto where senador = :nome")
     				.setParameter("nome", senador.getNomeParlamentar())
     				.getSingleResult();
@@ -336,6 +346,9 @@ public class Senadores extends Controller {
     		}
     		JPA.em().persist(senador);
 		}
+		
+		JPA.em().getTransaction().commit();
+		JPA.em().getTransaction().begin();
 	
 		/**
 		 * Calcula o índice do candidato
@@ -355,6 +368,7 @@ public class Senadores extends Controller {
 			
 			JPA.em().persist(sen);
 		}
+		System.out.println("Sucesso processando totais dos Senadores!");
 	}
 	
 }

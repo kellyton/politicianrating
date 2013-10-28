@@ -20,11 +20,11 @@
 									<table class="table table-striped table-bordered">
 										<thead>
 											<tr>
-												<th>Nome</th>
+												<th>Gabinete</th>
 												<th>Partido</th>
 												<th>UF</th>
 												<th>R$/dia</th>
-												<th>Indice</th>
+												<th  title="100 (vermelho cheio) representa o gabinete do Deputado com maior gasto no Congresso, e todos os outros são calculados proporcionalmente a ele. Portanto, quanto mais próximo de 100, maior o gasto do gabinete do parlamentar.">Gastos</th>
 											</tr>
 										</thead>
 			
@@ -39,7 +39,7 @@
 												<td>@sen.getPartido()</td>
 												<td>@sen.getUf()</td>
 												<td>@sen.getGastoPorDiaFormated()</td>
-												<td><canvas id="indice-s-@index" width="30" height="30"></canvas></td>
+												<td><div id='indice-s-@index'></div></td>
 											</tr>
 											}
 										</tbody>
@@ -64,11 +64,11 @@
 									<table class="table table-striped table-bordered">
 										<thead>
 											<tr>
-												<th>Nome</th>
+												<th>Gabinete</th>
 												<th>Partido</th>
 												<th>UF</th>
 												<th>R$/dia</th>
-												<th>Indice</th>
+<th  title="100 (vermelho cheio) representa o gabinete do Deputado com maior gasto no Congresso, e todos os outros são calculados proporcionalmente a ele. Portanto, quanto mais próximo de 100, maior o gasto do gabinete do parlamentar.">Gastos</th>
 											</tr>
 										</thead>
 			
@@ -83,8 +83,7 @@
 												<td>@dep.getPartido()</td>
 												<td>@dep.getUf()</td>
 												<td>@dep.getGastoPorDiaFormated()</td>
-												<!--  <td>@dep.getIndice()</td> -->
-												<td><canvas id="indice-@index" width="30" height="30"></canvas></td>
+												<td><div id='indice-@index'></div></td>
 											</tr>
 											}
 										</tbody>
@@ -117,11 +116,11 @@
 											<table class="table table-striped table-bordered">
 												<thead>
 													<tr>
-														<th>Nome</th>
+														<th>Gabinete</th>
 														<th>Partido</th>
 														<th>UF</th>
 														<th>R$/dia</th>
-														<th>Indice</th>
+<th  title="100 (vermelho cheio) representa o gabinete do Deputado com maior gasto no Congresso, e todos os outros são calculados proporcionalmente a ele. Portanto, quanto mais próximo de 100, maior o gasto do gabinete do parlamentar.">Gastos</th>
 													</tr>
 												</thead>
 					
@@ -136,7 +135,7 @@
 														<td>@sen.getPartido()</td>
 														<td>@sen.getUf()</td>
 														<td>@sen.getGastoPorDiaFormated()</td>
-														<td><canvas id="indice-sm-@index" width="30" height="30"></canvas></td>
+														<td><div id='indice-sm-@index'></div></td>
 													</tr>
 													}
 												</tbody>
@@ -166,11 +165,11 @@
 											<table class="table table-striped table-bordered">
 												<thead>
 													<tr>
-														<th>Nome</th>
+														<th>Gabinete</th>
 														<th>Partido</th>
 														<th>UF</th>
 														<th>R$/dia</th>
-														<th>Indice</th>
+<th  title="100 (vermelho cheio) representa o gabinete do Deputado com maior gasto no Congresso, e todos os outros são calculados proporcionalmente a ele. Portanto, quanto mais próximo de 100, maior o gasto do gabinete do parlamentar.">Gastos</th>
 													</tr>
 												</thead>
 					
@@ -185,7 +184,7 @@
 														<td>@sen.getPartido()</td>
 														<td>@sen.getUf()</td>
 														<td>@sen.getGastoPorDiaFormated()</td>
-														<td><canvas id="indice-sp-@index" width="30" height="30"></canvas></td>
+														<td><div id='indice-sp-@index'></div></td>
 														
 													</tr>
 													}
@@ -219,11 +218,11 @@
 											<table class="table table-striped table-bordered">
 												<thead>
 													<tr>
-														<th>Nome</th>
+														<th>Gabinete</th>
 														<th>Partido</th>
 														<th>UF</th>
 														<th>R$/dia</th>
-														<th>Indice</th>
+<th  title="100 (vermelho cheio) representa o gabinete do Deputado com maior gasto no Congresso, e todos os outros são calculados proporcionalmente a ele. Portanto, quanto mais próximo de 100, maior o gasto do gabinete do parlamentar.">Gastos</th>
 													</tr>
 												</thead>
 					
@@ -238,8 +237,7 @@
 														<td>@dep.getPartido()</td>
 														<td>@dep.getUf()</td>
 														<td>@dep.getGastoPorDiaFormated()</td>
-														<!--  <td>@dep.getIndice()</td> -->
-														<td><canvas id="indicem-@index" width="30" height="30"></canvas></td>
+														<td><div id='indicem-@index'></div></td>
 													</tr>
 													}
 												</tbody>
@@ -269,11 +267,11 @@
 											<table class="table table-striped table-bordered">
 												<thead>
 													<tr>
-														<th>Nome</th>
+														<th>Gabinete</th>
 														<th>Partido</th>
 														<th>UF</th>
 														<th>R$/dia</th>
-														<th>Indice</th>
+														<th  title="100 (vermelho cheio) representa o gabinete do Deputado com maior gasto no Congresso, e todos os outros são calculados proporcionalmente a ele. Portanto, quanto mais próximo de 100, maior o gasto do gabinete do parlamentar.">Gastos</th>
 													</tr>
 												</thead>
 					
@@ -288,9 +286,7 @@
 														<td>@dep.getPartido()</td>
 														<td>@dep.getUf()</td>
 														<td>@dep.getGastoPorDiaFormated()</td>
-														<!--  <td><td>@dep.getIndice()</td> -->
-														<td><canvas id="indicep-@index" width="30" height="30"></canvas></td>
-														
+														<td><div id='indicep-@index'></div></td>
 													</tr>
 													}
 												</tbody>
@@ -309,85 +305,68 @@
 
 
 <script type="text/javascript">
+
+var optionsBar = {
+	    width:60, height:40,
+	    isStacked: true,
+	    colors: ['#B80000','#B8B8B8']
+	  }
+
 @if(deputados != null) {
 	@for((dep, index) <- deputados.zipWithIndex){
-		var pieData = [
-				{ 	value: 100-@dep.getIndice(),
-					color:"#090"
-				},
-				{ 	value : @dep.getIndice(),
-					color : "#900"
-				}
-			];
-		
-		var myPie = new Chart(document.getElementById("indice-@index").getContext("2d")).Pie(pieData);
+		var data = google.visualization.arrayToDataTable([
+			['', '', ''],
+			['Gasto', @dep.getIndice(), 100-@dep.getIndice()]
+		]);
+                                                    
+		new google.visualization.BarChart(document.getElementById('indice-@index')).draw(data, optionsBar);
 	}
 	
 	@for((dep, index) <- depMelhores.zipWithIndex){
-		var pieData = [
-				{ 	value: 100-@dep.getIndice(),
-					color:"#090"
-				},
-				{ 	value : @dep.getIndice(),
-					color : "#900"
-				}
-			];
-		
-		var myPie = new Chart(document.getElementById("indicem-@index").getContext("2d")).Pie(pieData);
+		var data = google.visualization.arrayToDataTable([
+			['', '', ''],
+		    ['Gasto', @dep.getIndice(), 100-@dep.getIndice()]
+		]);
+		                                                                                                  
+		new google.visualization.BarChart(document.getElementById('indicem-@index')).draw(data, optionsBar);
 	}
 	
 	@for((dep, index) <- depPiores.zipWithIndex){
-		var pieData = [
-				{ 	value: 100-@dep.getIndice(),
-					color:"#090"
-				},
-				{ 	value : @dep.getIndice(),
-					color : "#900"
-				}
-			];
-		
-		var myPie = new Chart(document.getElementById("indicep-@index").getContext("2d")).Pie(pieData);
+		var data = google.visualization.arrayToDataTable([
+			['', '', ''],
+			['Gasto', @dep.getIndice(), 100-@dep.getIndice()]
+		]);
+                                                    
+		new google.visualization.BarChart(document.getElementById('indicep-@index')).draw(data, optionsBar);
 	}
 }
 
 @if(senadores != null) {
 	@for((sen, index) <- senadores.zipWithIndex){
-		var pieData = [
-				{ 	value: 100-@sen.getIndice(),
-					color:"#090"
-				},
-				{ 	value : @sen.getIndice(),
-					color : "#900"
-				}
-			];
-		
-		var myPie = new Chart(document.getElementById("indice-s-@index").getContext("2d")).Pie(pieData);
+	    var data = google.visualization.arrayToDataTable([
+			['', '', ''],
+			['Gasto', @sen.getIndice(), 100-@sen.getIndice()]
+		]);
+	                                                    
+		new google.visualization.BarChart(document.getElementById('indice-s-@index')).draw(data, optionsBar);
 	}
 	
 	@for((sen, index) <- senMelhores.zipWithIndex){
-		var pieData = [
-				{ 	value: 100-@sen.getIndice(),
-					color:"#090"
-				},
-				{ 	value : @sen.getIndice(),
-					color : "#900"
-				}
-			];
-		
-		var myPie = new Chart(document.getElementById("indice-sm-@index").getContext("2d")).Pie(pieData);
+		var data = google.visualization.arrayToDataTable([
+			['', '', ''],
+		    ['Gasto', @sen.getIndice(), 100-@sen.getIndice()]
+		]);
+		                                      	                                                    
+		new google.visualization.BarChart(document.getElementById('indice-sm-@index')).draw(data, optionsBar);
 	}
 	
 	@for((sen, index) <- senPiores.zipWithIndex){
-		var pieData = [
-				{ 	value: 100-@sen.getIndice(),
-					color:"#090"
-				},
-				{ 	value : @sen.getIndice(),
-					color : "#900"
-				}
-			];
-		
-		var myPie = new Chart(document.getElementById("indice-sp-@index").getContext("2d")).Pie(pieData);
+		var data = google.visualization.arrayToDataTable([
+			['', '', ''],
+			['Gasto', @sen.getIndice(), 100-@sen.getIndice()]
+		]);
+		                                      		                                      	                                                    
+		new google.visualization.BarChart(document.getElementById('indice-sp-@index')).draw(data, optionsBar);
 	}
 }
 </script>

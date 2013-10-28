@@ -26,7 +26,7 @@ public class DeputadoFederalExercicio {
 	@Column(nullable = false)
 	private String ideCadastro;
 	
-	@Column(nullable = false)
+	@Column(nullable = true)
 	private String idHistorico;
 	
 	@Column

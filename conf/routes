@@ -4,17 +4,20 @@
 
 # Home page
 GET     /                           controllers.Application.index()
-GET		/updateDeputadosFederais	controllers.Application.updatePoliticiansProfile()
-GET		/updateGastosDeputadosFederais	controllers.Application.updatePoliticiansExpenditures()
-GET		/calculaGastoMedio			controllers.Application.calculaGastoMedio()
+GET     /version                    controllers.Application.version()
+GET		/teste						controllers.Application.teste()
 
+#Configuration
+#GET		/updateDeputadosFederais	controllers.Application.updatePoliticiansProfile()
+#GET		/updateGastosDeputadosFederais	controllers.Application.updatePoliticiansExpenditures()
+#GET		/calculaGastoMedio			controllers.Application.calculaGastoMedio()
+
+GET		/deputado/update			controllers.Deputados.getAllData()
 GET		/senador/update				controllers.Senadores.getAllData()
 
-
+#Application
 GET		/depfederal					controllers.Deputados.depFederal()
 GET		/senador					controllers.Senadores.senador()
-GET		/estado						controllers.Application.estado()
-GET		/estatistica				controllers.Application.estatistica()
 
 # GET		/search						controllers.Search.search()
 POST	/search						controllers.Search.search()
