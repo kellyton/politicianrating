@@ -305,7 +305,7 @@
 
 
 <script type="text/javascript">
-
+@* Using rickshaw api *@
 var optionsBar = {
 	    width:60, height:40,
 	    isStacked: true,
@@ -314,59 +314,101 @@ var optionsBar = {
 
 @if(deputados != null) {
 	@for((dep, index) <- deputados.zipWithIndex){
-		var data = google.visualization.arrayToDataTable([
-			['', '', ''],
-			['Gasto', @dep.getIndice(), 100-@dep.getIndice()]
-		]);
-                                                    
-		new google.visualization.BarChart(document.getElementById('indice-@index')).draw(data, optionsBar);
+		var graph = new Rickshaw.Graph( {
+			element: document.querySelector("#indice-@index"),
+			width: 30,
+			height: 30,
+			renderer: 'bar',
+			series: [ 
+				{	data: [ { x: 0, y: @dep.getIndice() } ],
+					color: '#B80000'
+				}, {	data: [ { x: 0, y: 100 - @dep.getIndice() } ],
+					color: '#B8B8B8'
+				} ]
+		} );
+		graph.render();
 	}
 	
 	@for((dep, index) <- depMelhores.zipWithIndex){
-		var data = google.visualization.arrayToDataTable([
-			['', '', ''],
-		    ['Gasto', @dep.getIndice(), 100-@dep.getIndice()]
-		]);
-		                                                                                                  
-		new google.visualization.BarChart(document.getElementById('indicem-@index')).draw(data, optionsBar);
+		var graph = new Rickshaw.Graph( {
+			element: document.querySelector("#indicem-@index"),
+			width: 30,
+			height: 30,
+			renderer: 'bar',
+			series: [ 
+				{	data: [ { x: 0, y: @dep.getIndice() } ],
+					color: '#B80000'
+				}, {	data: [ { x: 0, y: 100 - @dep.getIndice() } ],
+					color: '#B8B8B8'
+				} ]
+		} );
+		graph.render();
 	}
 	
 	@for((dep, index) <- depPiores.zipWithIndex){
-		var data = google.visualization.arrayToDataTable([
-			['', '', ''],
-			['Gasto', @dep.getIndice(), 100-@dep.getIndice()]
-		]);
-                                                    
-		new google.visualization.BarChart(document.getElementById('indicep-@index')).draw(data, optionsBar);
+		var graph = new Rickshaw.Graph( {
+			element: document.querySelector("#indicep-@index"),
+			width: 30,
+			height: 30,
+			renderer: 'bar',
+			series: [ 
+				{	data: [ { x: 0, y: @dep.getIndice() } ],
+					color: '#B80000'
+				}, {	data: [ { x: 0, y: 100 - @dep.getIndice() } ],
+					color: '#B8B8B8'
+				} ]
+		} );
+		graph.render();
 	}
 }
 
 @if(senadores != null) {
 	@for((sen, index) <- senadores.zipWithIndex){
-	    var data = google.visualization.arrayToDataTable([
-			['', '', ''],
-			['Gasto', @sen.getIndice(), 100-@sen.getIndice()]
-		]);
-	                                                    
-		new google.visualization.BarChart(document.getElementById('indice-s-@index')).draw(data, optionsBar);
+		var graph = new Rickshaw.Graph( {
+			element: document.querySelector("#indice-s-@index"),
+			width: 30,
+			height: 30,
+			renderer: 'bar',
+			series: [ 
+				{	data: [ { x: 0, y: @sen.getIndice() } ],
+					color: '#B80000'
+				}, {	data: [ { x: 0, y: 100 - @sen.getIndice() } ],
+					color: '#B8B8B8'
+				} ]
+		} );
+		graph.render();
 	}
 	
 	@for((sen, index) <- senMelhores.zipWithIndex){
-		var data = google.visualization.arrayToDataTable([
-			['', '', ''],
-		    ['Gasto', @sen.getIndice(), 100-@sen.getIndice()]
-		]);
-		                                      	                                                    
-		new google.visualization.BarChart(document.getElementById('indice-sm-@index')).draw(data, optionsBar);
+		var graph = new Rickshaw.Graph( {
+			element: document.querySelector("#indice-sm-@index"),
+			width: 30,
+			height: 30,
+			renderer: 'bar',
+			series: [ 
+				{	data: [ { x: 0, y: @sen.getIndice() } ],
+					color: '#B80000'
+				}, {	data: [ { x: 0, y: 100 - @sen.getIndice() } ],
+					color: '#B8B8B8'
+				} ]
+		} );
+		graph.render();
 	}
 	
 	@for((sen, index) <- senPiores.zipWithIndex){
-		var data = google.visualization.arrayToDataTable([
-			['', '', ''],
-			['Gasto', @sen.getIndice(), 100-@sen.getIndice()]
-		]);
-		                                      		                                      	                                                    
-		new google.visualization.BarChart(document.getElementById('indice-sp-@index')).draw(data, optionsBar);
+		var graph = new Rickshaw.Graph( {
+			element: document.querySelector("#indice-sp-@index"),
+			width: 30,
+			height: 30,
+			renderer: 'bar',
+			series: [ 
+				{	data: [ { x: 0, y: @sen.getIndice() } ],
+					color: '#B80000'
+				}, {	data: [ { x: 0, y: 100 - @sen.getIndice() } ],
+					color: '#B8B8B8'
+				} ]
+		} );
+		graph.render();		                                      		                                      	                                                    
 	}
 }
 </script>

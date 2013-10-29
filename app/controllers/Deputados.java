@@ -69,9 +69,9 @@ public class Deputados extends Controller {
 			getProfileData();
 			JPA.em().getTransaction().commit();
 			
-			/*JPA.em().getTransaction().begin();
+			JPA.em().getTransaction().begin();
 			getExpensesData();
-			JPA.em().getTransaction().commit();*/
+			JPA.em().getTransaction().commit();
 			
 			JPA.em().getTransaction().begin();
 			getTotalsData();
@@ -410,7 +410,10 @@ public class Deputados extends Controller {
 			return badRequest("Error getting Deputado  " + id + ". Message: " + e.getMessage() + " - " + e.getLocalizedMessage());
 		}
 		
-		//Traz os resultados agrupados por tipo de gasto
+		//traz as comissões
+				
+		
+		//Traz os resultados dos gastos agrupados por tipo de gasto
 		try {
 			// urzeni (o mais ladrao) eh 616
 			String nuCarteiraParlamentar = deputado.getMatricula();

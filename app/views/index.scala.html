@@ -233,14 +233,19 @@ var optionsBar = {
 }
 
 @for((sen, index) <- senadores.zipWithIndex){
-    var data = google.visualization.arrayToDataTable([
-        ['', 'Gasto', 'Maximo'],
-        ['Gasto', @sen.getIndice(), 100-@sen.getIndice()]
-      ]);
-      
-      // Create and draw the visualization.
-      new google.visualization.BarChart(document.getElementById('indice-s-@index')).
-          draw(data, optionsBar);
+	var graph = new Rickshaw.Graph( {
+		element: document.querySelector("#indice-s-@index"),
+		width: 30,
+		height: 30,
+		renderer: 'bar',
+		series: [ 
+			{	data: [ { x: 0, y: @sen.getIndice() } ],
+				color: '#B80000'
+			}, {	data: [ { x: 0, y: 100 - @sen.getIndice() } ],
+				color: '#B8B8B8'
+			} ]
+	} );
+	graph.render();
 }
 </script>
 }
