@@ -283,7 +283,7 @@ public class Deputados extends Controller {
 		
 		try {
 			mostRecentDate = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(mostRecent);
-			olderDate = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse("2012-01-01");
+			olderDate = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse("2013-01-01");
 		} catch (ParseException e) {
 			System.out.println("Error getting mostRecentDate. " + e.getLocalizedMessage());
 		}
