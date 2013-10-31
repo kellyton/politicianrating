@@ -40,8 +40,10 @@ import models.DeputadoComissao;
 import models.DeputadoFederal;
 import models.DeputadoFederalExercicio;
 import models.DeputadoFederalGasto;
+import models.ProjetoDeLei;
 import models.TotalData;
 import models.TotalTipo;
+import models.util.ComissaoSimple;
 import models.util.WordFrequency;
 import play.data.DynamicForm;
 import play.db.jpa.JPA;
@@ -75,7 +77,11 @@ public class Deputados extends Controller {
 			
 			JPA.em().getTransaction().begin();
 			getTotalsData();
-			return ok("Success");
+			JPA.em().getTransaction().commit();
+
+			JPA.em().getTransaction().begin();
+			processProjetosDeLei();
+			return ok("Completed. See log to details.");
 		} catch (Exception e) {
 			e.printStackTrace();
 			return badRequest(e.getLocalizedMessage());
@@ -186,6 +192,7 @@ public class Deputados extends Controller {
         	JPA.em().persist(exercicio);
     	}
     	
+    	//Save comissoes
     	NodeList comList = depElement.getElementsByTagName("comissao");
     	Node comNode;
     	Element comElement;
@@ -204,7 +211,6 @@ public class Deputados extends Controller {
     		comissao.setOrgao(orgao);
     		
     		//TODO UGE problem. I gave up and I insert data duplicated on DB
-    		
     		//TODO: checar antes se já não existe
     		try {
     			if (!JPA.em().contains(comissao)){
@@ -232,9 +238,83 @@ public class Deputados extends Controller {
     		}
     	}
     	
-    	//System.out.println();
 	}
     
+    @Transactional
+    public static Result startProcessProjetosDeLei(){   	
+    	int erros = processProjetosDeLei();
+    	return ok("Projetos processados com " + erros + " erros.");
+    	
+    }
+    
+	private static int processProjetosDeLei() {
+		String url = "http://www.camara.gov.br/SitCamaraWS/Proposicoes.asmx/ListarProposicoes";
+		
+		System.out.println("Processando projetos de lei.");
+		
+		String[] tipoLei = {"PL", "PEC"};
+		
+		int erros = 0;
+		
+		for (int ano = 2011; ano <=2013; ano++){
+			for (int i = 0; i < tipoLei.length; i++){
+				try {
+	
+					Promise<WS.Response> result = 
+		    			WS.url(url)
+		    			.setQueryParameter("sigla", tipoLei[i])
+		    			.setQueryParameter("numero", " ")
+		    			.setQueryParameter("ano", ano +"")
+		    			.setQueryParameter("datApresentacaoIni", " ")
+		    			.setQueryParameter("datApresentacaoFim", " ")
+		    			.setQueryParameter("autor", " ")
+		    			.setQueryParameter("parteNomeAutor", " ")
+		    			.setQueryParameter("siglaPartidoAutor", " ")
+		    			.setQueryParameter("siglaUFAutor", " ")
+		    			.setQueryParameter("generoAutor", " ")
+		    			.setQueryParameter("codEstado", " ")
+		    			.setQueryParameter("codOrgaoEstado", " ")
+		    			.setQueryParameter("emTramitacao", " ")
+		    			.get();
+				
+					// Quando não acha, retorna "proposição não encontrada". Vou lançar e pegar uma exceção
+		    		try {
+						InputStream is = new ByteArrayInputStream(result.get(timeout).asByteArray());
+			    		
+			    		SAXParserFactory factory = SAXParserFactory.newInstance();
+						SAXParser saxParser = factory.newSAXParser();
+					
+						List<ProjetoDeLei> projetosDeLei = new ArrayList<ProjetoDeLei>();
+						
+						ProjetoDeLeiXMLHandler dhandler = new ProjetoDeLeiXMLHandler(projetosDeLei);
+						saxParser.parse(is, dhandler);
+						
+						System.out.println(ano + ": " + projetosDeLei.size());
+						for(ProjetoDeLei pdl: projetosDeLei){
+							try {
+								//System.out.println("Registrando detalhes de " + df.getNome());
+								JPA.em().persist(pdl);
+							} catch (Exception e) {
+								System.out.println("Erro salvando projeto de lei " + pdl.getNome() + " de " + pdl.getNomeAutor());
+								erros++;
+							}
+						}
+		    		} catch (Exception e){
+		    			System.out.println("Erro obtendo projetos de lei 1.");
+		    		}
+				} catch (Exception e){
+					System.out.println("Erro obtendo projetos de lei de lei 2.");
+					e.printStackTrace();
+					erros++;
+				}
+			}
+		}
+		System.out.println("Projetos de lei processados com " + erros + " erros.");
+		
+		return erros;
+		
+	}
+
 	/**
      * Uses SAX instead of DOM because file is huge.
      * @return
@@ -363,6 +443,11 @@ public class Deputados extends Controller {
 	}
 
 	@Transactional
+	public static void processprojetosDeLei(){
+		
+	}
+	
+	@Transactional
 	public static List<DeputadoFederal> getMelhores(){
 		List<DeputadoFederal> depMelhores = JPA.em()
     			.createQuery("FROM DeputadoFederal ORDER BY gastopordia ASC")
@@ -378,6 +463,16 @@ public class Deputados extends Controller {
     			.setMaxResults(5)
     			.getResultList();
 		return depMelhores;
+	}
+	
+	public static List<ProjetoDeLei> getProjetosDeLei(DeputadoFederal deputado){
+		List<ProjetoDeLei> projetosDeLei = new ArrayList<ProjetoDeLei>();
+		
+		List<ProjetoDeLei> projetos = JPA.em()
+				.createQuery("FROM ProjetoDeLei WHERE cadastroDeputado = :id ORDER BY ano DESC")
+				.setParameter("id", deputado.getIdeCadastro())
+				.getResultList();
+		return projetosDeLei;
 	}
 	
     @Transactional
@@ -483,13 +578,37 @@ public class Deputados extends Controller {
 		}
     	
 		List<WordFrequency> words = getWordFrequency(deputado, 30);
-		
-		System.out.println(words);
+		List<ComissaoSimple> comissoes = getComissoes(deputado);
+		List<ProjetoDeLei> projetos = getProjetosDeLei(deputado);
 		
 		//return ok(views.html.depfederaldetalhe.render(deputado, totalTipo, totalData));
-    	return ok(views.html.depfederaldetalhe.render(words, deputado, totalTipo, totalData));
+    	return ok(views.html.depfederaldetalhe.render(words, deputado, comissoes, projetos, totalTipo, totalData));
     }
 	
+	private static List<ComissaoSimple> getComissoes(DeputadoFederal deputado) {
+		String query = 
+				"select distinct sigla, nome " +
+				"from deputadocomissao, comissao " +	
+				"where comissao.sigla = deputadocomissao.siglacomissao " +
+				"and ideCadastroDeputado = :id";
+		
+		List<Object> resultList = JPA.em().createNativeQuery(query)
+			.setParameter("id", deputado.getIdeCadastro()).getResultList();
+		
+		LinkedList<ComissaoSimple> comissoes = new LinkedList<ComissaoSimple>();
+		
+		Object[] items;
+		ComissaoSimple comissao;
+		for (Object result : resultList) {
+		    items = (Object[]) result;
+		    comissao = new ComissaoSimple();
+		    comissao.setSigla((String)items[0]);
+		    comissao.setNome((String)items[1]);
+		    comissoes.add(comissao);
+		}
+		return comissoes;
+	}
+
 	public static List<WordFrequency> getWordFrequency(DeputadoFederal deputado, int numberWords){
 		
 		List<WordFrequency> finalList = new ArrayList<WordFrequency>();
@@ -927,5 +1046,125 @@ class GastoDeputadoXMLHandler extends DefaultHandler {
 			System.out.println("Salvo " + count);
 		}
 	}
+}
 
+class ProjetoDeLeiXMLHandler extends DefaultHandler {
+	private boolean bId;
+	private boolean bNome;
+	private boolean bSigla;
+	private boolean bAno;
+	private boolean bDatApresentacao;
+	private boolean bTxtEmenta;
+	private boolean bTxtNomeAutor;
+	private boolean bIdecadastro;
+	
+	//helpers because some elemens have same name
+	private boolean bTipoProposicao = false;
+	private boolean bOrgaoNumerador = false;
+	private boolean bApreciacao = false;
+	private boolean bSituacao = false;
+	
+	
+	List<ProjetoDeLei> projetos;
+	ProjetoDeLei projeto;
+	
+	public ProjetoDeLeiXMLHandler(List<ProjetoDeLei> projetos) {
+		this.projetos = projetos;
+	}
+
+	public void startElement(String uri, String localName,String qName, 
+            Attributes attributes) throws SAXException {
+		
+		if (qName.equalsIgnoreCase("id")) {
+			if (!bTipoProposicao && !bOrgaoNumerador && !bApreciacao && !bSituacao){
+				bId = true;
+			}
+		} else if (qName.equalsIgnoreCase("nome")) {
+			if (!bTipoProposicao && !bOrgaoNumerador){
+				bNome = true;
+			}
+		} else if (qName.equalsIgnoreCase("sigla")) {
+			if (bTipoProposicao){
+				bSigla = true;
+			}
+		} else if (qName.equalsIgnoreCase("ano")) {
+			bAno = true;
+		} else if (qName.equalsIgnoreCase("datApresentacao")) {
+			bDatApresentacao = true;
+		} else if (qName.equalsIgnoreCase("txtEmenta")) {
+			bTxtEmenta = true;
+		} else if (qName.equalsIgnoreCase("txtNomeAutor")) {
+			bTxtNomeAutor = true;
+		} else if (qName.equalsIgnoreCase("idecadastro")) {
+			bIdecadastro = true;
+			
+			//helper
+		} else if (qName.equalsIgnoreCase("tipoProposicao")) {
+			bTipoProposicao = true;
+		} else if (qName.equalsIgnoreCase("orgaoNumerador")) {
+			bOrgaoNumerador = true;
+		} else if (qName.equalsIgnoreCase("Apreciacao")) {
+			bApreciacao = true;
+		} else if (qName.equalsIgnoreCase("situacao")) {
+			bSituacao = true;
+		}
+	}
+	
+	public void endElement(String uri, String localName,
+			String qName) throws SAXException {
+	}
+	
+	public void characters(char ch[], int start, int length) throws SAXException {
+		if (bId) {
+			//Começando novo deputado
+			projeto = new ProjetoDeLei();
+			String s = new String(ch, start, length);
+			projeto.setId(Long.parseLong(s));
+			bId = false;
+		}
+		if (bNome) {
+			String s = new String(ch, start, length);
+			projeto.setNome(s);
+			bNome = false;
+		}
+		if (bSigla) {
+			String s = new String(ch, start, length);
+			projeto.setSigla(s);
+			bSigla = false;
+		}
+		if (bAno) {
+			String s = new String(ch, start, length);
+			projeto.setAno(Integer.parseInt(s));
+			bAno = false;
+		}
+		if (bDatApresentacao) {
+			String s = new String(ch, start, length);
+			projeto.setDataApresentacao(s);
+			bDatApresentacao = false;
+		}
+		if (bTxtEmenta) {
+			String s = new String(ch, start, length);
+			projeto.setEmenta(s);
+			bTxtEmenta = false;
+		}
+		if (bTxtNomeAutor) {
+			String s = new String(ch, start, length);
+			projeto.setNomeAutor(s);
+			bTxtNomeAutor = false;
+		}
+		if (bIdecadastro) {
+			String s = new String(ch, start, length);
+			projeto.setCadastroDeputado(s);
+			bIdecadastro = false;
+			
+			projetos.add(projeto);
+			projeto = new ProjetoDeLei();
+			System.out.println(projeto);
+			
+			bTipoProposicao = false;
+			bOrgaoNumerador = false;
+			bApreciacao = false;
+			bSituacao = false;
+		}		
+	}
 }

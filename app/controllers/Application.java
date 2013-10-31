@@ -45,7 +45,7 @@ import views.html.*;
 
 public class Application extends Controller {
   
-	public static final String version = "20131027 1515";
+	public static final String version = "20131030 1454";
 	
 	@Transactional
     public static Result index() {

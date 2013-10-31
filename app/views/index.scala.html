@@ -217,20 +217,30 @@
 
 
 <script type="text/javascript">
-var optionsBar = {
-	    width:60, height:40,
-	    isStacked: true,
-	    colors: ['#B80000','#B8B8B8']
-	  }
-
 @for((dep, index) <- deputados.zipWithIndex){
-	var data = google.visualization.arrayToDataTable([
-		['', 'Gasto', 'Maximo'],
-		['Gasto', @dep.getIndice(), 100-@dep.getIndice()]
-	]);
-	                                                
-	new google.visualization.BarChart(document.getElementById('indice-@index')).draw(data, optionsBar);
+	var graph = new Rickshaw.Graph( {
+		element: document.querySelector("#indice-@index"),
+		width: 30,
+		height: 30,
+		renderer: 'bar',
+		series: [ 
+			{	data: [ { x: 0, y: @dep.getIndice() } ],
+				@if(dep.getIndice() <= 32){
+					color: '#008000'
+				} else {
+					@if(dep.getIndice()<=67){
+						color: '#FFA500'
+					} else {
+						color: '#B80000'
+					}
+				}
+			}, {	data: [ { x: 0, y: 100 - @dep.getIndice() } ],
+				color: '#B8B8B8'
+			} ]
+	} );
+	graph.render();
 }
+
 
 @for((sen, index) <- senadores.zipWithIndex){
 	var graph = new Rickshaw.Graph( {
@@ -240,7 +250,15 @@ var optionsBar = {
 		renderer: 'bar',
 		series: [ 
 			{	data: [ { x: 0, y: @sen.getIndice() } ],
-				color: '#B80000'
+				@if(sen.getIndice() <= 32){
+					color: '#008000'
+				} else {
+					@if(sen.getIndice()<=67){
+						color: '#FFA500'
+					} else {
+						color: '#B80000'
+					}
+				}
 			}, {	data: [ { x: 0, y: 100 - @sen.getIndice() } ],
 				color: '#B8B8B8'
 			} ]

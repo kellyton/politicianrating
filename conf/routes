@@ -15,6 +15,8 @@ GET		/teste						controllers.Application.teste()
 GET		/deputado/update			controllers.Deputados.getAllData()
 GET		/senador/update				controllers.Senadores.getAllData()
 
+GET		/deputado/update/projetos	controllers.Deputados.startProcessProjetosDeLei()
+
 #Application
 GET		/depfederal					controllers.Deputados.depFederal()
 GET		/senador					controllers.Senadores.senador()

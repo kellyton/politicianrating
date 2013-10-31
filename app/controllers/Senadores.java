@@ -145,8 +145,8 @@ public class Senadores extends Controller {
 			e.printStackTrace();
 			return badRequest("Error getting Deputado  " + id + ". Message: " + e.getMessage() + " - " + e.getLocalizedMessage());
 		}
-    	
-    	return ok(views.html.depfederaldetalhe.render(null, senador, totalTipo, totalData));
+		
+    	return ok(views.html.depfederaldetalhe.render(null, senador, null, null, totalTipo, totalData));
 	}
 	
 	@Transactional
