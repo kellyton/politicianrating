@@ -10,10 +10,10 @@ public class ProjetoDeLei {
 	@Id
 	private long id;
 	
-	@Column
+	@Column(columnDefinition="TEXT")
 	private String nome;
 	
-	@Column(nullable = false)
+	@Column
 	private String sigla;
 	
 	@Column
@@ -25,7 +25,7 @@ public class ProjetoDeLei {
 	@Column(columnDefinition="TEXT")
 	private String ementa;
 	
-	@Column(unique = true, nullable = false)
+	@Column(columnDefinition="TEXT")
 	private String nomeAutor;
 	
 	@Column

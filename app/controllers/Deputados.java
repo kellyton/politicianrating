@@ -286,7 +286,7 @@ public class Deputados extends Controller {
 					
 						List<ProjetoDeLei> projetosDeLei = new ArrayList<ProjetoDeLei>();
 						
-						ProjetoDeLeiXMLHandler dhandler = new ProjetoDeLeiXMLHandler(projetosDeLei);
+						ProjetoDeLeiXMLHandlerBack dhandler = new ProjetoDeLeiXMLHandlerBack(projetosDeLei);
 						saxParser.parse(is, dhandler);
 						
 						System.out.println(ano + ": " + projetosDeLei.size());
@@ -295,15 +295,15 @@ public class Deputados extends Controller {
 								//System.out.println("Registrando detalhes de " + df.getNome());
 								JPA.em().persist(pdl);
 							} catch (Exception e) {
-								System.out.println("Erro salvando projeto de lei " + pdl.getNome() + " de " + pdl.getNomeAutor());
+								System.out.println("Erro salvando projeto de lei " + pdl.getNome() + " de " + pdl.getNomeAutor() + ": " + e.getMessage());
 								erros++;
 							}
 						}
 		    		} catch (Exception e){
-		    			System.out.println("Erro obtendo projetos de lei 1.");
+		    			System.out.println("Erro obtendo projetos de lei 1." + e.getMessage());
 		    		}
 				} catch (Exception e){
-					System.out.println("Erro obtendo projetos de lei de lei 2.");
+					System.out.println("Erro obtendo projetos de lei de lei 2." + e.getMessage());
 					e.printStackTrace();
 					erros++;
 				}
@@ -379,7 +379,7 @@ public class Deputados extends Controller {
 			int days = 0;
 			Date dataIni, dataFim;
 			
-			/** TODO Repensar e refazer essa conta do exercício */
+			/** TODO Repensar e refazer essa conta do exercício DIREITO */
 			/* List<DeputadoFederalExercicio> exeList =
 					JPA.em().createQuery(" FROM DeputadoFederalExercicio e where e.ideCadastro = :id")
 					.setParameter("id", dep.getIdeCadastro())
@@ -441,11 +441,6 @@ public class Deputados extends Controller {
 		
 		System.out.println("Sucesso processando totais dos Deputados!");
 	}
-
-	@Transactional
-	public static void processprojetosDeLei(){
-		
-	}
 	
 	@Transactional
 	public static List<DeputadoFederal> getMelhores(){
@@ -465,14 +460,12 @@ public class Deputados extends Controller {
 		return depMelhores;
 	}
 	
-	public static List<ProjetoDeLei> getProjetosDeLei(DeputadoFederal deputado){
-		List<ProjetoDeLei> projetosDeLei = new ArrayList<ProjetoDeLei>();
-		
+	public static List<ProjetoDeLei> getProjetosDeLei(DeputadoFederal deputado){		
 		List<ProjetoDeLei> projetos = JPA.em()
 				.createQuery("FROM ProjetoDeLei WHERE cadastroDeputado = :id ORDER BY ano DESC")
 				.setParameter("id", deputado.getIdeCadastro())
 				.getResultList();
-		return projetosDeLei;
+		return projetos;
 	}
 	
     @Transactional
@@ -1056,19 +1049,118 @@ class ProjetoDeLeiXMLHandler extends DefaultHandler {
 	private boolean bDatApresentacao;
 	private boolean bTxtEmenta;
 	private boolean bTxtNomeAutor;
-	private boolean bIdecadastro;
-	
-	//helpers because some elemens have same name
-	private boolean bTipoProposicao = false;
-	private boolean bOrgaoNumerador = false;
-	private boolean bApreciacao = false;
-	private boolean bSituacao = false;
-	
+	private boolean bIdecadastro;	
 	
 	List<ProjetoDeLei> projetos;
 	ProjetoDeLei projeto;
 	
 	public ProjetoDeLeiXMLHandler(List<ProjetoDeLei> projetos) {
+		this.projetos = projetos;
+		projeto = new ProjetoDeLei();
+	}
+
+	public void startElement(String uri, String localName,String qName, 
+            Attributes attributes) throws SAXException {
+		if (qName.equalsIgnoreCase("id")) {
+				bId = true;
+		} else if (qName.equalsIgnoreCase("nome")) {
+				bNome = true;
+		} else if (qName.equalsIgnoreCase("sigla")) {
+				bSigla = true;
+		} else if (qName.equalsIgnoreCase("ano")) {
+			bAno = true;
+		} else if (qName.equalsIgnoreCase("datApresentacao")) {
+			bDatApresentacao = true;
+		} else if (qName.equalsIgnoreCase("txtEmenta")) {
+			bTxtEmenta = true;
+		} else if (qName.equalsIgnoreCase("txtNomeAutor")) {
+			bTxtNomeAutor = true;
+		} else if (qName.equalsIgnoreCase("idecadastro")) {
+			bIdecadastro = true;
+		}
+	}
+	
+	public void endElement(String uri, String localName,
+			String qName) throws SAXException {
+	}
+	
+	public void characters(char ch[], int start, int length) throws SAXException {
+		if (bId) {
+			//Começando novo deputado
+			if (projeto.getId() == 0){
+				projeto = new ProjetoDeLei();
+				String s = new String(ch, start, length);
+				projeto.setId(Long.parseLong(s));
+				bId = false;
+			}
+		}
+		if (bNome) {
+			if (projeto.getNome() != null && projeto.getNome().trim().length() > 0){
+				String s = new String(ch, start, length);
+				projeto.setNome(s.trim());
+				bNome = false;
+			}
+		}
+		if (bSigla) {
+			if (projeto.getSigla() != null && projeto.getSigla().trim().length() > 0){
+				String s = new String(ch, start, length);
+				projeto.setSigla(s.trim());
+				bSigla = false;
+			}
+		}
+		if (bAno) {
+			String s = new String(ch, start, length);
+			projeto.setAno(Integer.parseInt(s));
+			bAno = false;
+		}
+		if (bDatApresentacao) {
+			String s = new String(ch, start, length);
+			projeto.setDataApresentacao(s);
+			bDatApresentacao = false;
+		}
+		if (bTxtEmenta) {
+			String s = new String(ch, start, length);
+			projeto.setEmenta(s);
+			bTxtEmenta = false;
+		}
+		if (bTxtNomeAutor) {
+			String s = new String(ch, start, length);
+			projeto.setNomeAutor(s);
+			bTxtNomeAutor = false;
+		}
+		if (bIdecadastro) {
+			String s = new String(ch, start, length);
+			projeto.setCadastroDeputado(s);
+			bIdecadastro = false;
+			
+			projetos.add(projeto);
+			projeto = new ProjetoDeLei();
+			System.out.println("Projeto: " + projeto);
+		}		
+	}
+}
+
+class ProjetoDeLeiXMLHandlerBack extends DefaultHandler {
+	private boolean bId;
+	private boolean bNome;
+	private boolean bSigla;
+	private boolean bAno;
+	private boolean bDatApresentacao;
+	private boolean bTxtEmenta;
+	private boolean bTxtNomeAutor;
+	private boolean bIdecadastro;
+	
+	//helpers because some elemens have same name
+	private boolean bTipoProposicao;
+	private boolean bOrgaoNumerador;
+	private boolean bApreciacao;
+	private boolean bSituacao;
+	
+	
+	List<ProjetoDeLei> projetos;
+	ProjetoDeLei projeto;
+	
+	public ProjetoDeLeiXMLHandlerBack(List<ProjetoDeLei> projetos) {
 		this.projetos = projetos;
 	}
 
@@ -1112,6 +1204,16 @@ class ProjetoDeLeiXMLHandler extends DefaultHandler {
 	
 	public void endElement(String uri, String localName,
 			String qName) throws SAXException {
+		
+		if (qName.equalsIgnoreCase("tipoProposicao")) {
+			bTipoProposicao = false;
+		} else if (qName.equalsIgnoreCase("orgaoNumerador")) {
+			bOrgaoNumerador = false;
+		} else if (qName.equalsIgnoreCase("Apreciacao")) {
+			bApreciacao = false;
+		} else if (qName.equalsIgnoreCase("situacao")) {
+			bSituacao = false;
+		}
 	}
 	
 	public void characters(char ch[], int start, int length) throws SAXException {
@@ -1158,8 +1260,9 @@ class ProjetoDeLeiXMLHandler extends DefaultHandler {
 			bIdecadastro = false;
 			
 			projetos.add(projeto);
+			//System.out.println(projeto);
+			
 			projeto = new ProjetoDeLei();
-			System.out.println(projeto);
 			
 			bTipoProposicao = false;
 			bOrgaoNumerador = false;
