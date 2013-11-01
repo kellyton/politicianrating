@@ -1,16 +1,11 @@
 @(content: Html)(activemenu: Integer)
-
 @contentfull = {
-
 <div id="content">
-	
 	<div class="container">
-		
 		<div class="row">
-			
 			<!--  Left menu -->
 			<div class="span3">
-								
+				<center><img src="@routes.Assets.at("images/mcn.png")" align="center"></center>
 				<ul id="main-nav" class="nav nav-tabs nav-stacked">
 					
 					@if(activemenu == 1) {
