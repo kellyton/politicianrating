@@ -45,7 +45,7 @@ import views.html.*;
 
 public class Application extends Controller {
   
-	public static final String version = "20131030 1454";
+	public static final String version = "20131101 0702";
 	
 	@Transactional
     public static Result index() {
@@ -60,6 +60,18 @@ public class Application extends Controller {
 	
 	public static Result teste(){
 		return ok(views.html.teste.render());
+	}  
+	
+	public static Result code(){
+		return ok("Em breve... (antes de 10/11/2013");
+	}  
+	
+	public static Result docs(){
+		return ok("Em breve... (antes de 10/11/2013");
+	}  
+	
+	public static Result license(){
+		return ok("Em breve... (antes de 10/11/2013");
 	}  
 	
 }

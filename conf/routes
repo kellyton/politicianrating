@@ -6,6 +6,10 @@
 GET     /                           controllers.Application.index()
 GET     /version                    controllers.Application.version()
 GET		/teste						controllers.Application.teste()
+GET		/code						controllers.Application.code()
+GET		/docs						controllers.Application.docs()
+GET		/license					controllers.Application.license()
+
 
 #Configuration
 #GET		/updateDeputadosFederais	controllers.Application.updatePoliticiansProfile()
