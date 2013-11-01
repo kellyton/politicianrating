@@ -17,9 +17,12 @@ GET		/senador/update				controllers.Senadores.getAllData()
 
 GET		/deputado/update/projetos	controllers.Deputados.startProcessProjetosDeLei()
 
+GET		/cotas						controllers.Cotas.getCotas()
+
 #Application
 GET		/depfederal					controllers.Deputados.depFederal()
 GET		/senador					controllers.Senadores.senador()
+GET		/cotas						controllers.Cotas.getCotas()
 
 # GET		/search						controllers.Search.search()
 POST	/search						controllers.Search.search()

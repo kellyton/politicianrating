@@ -1,0 +1,222 @@
+@(pr: List[DeputadoFederal])(pt: List[DeputadoFederal])(psb: List[DeputadoFederal])(pmn: List[DeputadoFederal])(pmdb: List[DeputadoFederal])(psc: List[DeputadoFederal])(pp: List[DeputadoFederal])(PROS: List[DeputadoFederal])(PDT: List[DeputadoFederal])(PSDB: List[DeputadoFederal])(PRB: List[DeputadoFederal])(PV: List[DeputadoFederal])(PPS: List[DeputadoFederal])(DEM: List[DeputadoFederal])(PSD: List[DeputadoFederal])(PCdoB: List[DeputadoFederal])(SDD: List[DeputadoFederal])(PTB: List[DeputadoFederal])(PTdoB: List[DeputadoFederal])(PRP: List[DeputadoFederal])(PSOL: List[DeputadoFederal])
+
+@content = {
+				<!-- Gastos -->
+				
+				<div class="row">
+					<div class="span9">
+						<div id="chart_container">
+							<div id="chart"></div>
+							<div id="legend_container">
+								<div id="smoother" title="Smoothing"></div>
+								<div id="legend"></div>
+							</div>
+							<div id="slider"></div>
+					</div>
+					</div>
+				</div>
+
+
+<script type="text/javascript">
+var graph = new Rickshaw.Graph( {
+	element: document.querySelector("#chart"),
+	width: 900,
+	height: 450,
+	renderer: 'scatterplot',
+	stroke: true,
+	padding: { top: 0.05, left: 0.05, right: 0.05 },
+	series: [ {
+		data: [ 
+			@for((deputado, index) <- pr.zipWithIndex){
+		        { x: @index, y: @deputado.getGastoPorDia() },
+			}
+		 ],
+		color: '#000033',
+		name: 'PR'
+		}, {
+		data: [ 
+			@for((deputado, index) <- pt.zipWithIndex){
+		        { x: @index, y: @deputado.getGastoPorDia() },
+			}
+		 ],
+		color: '#003366',
+		name: 'PT'
+		}, {
+		data: [ 
+			@for((deputado, index) <- psb.zipWithIndex){
+		        { x: @index, y: @deputado.getGastoPorDia() },
+			}
+		 ],
+		color: '#006699',
+		name: 'PSB'
+		}, {
+		data: [ 
+			@for((deputado, index) <- pmn.zipWithIndex){
+		        { x: @index, y: @deputado.getGastoPorDia() },
+			}
+		 ],
+		color: '#0099CC',
+		name: 'PMN'
+		}, {
+		data: [ 
+			@for((deputado, index) <- pmdb.zipWithIndex){
+		        { x: @index, y: @deputado.getGastoPorDia() },
+			}
+		 ],
+		color: '#00CCFF',
+		name: 'PMDB'
+		}, {
+		data: [ 
+			@for((deputado, index) <- psc.zipWithIndex){
+		        { x: @index, y: @deputado.getGastoPorDia() },
+			}
+		 ],
+		color: '#00FF00',
+		name: 'PSC'
+		}, {
+		data: [ 
+			@for((deputado, index) <- pp.zipWithIndex){
+		        { x: @index, y: @deputado.getGastoPorDia() },
+			}
+		 ],
+		color: '#660000',
+		name: 'PP'
+		}, {
+		data: [ 
+			@for((deputado, index) <- PROS.zipWithIndex){
+		        { x: @index, y: @deputado.getGastoPorDia() },
+			}
+		 ],
+		color: '#663333',
+		name: 'PROS'
+		}, {
+		data: [ 
+			@for((deputado, index) <- PDT.zipWithIndex){
+		        { x: @index, y: @deputado.getGastoPorDia() },
+			}
+		 ],
+		color: '#666666',
+		name: 'PDT'
+		}, {
+		data: [ 
+			@for((deputado, index) <- PSDB.zipWithIndex){
+		        { x: @index, y: @deputado.getGastoPorDia() },
+			}
+		 ],
+		color: '#669999',
+		name: 'PSDB'
+		}, {
+		data: [ 
+			@for((deputado, index) <- PRB.zipWithIndex){
+		        { x: @index, y: @deputado.getGastoPorDia() },
+			}
+		 ],
+		color: '#6600FF',
+		name: 'PRB'
+		}, {
+		data: [ 
+			@for((deputado, index) <- PV.zipWithIndex){
+		        { x: @index, y: @deputado.getGastoPorDia() },
+			}
+		 ],
+		color: '#66FFFF',
+		name: 'PV'
+		}, {
+		data: [ 
+			@for((deputado, index) <- PPS.zipWithIndex){
+		        { x: @index, y: @deputado.getGastoPorDia() },
+			}
+		 ],
+		color: '#990000',
+		name: 'PPS'
+		}, {
+			data: [ 
+				@for((deputado, index) <- DEM.zipWithIndex){
+			        { x: @index, y: @deputado.getGastoPorDia() },
+				}
+			 ],
+			color: '#993333',
+			name: 'DEM'
+		}, {
+			data: [ 
+				@for((deputado, index) <- PSD.zipWithIndex){
+			        { x: @index, y: @deputado.getGastoPorDia() }, 
+				}
+			 ],
+			color: '#999999',
+			name: 'PSD'
+		}, {
+			data: [ 
+				@for((deputado, index) <- PCdoB.zipWithIndex){
+			        { x: @index, y: @deputado.getGastoPorDia() },
+				}
+			 ],
+			color: '#CC0000',
+			name: 'PCdoB'
+		}, {
+			data: [ 
+				@for((deputado, index) <- SDD.zipWithIndex){
+			        { x: @index, y: @deputado.getGastoPorDia() },
+				}
+			 ],
+			color: '#CC3333',
+			name: 'SDD'
+		}, {
+			data: [ 
+				@for((deputado, index) <- PTB.zipWithIndex){
+			        { x: @index, y: @deputado.getGastoPorDia() },
+				}
+			 ],
+			color: '#CC6666',
+			name: 'PTB'
+		}, {
+			data: [ 
+				@for((deputado, index) <- PTdoB.zipWithIndex){
+			        { x: @index, y: @deputado.getGastoPorDia() },
+				}
+			 ],
+			color: '#CC9999',
+			name: 'PTdoB'
+		}, {
+			data: [ 
+				@for((deputado, index) <- PRP.zipWithIndex){
+			        { x: @index, y: @deputado.getGastoPorDia() },
+				}
+			 ],
+			color: '#FF0000',
+			name: 'PRP'
+		}, {
+			data: [ 
+				@for((deputado, index) <- PSOL.zipWithIndex){
+			        { x: @index, y: @deputado.getGastoPorDia() },
+				}
+			 ],
+			color: '#FFFF33',
+			name: 'PSOL'
+		}
+	]
+} );
+
+var legend = new Rickshaw.Graph.Legend({
+    graph: graph,
+    element: document.querySelector('#chart')
+});
+
+var shelving = new Rickshaw.Graph.Behavior.Series.Toggle({
+    graph: graph,
+    legend: legend
+});
+
+
+
+var hoverDetail = new Rickshaw.Graph.HoverDetail( {
+    graph: graph
+} );
+
+graph.render();
+
+</script>
+								
+}
+
+@rightheader(content)(0)
