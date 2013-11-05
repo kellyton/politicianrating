@@ -345,7 +345,15 @@ var optionsBar = {
 			renderer: 'bar',
 			series: [ 
 				{	data: [ { x: 0, y: @dep.getIndice() } ],
-					color: '#B80000'
+					@if(dep.getIndice() <= 32){
+						color: '#008000'
+					} else {
+						@if(dep.getIndice()<=67){
+							color: '#FFA500'
+						} else {
+							color: '#B80000'
+						}
+					}
 				}, {	data: [ { x: 0, y: 100 - @dep.getIndice() } ],
 					color: '#B8B8B8'
 				} ]
@@ -361,7 +369,15 @@ var optionsBar = {
 			renderer: 'bar',
 			series: [ 
 				{	data: [ { x: 0, y: @dep.getIndice() } ],
-					color: '#B80000'
+					@if(dep.getIndice() <= 32){
+						color: '#008000'
+					} else {
+						@if(dep.getIndice()<=67){
+							color: '#FFA500'
+						} else {
+							color: '#B80000'
+						}
+					}
 				}, {	data: [ { x: 0, y: 100 - @dep.getIndice() } ],
 					color: '#B8B8B8'
 				} ]
@@ -403,7 +419,15 @@ var optionsBar = {
 			renderer: 'bar',
 			series: [ 
 				{	data: [ { x: 0, y: @sen.getIndice() } ],
-					color: '#B80000'
+					@if(sen.getIndice() <= 32){
+						color: '#008000'
+					} else {
+						@if(sen.getIndice()<=67){
+							color: '#FFA500'
+						} else {
+							color: '#B80000'
+						}
+					}
 				}, {	data: [ { x: 0, y: 100 - @sen.getIndice() } ],
 					color: '#B8B8B8'
 				} ]
@@ -419,7 +443,15 @@ var optionsBar = {
 			renderer: 'bar',
 			series: [ 
 				{	data: [ { x: 0, y: @sen.getIndice() } ],
-					color: '#B80000'
+					@if(sen.getIndice() <= 32){
+						color: '#008000'
+					} else {
+						@if(sen.getIndice()<=67){
+							color: '#FFA500'
+						} else {
+							color: '#B80000'
+						}
+					}
 				}, {	data: [ { x: 0, y: 100 - @sen.getIndice() } ],
 					color: '#B8B8B8'
 				} ]
