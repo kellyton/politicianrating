@@ -16,25 +16,30 @@ GET		/license					controllers.Application.license()
 #GET		/updateGastosDeputadosFederais	controllers.Application.updatePoliticiansExpenditures()
 #GET		/calculaGastoMedio			controllers.Application.calculaGastoMedio()
 
-GET		/deputado/update			controllers.Deputados.getAllData()
-GET		/senador/update				controllers.Senadores.getAllData()
+# Update all data from deputados and senadores. Leave commented to avoid misuse
+#GET		/deputado/update			controllers.Deputados.getAllData()
+#GET		/senador/update				controllers.Senadores.getAllData()
 
-GET		/deputado/update/projetos	controllers.Deputados.startProcessProjetosDeLei()
-
-GET		/cotas						controllers.Cotas.getCotas()
+#Included on /deputado/update. here only because I did it after load previous data
+#GET		/deputado/update/projetos	controllers.Deputados.startProcessProjetosDeLei()
+#GET		/deputado/update/empresas		controllers.Deputados.startProcessCompaniesData()
 
 #Application
-GET		/depfederal					controllers.Deputados.depFederal()
-GET		/senador					controllers.Senadores.senador()
-GET		/cotas						controllers.Cotas.getCotas()
-
-# GET		/search						controllers.Search.search()
-POST	/search						controllers.Search.search()
+GET		/deputado					controllers.Deputados.deputados()
+GET		/senador					controllers.Senadores.senadores()
+GET		/empresa					controllers.Empresas.empresas()
 
 GET		/deputado/:id				controllers.Deputados.show(id: String)
 GET		/senador/:id				controllers.Senadores.show(id: String)
-
 GET		/estado/:id					controllers.Estados.estado(id: String)
+GET		/empresa/:id				controllers.Empresas.show(id: String)
+
+POST	/search						controllers.Search.search()
+
+#Test
+GET		/cotas						controllers.Cotas.getCotas()
+GET		/cnpj/:cnpj					controllers.Empresas.getCaptcha(cnpj: String)
+POST	/cnpj						controllers.Empresas.captchaValidado()	
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

@@ -127,7 +127,11 @@
 									<tbody>
 										@for((totalt, index) <- totaisTipo.zipWithIndex){
 										<tr>
-											<td>@totalt.getCnpj()</td>
+											<td>
+												<a href="/empresa/@totalt.getCnpj()">
+													@totalt.getCnpj()
+												</a>
+											</td>
 											<td>@totalt.getDescricao()</td>
 											<td>@totalt.getDetalhe()</td>
 											<td>@totalt.getTotalGastoFormated</td>

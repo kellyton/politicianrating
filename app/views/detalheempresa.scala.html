@@ -1,0 +1,91 @@
+@(empresa: Empresa)(politicoValores: List[util.PoliticoValor])
+
+@content = {
+
+				<div class="row"><!--  Primeira linha = detalhes -->
+					<div class="span6">
+						<div class="widget">
+							<div class="widget-header">
+								<i class="icon-th-list"></i>
+								<h3>@empresa.getFantasia()</h3>
+							</div> <!-- /widget-header -->
+							<div class="widget-content">
+								<div class="account-container">
+									<div class="account-details">
+										<span class="account-name">@empresa.getNome()</span>
+										<span class="account-name">@empresa.getCnpjFormatted()</span>
+										@if(empresa.isCNPJ()){
+										<span class="account-role">Data de Abertura: @empresa.getDataAberturaFormatted()</span>
+										<span class="account-role">Atividade Principal: @empresa.getAtividadePrincipal()</span>
+										<span class="account-role">Natureza Jurídica: @empresa.getNaturezaJuridica</span>
+										<span class="account-role">Endereço: @empresa.getLogradouro(), @empresa.getNumero(), @empresa.getComplemento()</span>
+										<span class="account-role">@empresa.getCep(), @empresa.getCidade(), @empresa.getEstado()</span>
+										}
+										<span class="account-role">Situação: @empresa.getSituacao(), obtida em @empresa.getDataSituacaoFormatted()</span>
+										<span class="account-role">Total recebido de parlamentares (em 2013): @empresa.getTotalRecebidoFormated()</span>
+										<span class="account-role">Dado obtido da Receita Federal em: @empresa.getUpdatedAtFormatted()</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="span3">
+						<div class="widget">
+							<div class="widget-header">
+								<i class="icon-th-list"></i>
+								<h3>Localização</h3>
+							</div>
+							<div class="widget-content">
+								Em breve...
+							</div>
+						</div>	
+					</div>
+					
+				</div>
+				<div class="row"><!-- segunda linha: tabela-->
+				
+					<div class="span6">
+							@if(politicoValores != null) {
+							<div class="widget widget-table">
+								<div class="widget-header">
+									<i class="icon-th-list"></i>
+									<h3>Recebeu verba de @politicoValores.size() deputado(s) em 2013</h3>
+								</div> <!-- /widget-header -->
+	
+								<div class="widget-content">
+									<table class="table table-striped table-bordered">
+										<thead>
+											<tr>
+											
+												<th>Deputado</th>
+												<th>Estado</th>
+												<th>Partido</th>
+												<th>Valor</th>
+											</tr>
+										</thead>
+										<tbody>
+											@for((valor, index) <- politicoValores.zipWithIndex){
+											<tr>
+												<td>
+													<a href="/deputado/@valor.getIdeCadastro()">
+														@valor.getNome()
+													</a>
+												</td>
+												<td>@valor.getEstado()</td>
+												<td>@valor.getPartido()</td>
+												<td>@valor.getValorFormated()</td>
+											</tr>
+											}
+										</tbody>
+									</table>
+								</div>
+							</div>
+							}
+					</div>
+				
+				</div> <!-- encerra a linha: tabela -->
+	
+}
+
+@rightheader(content)(0)

@@ -1,0 +1,24 @@
+@(link: String)(cnpj: String)
+
+@content = {
+
+    @if(flash.containsKey("error")) {
+        <div class="alert-message error">
+            <p>
+                <strong>Oops!</strong> @flash.get("error")
+            </p>
+        </div>
+    }
+
+	<img src="@link" alt=""><br>
+	Para concluir a consulta, insira os caracteres mostrados acima:
+	<form class="faq-search" method="post" action="@routes.Empresas.captchaValidado()">
+		<input type="text" name="captcha" placeholder="Digite as letras contidas na imagem acima">
+		<input type="hidden" name="link" value="@link">
+		<input type="hidden" name="cnpj" value="@cnpj">
+	</form>
+	
+
+}
+
+@rightheader(content)(0)

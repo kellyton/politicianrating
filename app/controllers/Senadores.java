@@ -150,7 +150,7 @@ public class Senadores extends Controller {
 	}
 	
 	@Transactional
-    public static Result senador() {
+    public static Result senadores() {
 		
     	List<Senador> senList = JPA.em().createQuery("FROM Senador ORDER BY nomeParlamentar").getResultList();
 

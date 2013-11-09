@@ -1,0 +1,146 @@
+@(empresas: List[Empresa])
+
+@content = {
+				<!-- Empresas a esquerda -->
+				<div class="row">
+					<div class="span6">
+						@if(empresas != null) {			
+							<!-- Empresas geral -->
+							<div class="widget widget-table">
+								<div class="widget-header">
+									<i class="icon-th-list"></i>
+									<h3>@empresas.size() empresas encontradas</h3>
+								</div> <!-- /widget-header -->
+	
+								<div class="widget-content">
+									<table class="table table-striped table-bordered">
+										<thead>
+											<tr>
+												<th>CNPJ/CPF</th>
+												<th>Nome Fantasia</th>
+												<th>R$ recebido</th>
+											</tr>
+										</thead>
+			
+										<tbody>
+											@for((emp, index) <- empresas.zipWithIndex){
+											<tr>
+												<td>
+													<a href="/empresa/@emp.getCnpj()">
+														@emp.getCnpj
+													</a>
+												</td>
+												<td>@emp.getFantasia()</td>
+												<td>@emp.getTotalRecebidoFormated()</td>
+											</tr>
+											}
+										</tbody>
+									</table>
+								
+								</div> <!-- /widget-content -->
+							</div>
+						}
+					</div><!-- Terminou. Vai pra parte da direita -->
+
+					<div class="span3">
+						<!-- Por tipo de empresa -->
+						@* @if(totalCategoria != null) { *@
+						<div class="row">
+							<div class="span3">
+								<div class="widget widget-table">
+									<div class="widget-header">
+										<i class="icon-th-list"></i>
+										<h3>Por tipo de gasto</h3>
+									</div> <!-- /widget-header -->
+		
+									<div class="widget-content">
+										<table class="table table-striped table-bordered">
+											<thead>
+												<tr>
+													<th>Tipo</th>
+													<th>Total</th>
+													<th>% do total</th>
+												</tr>
+											</thead>
+
+											<tbody>
+												@* @for((sen, index) <- senMelhores.zipWithIndex){ *@
+												<tr>
+													<td>
+														Em breve...
+													</td>
+													<td>Em breve...</td>
+													<td>0%</td>
+												</tr>
+												@* } *@
+											</tbody>
+										</table>
+									
+									</div> <!-- /widget-content -->
+								</div><!-- widget-table -->
+							</div> <!-- /span4 -->
+						</div>
+						@* } *@
+						
+						@* @if(totalEstado != null) { *@
+						<!-- Por estado -->
+						<div class="row">
+							<div class="span3">
+								<!-- Por estado -->
+								<div class="widget widget-table">
+									<div class="widget-header">
+										<i class="icon-th-list"></i>
+										<h3>Por estado</h3>
+									</div> <!-- /widget-header -->
+		
+									<div class="widget-content">
+										<table class="table table-striped table-bordered">
+											<thead>
+												<tr>
+													<th>Estado</th>
+													<th>Total</th>
+													<th>% do total</th>
+												</tr>
+											</thead>
+				
+											<tbody>
+												@* @for((sen, index) <- senPiores.zipWithIndex){ *@
+												<tr>
+													<td>
+														Em breve...
+													</td>
+													<td>Em breve...</td>
+													<td>0%</td>
+												</tr>
+												@* } *@
+											</tbody>
+										</table>
+									
+									</div> <!-- /widget-content -->
+								</div><!-- widget-table -->
+		
+							</div> <!-- /span4 -->
+		
+						</div>
+						@* } *@
+					</div> <!-- /span4 -->
+					
+				</div> <!-- Termina a linha dos caras -->
+
+
+<script type="text/javascript">
+
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-45372757-1', 'meucongressonacional.com');
+ga('send', 'pageview');
+
+</script>
+								
+}
+
+@rightheader(content)(0)
+ <!-- end if -->

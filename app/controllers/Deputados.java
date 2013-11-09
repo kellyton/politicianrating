@@ -40,6 +40,7 @@ import models.DeputadoComissao;
 import models.DeputadoFederal;
 import models.DeputadoFederalExercicio;
 import models.DeputadoFederalGasto;
+import models.Empresa;
 import models.ProjetoDeLei;
 import models.TotalData;
 import models.TotalTipo;
@@ -81,14 +82,19 @@ public class Deputados extends Controller {
 
 			JPA.em().getTransaction().begin();
 			processProjetosDeLei();
+			JPA.em().getTransaction().commit();
+
+			JPA.em().getTransaction().begin();
+			processCompaniesData();
+			
 			return ok("Completed. See log to details.");
 		} catch (Exception e) {
 			e.printStackTrace();
 			return badRequest(e.getLocalizedMessage());
 		}
 	}
-	
-    /**
+
+	/**
      * Uses SAX instead of DOM because file is huge.
      * @return
      */
@@ -323,7 +329,7 @@ public class Deputados extends Controller {
     	System.out.println("Processando despesas dos deputados...");
     	
     	try {
-    	
+    		//charset é 'cp852'
     		InputStream is = new FileInputStream(pathObterDeputadosGastos);
     		
     		SAXParserFactory factory = SAXParserFactory.newInstance();
@@ -443,6 +449,54 @@ public class Deputados extends Controller {
 	}
 	
 	@Transactional
+	public static Result startProcessCompaniesData(){
+		try {
+			processCompaniesData();
+			return ok("ok. Empresas processadas com sucesso"); 
+		} catch (Exception e) {
+			return badRequest("Erro processando empresas: " + e.getMessage());
+		}
+	}
+	
+    private static void processCompaniesData() throws Exception{
+    	String query = "select txtCNPJCPF, txtDescricaoEspecificacao, sum(vlrDocumento)" +
+    			" from deputadofederalgasto" +
+    			" group by txtCNPJCPF" +
+    			" order by 3 desc";
+    	
+    	List<Object> resultList = JPA.em().createNativeQuery(query).getResultList();
+		
+		//List<Empresa> empresas = new LinkedList<Empresa>();
+		Empresa emp;
+		
+		System.out.println("Processando " + resultList.size() + " empresas.");
+		int problemas = 0;
+		int corretos = 0;
+		for (Object result : resultList) {
+			emp = new Empresa();
+			
+		    Object[] items = (Object[]) result;
+		    emp.setCnpj((String)items[0]);
+		    emp.setNome((String)items[1]);
+		    emp.setFantasia((String)items[1]);
+		    emp.setTotalRecebido((Double)items[2]);
+		    emp.setDadosAtualizados(false);
+		    
+		    //System.out.println(emp);
+		    if ( emp.getCnpj() != null && emp.getCnpj().trim().length() > 5){
+		    	JPA.em().persist(emp);
+		    	corretos++;
+		    } else {
+		    	problemas++;
+		    }
+		    //empresas.add(emp);
+		} 
+		
+		System.out.println("Processadas " + corretos + " empresas. " + problemas + " não tinham CNPJ/CPF e não foram salvas");
+		
+	}
+	
+	@Transactional
 	public static List<DeputadoFederal> getMelhores(){
 		List<DeputadoFederal> depMelhores = JPA.em()
     			.createQuery("FROM DeputadoFederal ORDER BY gastopordia ASC")
@@ -469,7 +523,7 @@ public class Deputados extends Controller {
 	}
 	
     @Transactional
-    public static Result depFederal() {
+    public static Result deputados() {
     	List<DeputadoFederal> depList = JPA.em().createQuery("FROM DeputadoFederal ORDER BY nomeParlamentar").getResultList();
 
     	// TODO Probably get once and then get 5 best and worst is faster
@@ -486,8 +540,6 @@ public class Deputados extends Controller {
 		List<TotalTipo> totalTipo;
 		List<TotalData> totalData;
 		List<Object> resultList;
-		
-		System.out.println("ID = " + id);
 		
 		//Traz o deputado
 		try {
@@ -511,7 +563,7 @@ public class Deputados extends Controller {
 					" sum(vlrDocumento) as TotalGasto" +
 					" from deputadofederalgasto" + 
 					" where nuCarteiraParlamentar = :id" + 
-					" group by txtDescricaoEspecificacao order by 2,3,4 desc";
+					" group by txtCNPJCPF order by 2,3,4 desc";
 			
 			resultList = JPA.em().createNativeQuery(query)
 					.setParameter("id", nuCarteiraParlamentar).getResultList();
@@ -538,7 +590,6 @@ public class Deputados extends Controller {
 		
 		//Traz os resultados por data
 		try {
-			// urzeni (o mais ladrao) eh 616
 			String nuCarteiraParlamentar = deputado.getMatricula();
 		
 			String query = 
