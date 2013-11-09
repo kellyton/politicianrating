@@ -4,9 +4,15 @@ import static play.data.Form.form;
 
 import static play.libs.Json.toJson;
 
+import java.awt.image.BufferedImage;
 import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URL;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -139,6 +145,13 @@ public class Empresas extends Controller{
 		}
 	}
 		
+	/**
+	 * It has a problem trying to show the link on user browser. It only works if
+	 * we run the application in the same server than client.
+	 * So, we have to save image locally and than show that image to the client
+	 * @param cnpj
+	 * @return
+	 */
 	private static Result validaCPF(String cnpj) {
 		try {
 		
@@ -150,19 +163,24 @@ public class Empresas extends Controller{
 			Document form = res.parse();
 			
 			Element captchaLink = form.select("img#imgcaptcha").first();
-			String absHref = captchaLink.attr("abs:src");
-			
 			String viewState = form.select("#viewstate").first().attr("value");
+			
+			//Save image locally
+			String imageOriginalLink = captchaLink.attr("abs:src");
+			String imageFinalLink = "./public/captchas/" + imageOriginalLink.substring(imageOriginalLink.indexOf("guid=")+5);
+			String webLink = "/assets/captchas/" + imageOriginalLink.substring(imageOriginalLink.indexOf("guid=")+5);	
+			
+			saveImage(imageOriginalLink, imageFinalLink);
 			
 			Session session = new Session();
 			session.cnpj = cnpj;
 			session.cookies = cookies;
-			session.url = absHref;
+			session.localpath = imageFinalLink;
 			session.viewState = viewState;
 			
-			sessionMap.put(absHref, session);
+			sessionMap.put(webLink, session);
 			
-			return ok(views.html.validacaptcha.render(absHref, cnpj));
+			return ok(views.html.validacaptcha.render(webLink, cnpj));
 			
 		} catch (IOException e) {
 			return badRequest(e.getMessage());
@@ -180,23 +198,43 @@ public class Empresas extends Controller{
 			Document form = res.parse();
 			
 			Element captchaLink = form.select("img#imgcaptcha").first();
-			String absHref = captchaLink.attr("abs:src");
-			
 			String viewState = form.select("#viewstate").first().attr("value");
+			
+			//Save image locally
+			String imageOriginalLink = captchaLink.attr("abs:src");
+			String imageFinalLink = "./public/captchas/" + imageOriginalLink.substring(imageOriginalLink.indexOf("guid=")+5);
+			String webLink = "/assets/captchas/" + imageOriginalLink.substring(imageOriginalLink.indexOf("guid=")+5);
+			
+			saveImage(imageOriginalLink, imageFinalLink);
 			
 			Session session = new Session();
 			session.cnpj = cnpj;
 			session.cookies = cookies;
-			session.url = absHref;
+			session.localpath = imageFinalLink;
 			session.viewState = viewState;
 			
-			sessionMap.put(absHref, session);
+			sessionMap.put(webLink, session);
 			
-			return ok(views.html.validacaptcha.render(absHref, cnpj));
+			return ok(views.html.validacaptcha.render(webLink, cnpj));
 			
 		} catch (Exception e){
 			return badRequest(e.getMessage());
 		}
+	}
+	
+	private static void saveImage(String imageUrl, String destinationFile) throws IOException {
+		URL url = new URL(imageUrl);
+		InputStream is = url.openStream();
+		OutputStream os = new FileOutputStream(destinationFile);
+
+		byte[] b = new byte[2048];
+		int length;
+
+		while ((length = is.read(b)) != -1) {
+			os.write(b, 0, length);
+		}
+		is.close();
+		os.close();
 	}
 	
 	@Transactional
@@ -211,7 +249,6 @@ public class Empresas extends Controller{
 		} else {
 			return finalizaValidacaoCPF(typedCaptcha, link, cnpj);
 		}
-		
 	}
 		
 		
@@ -255,6 +292,12 @@ public class Empresas extends Controller{
 			//Save empresa
 			e = atualizarEmpresaCPF(e);
 			
+			try {
+				new File(session.localpath).delete();
+			} catch (Exception ex){
+				//do nothing
+			}
+			
 			return redirect(controllers.routes.Empresas.show(cnpj));
 			
 		} catch (Exception e){ //wrong captcha. Try again
@@ -297,7 +340,6 @@ public class Empresas extends Controller{
 		
 		Map<String, String> cookies;
 		
-		//Lost session
 		try {
 			 cookies = session.cookies;
 			if (cookies == null) return redirect(controllers.routes.Empresas.getCaptcha(cnpj)); 
@@ -332,6 +374,12 @@ public class Empresas extends Controller{
 			
 			//Save empresa
 			e = atualizarEmpresa(e);
+			
+			try {
+				new File(session.localpath).delete();
+			} catch (Exception ex){
+				//do nothing
+			}
 			
 			return redirect(controllers.routes.Empresas.show(cnpj));
 			
@@ -450,7 +498,7 @@ public class Empresas extends Controller{
 
 class Session {
 	
-	String url;
+	String localpath;
 	Map<String, String> cookies;
 	String viewState;
 	String cnpj;
