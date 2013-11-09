@@ -144,8 +144,7 @@ public class Empresas extends Controller{
 	 * @return
 	 */
 	private static Result validaCPF(String cnpj) {
-		/*try {
-		
+		try {
 			String url = "http://www.receita.fazenda.gov.br/aplicacoes/atcta/cpf/consultapublica.asp";
 			
 			Response res = Jsoup.connect(url).execute();
@@ -158,29 +157,25 @@ public class Empresas extends Controller{
 			
 			//Save image locally
 			String imageOriginalLink = captchaLink.attr("abs:src");
-			String imageFinalLink = "./public/captchas/" + imageOriginalLink.substring(imageOriginalLink.indexOf("guid=")+5)+".jpg";
-			String webLink = "/assets/captchas/" + imageOriginalLink.substring(imageOriginalLink.indexOf("guid=")+5)+".jpg";	
+			String filename = imageOriginalLink.substring(imageOriginalLink.indexOf("guid=")+5)+".jpg";			
+			String imageLocalPath = FileService.path + filename; 	
 			
-			saveImage(imageOriginalLink, imageFinalLink);
+			saveImage(imageOriginalLink, imageLocalPath);
 			
 			Session session = new Session();
-			session.cnpj = cnpj;
 			session.cookies = cookies;
-			session.localpath = imageFinalLink;
 			session.viewState = viewState;
 			
-			sessionMap.put(webLink, session);
+			sessionMap.put(filename, session);
 			
-			return ok(views.html.validacaptcha.render(webLink, cnpj));
+			return ok(views.html.validacaptcha.render(filename, cnpj));
 			
 		} catch (IOException e) {
 			return badRequest(e.getMessage());
-		}*/
-		return TODO;
+		}
 	}
 
 	private static Result validaCNPJ(String cnpj){
-		
 		try {
 			String url = "http://www.receita.fazenda.gov.br/pessoajuridica/cnpj/cnpjreva/Cnpjreva_Solicitacao2.asp";
 			
@@ -241,11 +236,8 @@ public class Empresas extends Controller{
 		}
 	}
 		
-		
 	private static Result finalizaValidacaoCPF(String typedCaptcha, String filename, String cnpj) {
-		
-		/*Session session = sessionMap.remove(link);
-		
+		Session session = sessionMap.remove(filename);
 		Map<String, String> cookies;
 		
 		//Lost session
@@ -283,7 +275,7 @@ public class Empresas extends Controller{
 			e = atualizarEmpresaCPF(e);
 			
 			try {
-				new File(session.localpath).delete();
+				new File(FileService.path + filename).delete();
 			} catch (Exception ex){
 				//do nothing
 			}
@@ -293,11 +285,9 @@ public class Empresas extends Controller{
 		} catch (Exception e){ //wrong captcha. Try again
 			flash("error", "Captcha incorreto. Por favor digite as letras novamente");
 			return redirect(controllers.routes.Empresas.show(cnpj));
-		}*/
-		return TODO;
-		
+		}
 	}
-
+	
 	private static Empresa parseDocumentCPF(Document doc) {
 		Empresa pessoa = new Empresa();
 		
@@ -325,10 +315,9 @@ public class Empresas extends Controller{
 	private static Empresa atualizarEmpresaCPF(Empresa e) {
 		return atualizarEmpresa(e);
 	}
-
+	
 	public static Result finalizaValidacaoCNPJ(String typedCaptcha, String filename, String cnpj){
 		Session session = sessionMap.remove(filename);
-		
 		Map<String, String> cookies;
 		
 		try {
