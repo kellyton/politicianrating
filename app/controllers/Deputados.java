@@ -476,7 +476,12 @@ public class Deputados extends Controller {
 			emp = new Empresa();
 			
 		    Object[] items = (Object[]) result;
-		    emp.setCnpj((String)items[0]);
+		    try {
+		    	emp.setCnpj((String)items[0]);
+		    } catch (Exception e){
+		    	//se não tem cnpj, passa batido
+		    	continue;
+		    }
 		    emp.setNome((String)items[1]);
 		    emp.setFantasia((String)items[1]);
 		    emp.setTotalRecebido((Double)items[2]);
