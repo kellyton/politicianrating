@@ -167,8 +167,8 @@ public class Empresas extends Controller{
 			
 			//Save image locally
 			String imageOriginalLink = captchaLink.attr("abs:src");
-			String imageFinalLink = "./public/captchas/" + imageOriginalLink.substring(imageOriginalLink.indexOf("guid=")+5);
-			String webLink = "/assets/captchas/" + imageOriginalLink.substring(imageOriginalLink.indexOf("guid=")+5);	
+			String imageFinalLink = "./public/captchas/" + imageOriginalLink.substring(imageOriginalLink.indexOf("guid=")+5)+".jpg";
+			String webLink = "/assets/captchas/" + imageOriginalLink.substring(imageOriginalLink.indexOf("guid=")+5)+".jpg";	
 			
 			saveImage(imageOriginalLink, imageFinalLink);
 			
@@ -202,8 +202,8 @@ public class Empresas extends Controller{
 			
 			//Save image locally
 			String imageOriginalLink = captchaLink.attr("abs:src");
-			String imageFinalLink = "./public/captchas/" + imageOriginalLink.substring(imageOriginalLink.indexOf("guid=")+5);
-			String webLink = "/assets/captchas/" + imageOriginalLink.substring(imageOriginalLink.indexOf("guid=")+5);
+			String imageFinalLink = "./public/captchas/" + imageOriginalLink.substring(imageOriginalLink.indexOf("guid=")+5)+".jpg";
+			String webLink = "/assets/captchas/" + imageOriginalLink.substring(imageOriginalLink.indexOf("guid=")+5)+".jpg";
 			
 			saveImage(imageOriginalLink, imageFinalLink);
 			
