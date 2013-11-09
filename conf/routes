@@ -22,7 +22,7 @@ GET		/license					controllers.Application.license()
 
 #Included on /deputado/update. here only because I did it after load previous data
 #GET		/deputado/update/projetos	controllers.Deputados.startProcessProjetosDeLei()
-#GET		/deputado/update/empresas		controllers.Deputados.startProcessCompaniesData()
+GET		/deputado/update/empresas		controllers.Deputados.startProcessCompaniesData()
 
 #Application
 GET		/deputado					controllers.Deputados.deputados()
