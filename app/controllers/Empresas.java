@@ -2,13 +2,9 @@ package controllers;
 
 import static play.data.Form.form;
 
-import static play.libs.Json.toJson;
 
-import java.awt.image.BufferedImage;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -18,13 +14,8 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Scanner;
 
-import models.DeputadoFederal;
 import models.Empresa;
-import models.Senador;
-import models.TotalData;
-import models.TotalTipo;
 import models.util.PoliticoValor;
 
 import org.jsoup.Connection.Method;
@@ -153,7 +144,7 @@ public class Empresas extends Controller{
 	 * @return
 	 */
 	private static Result validaCPF(String cnpj) {
-		try {
+		/*try {
 		
 			String url = "http://www.receita.fazenda.gov.br/aplicacoes/atcta/cpf/consultapublica.asp";
 			
@@ -184,7 +175,8 @@ public class Empresas extends Controller{
 			
 		} catch (IOException e) {
 			return badRequest(e.getMessage());
-		}
+		}*/
+		return TODO;
 	}
 
 	private static Result validaCNPJ(String cnpj){
@@ -202,20 +194,18 @@ public class Empresas extends Controller{
 			
 			//Save image locally
 			String imageOriginalLink = captchaLink.attr("abs:src");
-			String imageFinalLink = "./public/captchas/" + imageOriginalLink.substring(imageOriginalLink.indexOf("guid=")+5)+".jpg";
-			String webLink = "/assets/captchas/" + imageOriginalLink.substring(imageOriginalLink.indexOf("guid=")+5)+".jpg";
+			String filename = imageOriginalLink.substring(imageOriginalLink.indexOf("guid=")+5)+".jpg";			
+			String imageLocalPath = FileService.path + filename; 
 			
-			saveImage(imageOriginalLink, imageFinalLink);
+			saveImage(imageOriginalLink, imageLocalPath);
 			
 			Session session = new Session();
-			session.cnpj = cnpj;
 			session.cookies = cookies;
-			session.localpath = imageFinalLink;
 			session.viewState = viewState;
 			
-			sessionMap.put(webLink, session);
+			sessionMap.put(filename, session);
 			
-			return ok(views.html.validacaptcha.render(webLink, cnpj));
+			return ok(views.html.validacaptcha.render(filename, cnpj));
 			
 		} catch (Exception e){
 			return badRequest(e.getMessage());
@@ -241,20 +231,20 @@ public class Empresas extends Controller{
 	public static Result captchaValidado(){
 		DynamicForm dynamicForm = form().bindFromRequest();
 		String typedCaptcha = dynamicForm.get("captcha");
-		String link = dynamicForm.get("link");
+		String filename = dynamicForm.get("filename");
 		String cnpj = dynamicForm.get("cnpj");
 		
 		if (CnpjCpf.isCNPJ(cnpj)){
-			return finalizaValidacaoCNPJ(typedCaptcha, link, cnpj);
+			return finalizaValidacaoCNPJ(typedCaptcha, filename, cnpj);
 		} else {
-			return finalizaValidacaoCPF(typedCaptcha, link, cnpj);
+			return finalizaValidacaoCPF(typedCaptcha, filename, cnpj);
 		}
 	}
 		
 		
-	private static Result finalizaValidacaoCPF(String typedCaptcha, String link, String cnpj) {
+	private static Result finalizaValidacaoCPF(String typedCaptcha, String filename, String cnpj) {
 		
-		Session session = sessionMap.remove(link);
+		/*Session session = sessionMap.remove(link);
 		
 		Map<String, String> cookies;
 		
@@ -303,7 +293,8 @@ public class Empresas extends Controller{
 		} catch (Exception e){ //wrong captcha. Try again
 			flash("error", "Captcha incorreto. Por favor digite as letras novamente");
 			return redirect(controllers.routes.Empresas.show(cnpj));
-		}
+		}*/
+		return TODO;
 		
 	}
 
@@ -335,8 +326,8 @@ public class Empresas extends Controller{
 		return atualizarEmpresa(e);
 	}
 
-	public static Result finalizaValidacaoCNPJ(String typedCaptcha, String link, String cnpj){
-		Session session = sessionMap.remove(link);
+	public static Result finalizaValidacaoCNPJ(String typedCaptcha, String filename, String cnpj){
+		Session session = sessionMap.remove(filename);
 		
 		Map<String, String> cookies;
 		
@@ -376,7 +367,7 @@ public class Empresas extends Controller{
 			e = atualizarEmpresa(e);
 			
 			try {
-				new File(session.localpath).delete();
+				new File(FileService.path + filename).delete();
 			} catch (Exception ex){
 				//do nothing
 			}
@@ -497,10 +488,6 @@ public class Empresas extends Controller{
 }
 
 class Session {
-	
-	String localpath;
 	Map<String, String> cookies;
 	String viewState;
-	String cnpj;
-	
 }

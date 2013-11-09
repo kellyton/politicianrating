@@ -1,1 +1,0 @@
-Empty folder used as an temporary folder to get captchas for CNPJ and CPF validation
