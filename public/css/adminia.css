@@ -121,17 +121,17 @@ input {
 #main-nav.nav-tabs.nav-stacked > li > a:hover {	
 	color: #FFF;
 	
-	background: #3C4049;
-	background:-moz-linear-gradient(top, #4A515B 0%, #3C4049 100%); /* FF3.6+ */
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0%,#4A515B), color-stop(100%,#3C4049)); /* Chrome,Safari4+ */
-	background:-webkit-linear-gradient(top, #4A515B 0%,#3C4049 100%); /* Chrome10+,Safari5.1+ */
-	background:-o-linear-gradient(top, #4A515B 0%,#3C4049 100%); /* Opera11.10+ */
-	background:-ms-linear-gradient(top, #4A515B 0%,#3C4049 100%); /* IE10+ */
-	background:linear-gradient(top, #4A515B 0%,#3C4049 100%); /* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#4A515B', endColorstr='#3C4049');
-	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#4A515B', endColorstr='#3C4049')";
+	background: #2D7196;
+	background:-moz-linear-gradient(top, #3888B2 0%, #2D7196 100%); /* FF3.6+ */
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0%,#3888B2), color-stop(100%,#2D7196)); /* Chrome,Safari4+ */
+	background:-webkit-linear-gradient(top, #3888B2 0%,#2D7196 100%); /* Chrome10+,Safari5.1+ */
+	background:-o-linear-gradient(top, #3888B2 0%,#2D7196 100%); /* Opera11.10+ */
+	background:-ms-linear-gradient(top, #3888B2 0%,#2D7196 100%); /* IE10+ */
+	background:linear-gradient(top, #3888B2 0%,#2D7196 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#3888B2', endColorstr='#2D7196');
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#3888B2', endColorstr='#2D7196')";
 	
-	border-color: #2B2E33;
+	border-color: #2D7196;
 }
 
 #main-nav.nav-tabs.nav-stacked > li:first-child > a,
@@ -195,15 +195,15 @@ input {
 	height: 40px;
 	line-height: 40px;
 	
-	background: #E9E9E9;
-	background:-moz-linear-gradient(top, #FAFAFA 0%, #E9E9E9 100%); /* FF3.6+ */
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0%,#FAFAFA), color-stop(100%,#E9E9E9)); /* Chrome,Safari4+ */
-	background:-webkit-linear-gradient(top, #FAFAFA 0%,#E9E9E9 100%); /* Chrome10+,Safari5.1+ */
-	background:-o-linear-gradient(top, #FAFAFA 0%,#E9E9E9 100%); /* Opera11.10+ */
-	background:-ms-linear-gradient(top, #FAFAFA 0%,#E9E9E9 100%); /* IE10+ */
-	background:linear-gradient(top, #FAFAFA 0%,#E9E9E9 100%); /* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FAFAFA', endColorstr='#E9E9E9');
-	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#FAFAFA', endColorstr='#E9E9E9')";
+	background: #FFCD00;
+	background:-moz-linear-gradient(top, #FFE833 0%, #FFCD00 100%); /* FF3.6+ */
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0%,#FFE833), color-stop(100%,#FFCD00)); /* Chrome,Safari4+ */
+	background:-webkit-linear-gradient(top, #FFE833 0%,#FFCD00 100%); /* Chrome10+,Safari5.1+ */
+	background:-o-linear-gradient(top, #FFE833 0%,#FFCD00 100%); /* Opera11.10+ */
+	background:-ms-linear-gradient(top, #FFE833 0%,#FFCD00 100%); /* IE10+ */
+	background:linear-gradient(top, #FFE833 0%,#FFCD00 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFE833', endColorstr='#FFCD00');
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFE833', endColorstr='#FFCD00')";
 	
 	
 	border: 1px solid #D5D5D5;
@@ -276,9 +276,10 @@ input {
 	border-top-left-radius: 0;
 	border-top-right-radius: 0;
 }
-
-.widget-nopad .widget-content {
-	padding: 0;
+.stat-container + .widget .widget-content{
+	background: url(http://wphotography.altervista.org/blog/wp-content/uploads/2013/08/congresso.jpg) no-repeat;
+	background-size: 100%;
+	background-position-y: -202px;
 }
 
 /* Widget Content Clearfix */	
@@ -390,15 +391,16 @@ input {
 	font-weight: 600;
 	color: #FFF;
 	
-	background: #3C4049;
-	background:-moz-linear-gradient(top, #4A515B 0%, #3C4049 100%); /* FF3.6+ */
-	background:-webkit-gradient(linear, left top, left bottom, color-stop(0%,#4A515B), color-stop(100%,#3C4049)); /* Chrome,Safari4+ */
-	background:-webkit-linear-gradient(top, #4A515B 0%,#3C4049 100%); /* Chrome10+,Safari5.1+ */
-	background:-o-linear-gradient(top, #4A515B 0%,#3C4049 100%); /* Opera11.10+ */
-	background:-ms-linear-gradient(top, #4A515B 0%,#3C4049 100%); /* IE10+ */
-	background:linear-gradient(top, #4A515B 0%,#3C4049 100%); /* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#4A515B', endColorstr='#3C4049');
-	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#4A515B', endColorstr='#3C4049')";
+	background: #2D7196;
+	background:-moz-linear-gradient(top, #3888B2 0%, #2D7196 100%); /* FF3.6+ */
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0%,#3888B2), color-stop(100%,#2D7196)); /* Chrome,Safari4+ */
+	background:-webkit-linear-gradient(top, #3888B2 0%,#2D7196 100%); /* Chrome10+,Safari5.1+ */
+	background:-o-linear-gradient(top, #3888B2 0%,#2D7196 100%); /* Opera11.10+ */
+	background:-ms-linear-gradient(top, #3888B2 0%,#2D7196 100%); /* IE10+ */
+	background:linear-gradient(top, #3888B2 0%,#2D7196 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#3888B2', endColorstr='#2D7196');
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#3888B2', endColorstr='#2D7196')";
+	border: 1px solid #2D7196;
 	
 	border-radius: 4px;
 	
@@ -418,75 +420,7 @@ input {
 }
 
 
-/* Additional CSS - Misael*/
-
-#connect-you h4{
-	margin-bottom: 5px;
-	color: #0088cc;	
-}
-
-#connect-you img{
-	width: 100%;
-}
-
-#connect-you .span4{
-	font-weight: bolder; 
-}
 
 
-#connect-you .explanation-block h3{
-	margin-bottom: 5px;
-}
-
-#connect-you .explanation-block{
-	min-height: 70px;
-}
-
-#connect-you .explanation-img{
-	width: 100px;
-}
-
-#connect-you .span2 button{
-	margin-top: 10px;
-}
-
-#reportrange{
-	width: 91%;
-	text-align: center;
-}
 
 
-.invisible-horizontal-divider{
-	margin-top: 15px;
-}
-
-#focus-summary .picture{
-	display: table-cell;
-	padding-right: 10px;
-	padding-left: 10px;
-}
-
-#focus-summary hr{
-	margin: 5px 0;
-}
-
-#focus-summary .content{
-	display: table-cell;
-	vertical-align: top;
-}
-
-#focus-summary img{
-	width: 40px;
-}
-
-#focus-details .focus-item-name{
-	font-size: 18px;
-	font-weight: bolder;
-	color: #0088cc;
-}
-
-#focus-details .focus-item-date{
-	float: right;
-	font-size: 15px;
-	font-weight: bolder;
-}

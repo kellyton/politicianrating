@@ -43,28 +43,44 @@
 	font-size: 32px;
 	font-weight: 600;
 	font-style: normal;
-	color: #4A515B;
+	color: #fff;
 }
 
 .stat {
-	height: 50px;
-	padding: 15px;
+	height: 100px;
+	width: 150px;
+	padding-top: 50px;
 	margin-right: 1em;
 	
 	font-size: 12px;
 	font-style: italic;
 	text-align: center;
-	color: #888;
+	vertical-align: middle;
+	line-height: 20px;
+	color: #fff;
 	
-	background: #FFF;
+	background: #51B746;
 	
-	border: 1px solid #CCC;
+	border-radius: 50%;
 	
-	border-radius: 5px;
 	
-	text-shadow: 1px 1px 2px rgba(255,255,255,.5);
+	/*text-shadow: 1px 1px 2px rgba(0,0,0,.3);*/
 }
 
+.stat:hover{
+	-webkit-transition: all .5s linear;
+	-moz-transition: all .5s linear;
+	-o-transition: all .5s linear;
+	transition: all .5s linear;
+	background-color: #42973A;
+	box-shadow: inset 5px 5px 5px #2F6C29, 1px 1px 0 #ddd;
+	cursor: default;
+
+}
+.stat:hover span{
+	cursor: default;
+
+}
 
 .stat-container .stat-holder:last-child .stat {
 	margin: 0;

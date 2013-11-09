@@ -12,7 +12,9 @@
 -------------------------------------------------------------------*/
 
 
-
+.faq-content{
+	background: url(http://prosaepolitica.com.br/wp-content/uploads/2013/06/congresso-nacional.jpg) no-repeat;
+}
 
 .faq-search {
 	margin-bottom: 2em;
