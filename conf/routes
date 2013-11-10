@@ -36,6 +36,8 @@ GET		/empresa/:id				controllers.Empresas.show(id: String)
 
 POST	/search						controllers.Search.search()
 
+GET		/map						controllers.MapService.showMap(lat: Double, lng: Double, fantasia: String)
+
 #Test
 GET		/cotas						controllers.Cotas.getCotas()
 GET		/cnpj/:cnpj					controllers.Empresas.getCaptcha(cnpj: String)

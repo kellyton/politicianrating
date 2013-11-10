@@ -29,15 +29,15 @@ public class Application extends Controller {
 	}  
 	
 	public static Result code(){
-		return ok("Em breve... (antes de 10/11/2013");
+		return ok("Em breve... (antes de 11/11/2013)");
 	}  
 	
 	public static Result docs(){
-		return ok("Em breve... (antes de 10/11/2013");
+		return ok("Em breve... (antes de 11/11/2013");
 	}  
 	
 	public static Result license(){
-		return ok("Em breve... (antes de 10/11/2013");
+		return ok("Em breve... (antes de 11/11/2013");
 	}  
 	
 }

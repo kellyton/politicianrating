@@ -3,15 +3,16 @@
 @content = {
 
 				<div class="row"><!--  Primeira linha = detalhes -->
-					<div class="span6">
+					<div class="span5">
 						<div class="widget">
 							<div class="widget-header">
 								<i class="icon-th-list"></i>
-								<h3>@empresa.getFantasia()</h3>
+								<h3>Empresa</h3>
 							</div> <!-- /widget-header -->
 							<div class="widget-content">
 								<div class="account-container">
 									<div class="account-details">
+										<span class="account-name">@empresa.getFantasia()</span>
 										<span class="account-name">@empresa.getNome()</span>
 										<span class="account-name">@empresa.getCnpjFormatted()</span>
 										@if(empresa.isCNPJ()){
@@ -30,14 +31,15 @@
 						</div>
 					</div>
 					
-					<div class="span3">
+					<div class="span4">
 						<div class="widget">
 							<div class="widget-header">
 								<i class="icon-th-list"></i>
-								<h3>Localização</h3>
+								<h3>Localização (em fase experimental)</h3>
 							</div>
-							<div class="widget-content">
-								Em breve...
+							<div class="widget-content" align="center">
+								<iframe src="@routes.MapService.showMap(empresa.getLatitude(), empresa.getLongitude(), empresa.getFantasia())"></iframe>
+								<a href="@routes.MapService.showMap(empresa.getLatitude(), empresa.getLongitude(), empresa.getFantasia())" target="_blank">Clique AQUI para expandir</a><br>
 							</div>
 						</div>	
 					</div>

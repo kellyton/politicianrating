@@ -1,20 +1,4 @@
-@* 
-@content = {
-				
-Teste antes
-
-<div id="map"></div>
-
-
-<script type="text/javascript">
-
-</script>
-
-}
-
-@rightheader(content)(0)
-*@
-
+@(lat: Double)(lng: Double)(fantasia: String)
 <!DOCTYPE html>
 <html>
   <head>
@@ -29,13 +13,23 @@ Teste antes
     </script>
     <script type="text/javascript">
       function initialize() {
+    	 
+    	var myLatlng = new google.maps.LatLng(@lat,@lng);
+    	
         var mapOptions = {
-          center: new google.maps.LatLng(-7.1920745, -48.2077896),
+          center: myLatlng,
           zoom: 18,
           mapTypeId: google.maps.MapTypeId.HYBRID 
         };
+        
         var map = new google.maps.Map(document.getElementById("map-canvas"),
             mapOptions);
+     	
+        var marker = new google.maps.Marker({
+            position: myLatlng,
+            map: map,
+            title:"@fantasia"
+        });
       }
       google.maps.event.addDomListener(window, 'load', initialize);
     </script>

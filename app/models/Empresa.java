@@ -50,6 +50,10 @@ public class Empresa {
 	@Column
 	double totalRecebido;
 	@Column
+	double latitude;
+	@Column
+	double longitude;
+	@Column
 	boolean dadosAtualizados;
 	
 	@Column(nullable = false)
@@ -209,9 +213,19 @@ public class Empresa {
 	public void setDadosAtualizados(boolean dadosAtualizados) {
 		this.dadosAtualizados = dadosAtualizados;
 	}
+	public double getLatitude() {
+		return latitude;
+	}
+	public void setLatitude(double latitude) {
+		this.latitude = latitude;
+	}
+	public double getLongitude() {
+		return longitude;
+	}
+	public void setLongitude(double longitude) {
+		this.longitude = longitude;
+	}
 
-	
-	
 	public Date getCreatedAt() {
 		return createdAt;
 	}

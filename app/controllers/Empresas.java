@@ -18,6 +18,9 @@ import java.util.Map;
 import models.Empresa;
 import models.util.PoliticoValor;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.jsoup.Connection.Method;
 import org.jsoup.Connection.Response;
 import org.jsoup.Jsoup;
@@ -28,6 +31,8 @@ import org.jsoup.select.Elements;
 import play.data.DynamicForm;
 import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
+import play.libs.WS;
+import play.libs.F.Promise;
 import play.mvc.Controller;
 import play.mvc.Result;
 import util.CnpjCpf;
@@ -398,12 +403,61 @@ public class Empresas extends Controller{
 			oldEmpresa.setSituacao(newEmpresa.getSituacao());
 			oldEmpresa.setDataSituacao(newEmpresa.getDataSituacao());
 			oldEmpresa.setDadosAtualizados(true);
+			
+			if (oldEmpresa.isCNPJ()){
+				oldEmpresa = setLocation(oldEmpresa);
+			}
+			
 			JPA.em().persist(oldEmpresa);
 		} else {
 			//insert or do nothing? Company MUST exist before this method
 		}
 		
 		return oldEmpresa;
+	}
+
+	/**
+	 * Using google geocode API
+	 * @param oldEmpresa
+	 * @return
+	 */
+	private static Empresa setLocation(Empresa empresa) {
+		//Example: http://maps.googleapis.com/maps/api/geocode/json?address=santa+cruz&components=country:ES&sensor=false
+		
+		String address = "";
+		
+		String []parts ={empresa.getLogradouro(), empresa.getNumero(), empresa.getComplemento(), empresa.getCep(), 
+				empresa.getBairro(), empresa.getCidade(), empresa.getEstado()}; 
+		
+		for (int i = 0; i < parts.length; i++) {
+			if (parts[i]!=null && parts[i].length() > 0){
+				address += ", " + parts[i];
+			}
+		}
+		
+		if (address.length() > 0){
+			address = address.substring(2);
+		} else {
+			return empresa;
+		}
+		
+		Promise<WS.Response> response = WS.url("http://maps.googleapis.com/maps/api/geocode/xml")
+				.setQueryParameter("address", address)
+				.setQueryParameter("components", "country:BR")
+				.setQueryParameter("sensor", "false")
+				.get();
+		
+		org.w3c.dom.Document doc = response.get().asXml();
+		doc.getDocumentElement().normalize();
+		
+		//Process XML
+		String lat = doc.getElementsByTagName("lat").item(0).getTextContent();
+		String lng = doc.getElementsByTagName("lng").item(0).getTextContent();
+		
+		empresa.setLatitude(Double.parseDouble(lat));
+		empresa.setLongitude(Double.parseDouble(lng));
+		
+		return empresa;
 	}
 
 	/**
