@@ -41,15 +41,25 @@ public class Empresas extends Controller{
 	
 	private static HashMap<String, Session> sessionMap = new HashMap<String, Session>();  
 	
+	private static final int PAGE_SIZE = 5000;
 	
 	/**
 	 * Return a page with a list of all companies
 	 * @return
 	 */
     @Transactional
-    public static Result empresas() {
-    	List<Empresa> empresas = JPA.em().createQuery("FROM Empresa ORDER BY totalRecebido DESC").getResultList();    	
-    	return ok(views.html.empresa.render(empresas));
+    public static Result empresas() {  	
+    	return empresas(1);
+    }
+    
+    private static Result empresas(int page){
+    	int begin = (page - 1) * PAGE_SIZE;
+    	
+    	List<Empresa> empresas = JPA.em().createQuery("FROM Empresa ORDER BY totalRecebido DESC")
+    	.setFirstResult(begin)
+    	.setMaxResults(PAGE_SIZE)
+    	.getResultList();    	
+    	return ok(views.html.empresa.render(empresas, page));
     }
     
     /**
