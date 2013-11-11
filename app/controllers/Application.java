@@ -49,15 +49,16 @@ public class Application extends Controller {
 	}  
 	
 	public static Result docs(){
-		return ok("Em breve... (antes de 11/11/2013");
+		return redirect("http://bit.ly/kbhackv");
 	}  
 	
 	public static Result license(){
-		return ok("Em breve... (antes de 11/11/2013");
+		//return redirect("http://www.gnu.org/licenses/agpl-3.0.html");
+		return redirect(controllers.routes.FileService.getFile("LICENCA.txt"));
 	}
 	
 	public static Result sobre(){
-		return ok("Em breve... (antes de 11/11/2013");
+		return ok("Em breve...");
 	} 
 	
 }
