@@ -31,7 +31,7 @@ import play.mvc.Result;
 
 public class Cotas extends Controller {
 	
-	public static Result getCotas(){
+	/*public static Result getCotas(){
 		return ok(views.html.cotas.render());
 	}
 	
@@ -78,7 +78,7 @@ public class Cotas extends Controller {
 		gastos = gastos.replace("#", ",");
 		
 		return ok(views.html.grafico_cotas.render(gastosPartidos, gastos));
-	}
+	}*/
 	
 /*	@Transactional
 	public static Result getCotasBak() {

@@ -40,10 +40,10 @@ POST	/search						controllers.Search.search()
 
 #Methods to show iFrames
 GET		/map						controllers.MapService.showMap(lat: Double, lng: Double, fantasia: String)
-GET		/graph/cota					controllers.Cotas.getGraficoCotas()
+GET		/graph/cota					controllers.Estatisticas.getGraficoCotas()
 
 #Test
-GET		/cotas						controllers.Cotas.getCotas()
+#GET		/cotas						controllers.Cotas.getCotas()
 GET		/cnpj/:cnpj					controllers.Empresas.getCaptcha(cnpj: String)
 POST	/cnpj						controllers.Empresas.captchaValidado()	
 

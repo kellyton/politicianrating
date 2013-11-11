@@ -31,10 +31,94 @@ import play.mvc.Result;
 
 public class Estatisticas extends Controller {
 	
+	@Transactional
 	public static Result estatisticas(){
-		return ok(views.html.cotas.render());
+		
+		List<GastoPartido> gastosTipoDeputado = getGastosTipoDeputado();
+		List<GastoPartido> gastosTipoSenador = getGastosTipoSenador();
+		
+		double totalGastosDeputado = 0;
+		double totalGastosSenador = 0;
+		
+		for (GastoPartido gasto: gastosTipoDeputado){
+			totalGastosDeputado += gasto.getValor();
+		}
+		
+		for (GastoPartido gasto: gastosTipoSenador){
+			totalGastosSenador += gasto.getValor();
+		}
+		
+		String totalDeputado, totalSenador;
+		totalDeputado = String.valueOf(totalGastosDeputado);
+		totalDeputado = totalDeputado.substring(0, totalDeputado.indexOf(".") + 2); 
+		
+		totalSenador = String.valueOf(totalGastosSenador);
+		totalSenador = totalSenador.substring(0, totalSenador.indexOf(".") + 2);
+		
+		return ok(views.html.cotas.render(totalDeputado, gastosTipoDeputado, totalSenador, gastosTipoSenador));
 	}
 	
+	 
+	
+	private static List<GastoPartido> getGastosTipoDeputado() {
+		String query = "SELECT txtDescricao, sum(vlrDocumento)" +
+				" FROM deputadofederalgasto" +
+				" GROUP BY txtDescricao" +
+				" ORDER BY 2 DESC";
+	
+    	List<Object> resultList = JPA.em().createNativeQuery(query).getResultList();
+    	List<GastoPartido> gastosTipo = new ArrayList<GastoPartido>(15);
+    	
+    	GastoPartido gastoTipo;
+    	
+		for (Object result : resultList) {
+			gastoTipo = new GastoPartido();
+			
+		    Object[] items = (Object[]) result;
+		    try {
+		    	gastoTipo.setPartido((String)items[0]);
+		    	gastoTipo.setMedia((Double)items[1]);
+		    	
+		    	gastosTipo.add(gastoTipo);
+		    } catch (Exception e){
+		    	e.printStackTrace();
+		    }
+		}
+		
+		return gastosTipo;
+	}
+	
+	private static List<GastoPartido> getGastosTipoSenador() {
+		String query = "SELECT tipo_depesa, sum(valor_reembolsado)" +
+				" FROM senadorGasto WHERE ano = :ano" +
+				" GROUP BY tipo_depesa ORDER BY 2 DESC";
+	
+    	List<Object> resultList = JPA.em().createNativeQuery(query)
+    			.setParameter("ano", "2013")
+    			.getResultList();
+    	List<GastoPartido> gastosTipo = new ArrayList<GastoPartido>(15);
+    	
+    	GastoPartido gastoTipo;
+    	
+		for (Object result : resultList) {
+			gastoTipo = new GastoPartido();
+			
+		    Object[] items = (Object[]) result;
+		    try {
+		    	gastoTipo.setPartido((String)items[0]);
+		    	gastoTipo.setMedia((Double)items[1]);
+		    	
+		    	gastosTipo.add(gastoTipo);
+		    } catch (Exception e){
+		    	e.printStackTrace();
+		    }
+		}
+		
+		return gastosTipo;
+	}
+
+
+
 	@Transactional
 	public static Result getGraficoCotas(){
 		//String partidos[] = { 
@@ -79,117 +163,5 @@ public class Estatisticas extends Controller {
 		
 		return ok(views.html.grafico_cotas.render(gastosPartidos, gastos));
 	}
-	
-/*	@Transactional
-	public static Result getCotasBak() {
-
-    	String partidos[] = { 
-    			"PR", "PT", "PSB", "PMN", "PMDB", "PSC", "PP", "PROS", "PDT", "PSDB", "PRB", "PV",
-    			"PPS", "DEM", "PSD", "PCdoB", "SDD", "PTB", "PTdoB", "PRP", "PSOL" };
-    	
-    	List<DeputadoFederal> pr = JPA.em().createQuery("FROM DeputadoFederal WHERE partido = :id ORDER BY gastoPorDia")
-    			.setParameter("id", "PR")
-    			.getResultList();
-    	
-    	List<DeputadoFederal> pt = JPA.em().createQuery("FROM DeputadoFederal WHERE partido = :id ORDER BY gastoPorDia")
-    			.setParameter("id", "PT")
-    			.getResultList(); 
-    	
-    	List<DeputadoFederal> psb = JPA.em().createQuery("FROM DeputadoFederal WHERE partido = :id ORDER BY gastoPorDia")
-    			.setParameter("id", "PSB")
-    			.getResultList(); 
-    	
-    	List<DeputadoFederal> pmn = JPA.em().createQuery("FROM DeputadoFederal WHERE partido = :id ORDER BY gastoPorDia")
-    			.setParameter("id", "PMN")
-    			.getResultList();
-    	
-    	List<DeputadoFederal> pmdb = JPA.em().createQuery("FROM DeputadoFederal WHERE partido = :id ORDER BY gastoPorDia")
-    			.setParameter("id", "PMDB")
-    			.getResultList(); 
-    	
-    	List<DeputadoFederal> psc = JPA.em().createQuery("FROM DeputadoFederal WHERE partido = :id ORDER BY gastoPorDia")
-    			.setParameter("id", "PSC")
-    			.getResultList(); 
-    	
-    	List<DeputadoFederal> pp = JPA.em().createQuery("FROM DeputadoFederal WHERE partido = :id ORDER BY gastoPorDia")
-    			.setParameter("id", "PP")
-    			.getResultList();
-    	
-    	List<DeputadoFederal> PROS = JPA.em().createQuery("FROM DeputadoFederal WHERE partido = :id ORDER BY gastoPorDia")
-    			.setParameter("id", "PROS")
-    			.getResultList(); 
-    	
-    	List<DeputadoFederal> PDT = JPA.em().createQuery("FROM DeputadoFederal WHERE partido = :id ORDER BY gastoPorDia")
-    			.setParameter("id", "PDT")
-    			.getResultList(); 
-    	
-    	List<DeputadoFederal> PSDB = JPA.em().createQuery("FROM DeputadoFederal WHERE partido = :id ORDER BY gastoPorDia")
-    			.setParameter("id", "PSDB")
-    			.getResultList(); 
-    	
-    	List<DeputadoFederal> PRB = JPA.em().createQuery("FROM DeputadoFederal WHERE partido = :id ORDER BY gastoPorDia")
-    			.setParameter("id", "PRB")
-    			.getResultList(); 
-    	
-    	List<DeputadoFederal> PV = JPA.em().createQuery("FROM DeputadoFederal WHERE partido = :id ORDER BY gastoPorDia")
-    			.setParameter("id", "PV")
-    			.getResultList(); 
-    	
-    	List<DeputadoFederal> PPS = JPA.em().createQuery("FROM DeputadoFederal WHERE partido = :id ORDER BY gastoPorDia")
-    			.setParameter("id", "PPS")
-    			.getResultList(); 
-    	
-    	List<DeputadoFederal> DEM = JPA.em().createQuery("FROM DeputadoFederal WHERE partido = :id ORDER BY gastoPorDia")
-    			.setParameter("id", "DEM")
-    			.getResultList(); 
-    	
-    	List<DeputadoFederal> PSD = JPA.em().createQuery("FROM DeputadoFederal WHERE partido = :id ORDER BY gastoPorDia")
-    			.setParameter("id", "PSD")
-    			.getResultList(); 
-    	
-    	List<DeputadoFederal> PCdoB = JPA.em().createQuery("FROM DeputadoFederal WHERE partido = :id ORDER BY gastoPorDia")
-    			.setParameter("id", "PCdoB")
-    			.getResultList(); 
-    	
-    	List<DeputadoFederal> SDD = JPA.em().createQuery("FROM DeputadoFederal WHERE partido = :id ORDER BY gastoPorDia")
-    			.setParameter("id", "SDD")
-    			.getResultList(); 
-    	
-    	List<DeputadoFederal> PTB = JPA.em().createQuery("FROM DeputadoFederal WHERE partido = :id ORDER BY gastoPorDia")
-    			.setParameter("id", "PTB")
-    			.getResultList(); 
-    	
-    	List<DeputadoFederal> PTdoB = JPA.em().createQuery("FROM DeputadoFederal WHERE partido = :id ORDER BY gastoPorDia")
-    			.setParameter("id", "PTdoB")
-    			.getResultList(); 
-    	
-    	List<DeputadoFederal> PRP = JPA.em().createQuery("FROM DeputadoFederal WHERE partido = :id ORDER BY gastoPorDia")
-    			.setParameter("id", "PRP")
-    			.getResultList(); 
-    	
-    	List<DeputadoFederal> PSOL = JPA.em().createQuery("FROM DeputadoFederal WHERE partido = :id ORDER BY gastoPorDia")
-    			.setParameter("id", "PSOL")
-    			.getResultList(); 
-    
-
-		
-    	return ok(views.html.cotas.render(pr, pt, psb, pmn, pmdb, psc, pp, PROS, PDT, PSDB, PRB, PV,
-    			PPS, DEM, PSD, PCdoB, SDD, PTB, PTdoB, PRP, PSOL));
-    			
-    			*/
-	
-		/*		List<Float> medias = new ArrayList<Float>(); 
-		//TreeMap<String, Float> partidoValor = new TreeMap<String, Float>();
-		for (String partido: partidos){
-			Float media = (Float)JPA.em()
-				.createNativeQuery("select avg(gastoPorDia) from deputadofederal where partido = :id")
-				.setParameter("id", partido)
-				.getSingleResult();
-			
-			medias.add(media);
-			//partidoValor.put(partido, media);
-		}*/
-		
-	//}
 
 }

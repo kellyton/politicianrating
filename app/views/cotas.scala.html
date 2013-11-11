@@ -1,3 +1,5 @@
+@(totalDeputado:String)(listDeputado:List[util.GastoPartido])(totalSenador:String)(listSenador:List[util.GastoPartido])
+
 @* Copyright 2013 de Kellyton Brito. Este arquivo é parte 
 do programa MeuCongressoNacional.com . O MeuCongressoNacional.com 
 é um software livre; você pode redistribuí-lo e/ou modificá-lo 
@@ -21,13 +23,69 @@ junto com este programa, se não, acesse http://www.gnu.org/licenses/ *@
 				<h3>Gasto médio, por partido</h3>
 			</div>
 			<div class="widget-content" align="center">
-				<iframe src="@routes.Cotas.getGraficoCotas()" style="width: 550px; height: 450px; margin: 0 auto;"></iframe>
-				<br></>Em breve: gastos por base, por tipo de gasto, e comparações dentro do mesmo partido
+				<iframe src="@routes.Estatisticas.getGraficoCotas()" style="width: 550px; height: 375px; margin: 0 auto;"></iframe>
 			</div>
 			
 		</div>
 	</div>
 </div>	
+
+<div class="row">
+	<div class="span5">
+		<div class="widget widget-table">
+			<div class="widget-header">
+				<i class="icon-signal"></i>
+				<h3>Gastos da Câmara, por tipo</h3>
+			</div>
+			<div class="widget-content" align="center">
+				<table class="table table-striped table-bordered">
+					<thead>
+						<tr>
+							<th>Tipo</th>
+							<th>Valor</th>
+						</tr>
+					</thead>
+
+					<tbody>
+						@for((item, index) <- listDeputado.zipWithIndex){
+						<tr>
+							<td>@item.getPartido()</td>
+							<td>@item.getValorFormated()</td>
+						</tr>
+						}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<div class="span4">
+		<div class="widget widget-table">
+			<div class="widget-header">
+				<i class="icon-signal"></i>
+				<h3>Gastos do Senado, por tipo</h3>
+			</div>
+			<div class="widget-content" align="center">
+				<table class="table table-striped table-bordered">
+					<thead>
+						<tr>
+							<th>Tipo</th>
+							<th>Valor</th>
+						</tr>
+					</thead>
+
+					<tbody>
+						@for((item, index) <- listSenador.zipWithIndex){
+						<tr>
+							<td>@item.getPartido()</td>
+							<td>@item.getValorFormated()</td>
+						</tr>
+						}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
 
 }
 
