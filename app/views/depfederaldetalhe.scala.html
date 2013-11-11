@@ -29,6 +29,12 @@ junto com este programa, se não, acesse http://www.gnu.org/licenses/ *@
 										}
 									</div> <!-- /account-avatar -->
 									<div class="account-details">
+										@if(!politico.isDeputado()){
+										<b>
+										<span class="account-role">***** Dados dos Senadores ainda em fase experimental. Para dados mais detalhados sobre os parlamentares, verifique os Deputados Federais *****</span>
+										</b>
+										}
+										
 										<span class="account-name">@politico.getNomeParlamentar()</span>
 										<span class="account-name">@politico.getNome()</span>
 										<span class="account-role">Partido: @politico.getPartido()</span>
@@ -124,7 +130,11 @@ junto com este programa, se não, acesse http://www.gnu.org/licenses/ *@
 						<div class="widget widget-table">
 							<div class="widget-header">
 								<i class="icon-th-list"></i>
+								@if(politico.isDeputado()){
 								<h3>Gastos da cota parlamentar em 2013</h3>
+								} else {
+								<h3>Gastos da cota parlamentar desde o início do mandato</h3>
+								}
 							</div> <!-- /widget-header -->
 
 							<div class="widget-content">
@@ -141,9 +151,13 @@ junto com este programa, se não, acesse http://www.gnu.org/licenses/ *@
 										@for((totalt, index) <- totaisTipo.zipWithIndex){
 										<tr>
 											<td>
+												@if(politico.isDeputado()){
 												<a href="/empresa/@totalt.getCnpj()">
 													@totalt.getCnpj()
 												</a>
+												}else{
+												@totalt.getCnpj()
+												}
 											</td>
 											<td>@totalt.getDescricao()</td>
 											<td>@totalt.getDetalhe()</td>

@@ -25,5 +25,6 @@ public interface IPolitico {
 	public String getGastoPorDiaFormated();
 	public int getIndice();
 	public String getPhotoURL();
+	public boolean isDeputado();
 	
 }

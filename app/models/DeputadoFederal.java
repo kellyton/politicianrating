@@ -26,7 +26,7 @@ import javax.persistence.PreUpdate;
 
 import play.db.jpa.JPA;
 
-/**
+/*
  * O numero da matricula aqui é o NuCarteiraParlamentar nos gastos 
  * @author kellyton
  *
@@ -215,6 +215,10 @@ public class DeputadoFederal implements IPolitico{
 	@Override
 	public String getPhotoURL() {
 		return null;
+	}
+	@Override
+	public boolean isDeputado() {
+		return true;
 	}
 	
 	////////////////////////

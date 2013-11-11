@@ -46,8 +46,8 @@ junto com este programa, se não, acesse http://www.gnu.org/licenses/ *@
 					
 					<div class="stat-holder">						
 						<div class="stat">							
-							<span>100+</span>							
-							Estatísticas							
+							<span>20.475</span>							
+							Empresas							
 						</div> <!-- /stat -->						
 					</div> <!-- /stat-holder -->
 					
@@ -78,11 +78,26 @@ junto com este programa, se não, acesse http://www.gnu.org/licenses/ *@
 						<div class="widget">
 							
 							<div class="widget-header">
-								<h3>Orientações</h3>
+								<h3>Olhe a vontade!</h3>
 							</div> <!-- /widget-header -->
 																
 							<div class="widget-content">
-								<p>Para saber informações detalhadas sobre os gastos dos digníssimos Senadores e Deputados Federais, apenas coloque o nome ou parte do nome deles (podem ser vários) no campo de busca acima, selecione por estado ao lado direito, ou visualize todos os deputados federais ou todos os senadores no menu do lado esquerdo.<br>
+								<p>Aqui você poderá encontrar informações sobre o mandato dos nossos parlamentares: 
+								<a href="@routes.Deputados.deputados()"">
+								<b>Deputados Federais</b></a> (mais completo) e <a href="@routes.Senadores.senadores()"><b>Senadores</b></a> (ainda em desenvolvimento). Você encontrará 
+								dados sobre as <a href="http://www2.camara.leg.br/atividade-legislativa/comissoes/o-papel-das-comissoes" target="_blank">
+								<b>comissões </b></a> que cada um participa, os <a href="http://www12.senado.gov.br/jovemsenador/arquivos/como-sao-feitas-as-leis-1" target="_blank">
+								<b>projetos de lei ou de emenda da constituição </b></a> que cada um já apresentou,
+								e principalmente dados sobre os <b>gastos</b> relacionados 
+								<a href="http://www2.camara.leg.br/comunicacao/assessoria-de-imprensa/cota-parlamentar" target="_blank">
+								<b>às cotas parlamentares</b></a>. Também poderá verificar quais 
+								<a href="@routes.Empresas.empresas()"><b> empresas </b></a>receberam pagamentos 
+								relacionados à cota parlamentar, verificar algumas <a href="@routes.Estatisticas.estatisticas()"><b> estatísticas </b></a>
+								e até visualizar a localização delas no mapa(quem sabe você não acha alguma empresa fantasma?).
+								<br>
+								O site está em constante desenvolvimento. Mais informações, ou qualquer dúvida, reclamação, crítica, sugestão, ou
+								solicitação de dados relacionados aos parlamentares mas não constantes no site, pode nos contactar
+								pelo menu <a href="@routes.Application.sobre()"><b>Sobre</b></a>.
 								</p>
 							</div> <!-- /widget-content -->
 							

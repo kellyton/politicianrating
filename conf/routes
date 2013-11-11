@@ -29,6 +29,7 @@ GET		/sobre						controllers.Application.sobre()
 GET		/deputado					controllers.Deputados.deputados()
 GET		/senador					controllers.Senadores.senadores()
 GET		/empresa					controllers.Empresas.empresas()
+GET		/estatisticas				controllers.Estatisticas.estatisticas()
 
 GET		/deputado/:id				controllers.Deputados.show(id: String)
 GET		/senador/:id				controllers.Senadores.show(id: String)

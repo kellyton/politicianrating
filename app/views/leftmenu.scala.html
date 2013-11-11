@@ -83,9 +83,20 @@ junto com este programa, se não, acesse http://www.gnu.org/licenses/ *@
 						</a>
 					</li>
 					
+					@if(activemenu == 6) {
+					<li class="active">
+					} else {
+	  				<li>
+					}
+						<a href="@routes.Estatisticas.estatisticas()">
+							<i class="icon-user"></i>
+							Estatísticas
+						</a>
+					</li>
+					
 					<hr />
 					
-					@if(activemenu == 5) {
+					@if(activemenu == 7) {
 					<li class="active">
 					} else {
 	  				<li>
@@ -101,8 +112,8 @@ junto com este programa, se não, acesse http://www.gnu.org/licenses/ *@
 				<hr />
 				
 				<div class="sidebar-extra">
-					<p>Pesquise inserindo à direita o nome (ou parte do nome) de algum deputado e/ou senador, ou selecione por estado, ou clique acima para ver a lista de todos os deputados ou senadores.</p>
-				</div> <!-- .sidebar-extra -->
+					<p></p>
+				</div> <!-- colocar aqui pra cadastrar o e-mail -->
 				
 				<br />
 		

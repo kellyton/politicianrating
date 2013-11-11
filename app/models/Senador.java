@@ -182,5 +182,9 @@ public class Senador implements IPolitico{
 	public String toString(){
 		return nome + " - " + uf + " - " + partido;
 	}
+	@Override
+	public boolean isDeputado() {
+		return false;
+	}
 	
 }

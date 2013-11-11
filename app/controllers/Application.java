@@ -58,7 +58,7 @@ public class Application extends Controller {
 	}
 	
 	public static Result sobre(){
-		return ok("Em breve...");
+		return ok(views.html.sobre.render());
 	} 
 	
 }
