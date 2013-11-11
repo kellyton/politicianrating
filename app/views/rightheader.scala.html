@@ -16,30 +16,29 @@ junto com este programa, se não, acesse http://www.gnu.org/licenses/ *@
 @contentfull = {
 
 	<div class="span9">
-				<h1 class="page-title">
-					<i class="icon-home"></i>
-					Nossos Parlamentares					
-				</h1>
-				
-				<div class="widget">
+		<h1 class="page-title">
+			<i class="icon-home"></i>
+			Nossos Parlamentares					
+		</h1>
+		
+		<div class="widget">
 
-					<div class="widget-header">
-						<i class="icon-search"></i>
-						<h3>Busca</h3>
-					</div> <!-- /widget-header -->
-					<div class="widget-content">
-						<div class="faq-container">
-							<form class="faq-search" method="post" action="@routes.Search.search()">
-								<input type="text" name="q" placeholder="Digite o nome ou parte do nome de um ou mais políticos (deputados ou senadores)">
-							</form>
-						</div>	
-					</div> <!-- /widget-content -->
-					
-				</div>
-				
-				@content
-				
-			</div>
+			<div class="widget-header">
+				<i class="icon-search"></i>
+				<h3>Busca</h3>
+			</div> <!-- /widget-header -->
+			<div class="widget-content">
+				<div class="faq-container">
+					<form class="faq-search" method="post" action="@routes.Search.search()">
+						<input type="text" name="q" placeholder="Digite o nome ou parte do nome de um ou mais políticos (deputados ou senadores)">
+					</form>
+				</div>	
+			</div> <!-- /widget-content -->
+			
+		</div>
+		
+		@content
+	</div>
 
 }
 

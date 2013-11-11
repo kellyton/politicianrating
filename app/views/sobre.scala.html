@@ -11,10 +11,146 @@ meucongressonacional.com/license. Você deve ter recebido uma cópia
 da GNU Affero General Public License, sob o título "LICENCA.txt", 
 junto com este programa, se não, acesse http://www.gnu.org/licenses/ *@
 
-@content = {
+@contentfull = {
 
-	Erro... Por favor retorne em alguns minutos.
+	<div class="span9">
+		<h1 class="page-title">
+			<i class="icon-home"></i>
+			Sobre o MeuCongressoNacional.com					
+		</h1>
+		
+		<div class=row>
+			<div class="span5">
+				<div class="widget">
+					<div class="widget-header">
+						<i class="icon-search"></i>
+						<h3>O Site</h3>
+					</div>
+					<div class="widget-content">
+					O MeuCongressoNacional.com surgiu de um almoço entre amigos, durante o
+					período das manifestações populares ocorridas no Brasil em 2013. Estes
+					amigos queriam fazer algo realmente útil, que pudesse ajudar a população
+					a escolher melhor nossos parlamentares nas próximas eleições.
+					
+					O objetivo do projeto é o aumento da transparência na divulgação de informações públicas, além de
+					uma maior aproximação da população com o poder legislativo e uma maior compreensão das atividades
+					parlamentares, tanto <a href="@routes.Deputados.deputados()"">
+					<b>Deputados Federais</b></a> (mais completo) quanto <a href="@routes.Senadores.senadores()"><b>Senadores</b></a> (ainda em desenvolvimento).
+					No site são apresentados dados (unitários ou consolidados) sobre as <a href="http://www2.camara.leg.br/atividade-legislativa/comissoes/o-papel-das-comissoes" target="_blank">
+					<b>comissões </b></a> que cada um participa, os <a href="http://www12.senado.gov.br/jovemsenador/arquivos/como-sao-feitas-as-leis-1" target="_blank">
+					<b>projetos de lei ou de emenda da constituição </b></a> que cada um já apresentou,
+					e principalmente dados sobre os <b>gastos</b> relacionados 
+					<a href="http://www2.camara.leg.br/comunicacao/assessoria-de-imprensa/cota-parlamentar" target="_blank">
+					<b>às cotas parlamentares</b></a>. Também são apresentados dados sobre as  
+					<a href="@routes.Empresas.empresas()"><b> empresas </b></a>que receberam pagamentos 
+					relacionados à cota parlamentar, verificar algumas <a href="@routes.Estatisticas.estatisticas()"><b> estatísticas </b></a>
+					e até visualizar a localização delas no mapa <a href="/empresa/17589509000114"><b>(ver exemplo)</b></a>.
+					<br><br>
+					O site tem como público alvo tanto a população em geral, que queira acompanhar mais de perto o mandato dos parlamentares,
+					como órgãos de controle e fiscalização, que podem utilizar o mesmo como uma ferramenta de apoio na detecção de irregularidades.
+					<br>
+					O site está em constante desenvolvimento. Mais informações, ou qualquer dúvida, reclamação, crítica, sugestão, ou
+					solicitação de dados relacionados aos parlamentares mas não constantes no site, pode nos contactar
+					pelo menu <a href="@routes.Application.sobre()"><b>Sobre</b></a>.
+					</div>
+				</div>
+			</div>
+			<div class="span4">
+				<div class="widget">
+					<div class="widget-header">
+						<i class="icon-search"></i>
+						<h3>Os Dados</h3>
+					</div>
+					<div class="widget-content">
+						Todos os dados aqui apresentados são dados abertos, disponibilizados pelo Governo Federal, e "acessíveis"
+						por qualquer pessoa. "Acessíveis" pois normalmente eles são de difícil acesso, e principalmente
+						são difíceis de se obter informações relevantes, como somatórios, totalizações, comparativos, etc.
+						<br><br>
+						Os dados dos deputados são obtidos na seção de <a href="http://www2.camara.leg.br/transparencia/dados-abertos" target="_blank">
+						dados abertos da Câmara dos Deputados</a>, e de igual modo, os dados dos senadores são obtidos na seção de
+						<a href="http://dadosabertos.senado.gov.br/" target="_blank">dados abertos do Senado Federal</a> (que sofreu uma boa atualizada
+						nos últimos dias). Além disso, os dados das empresas são obtidos diretamente no site de 
+						<a href="http://www.receita.fazenda.gov.br/pessoajuridica/cnpj/cnpjreva/cnpjreva_solicitacao.asp" target="_blank">
+						Consulta de CNPJ da Receita Federal</a> de forma semi-automática: se nós ainda não temos os dados da empresa
+						que você deseja consultar, nós remetemos sua pesquisa ao site da receita e você mesmo valida o 
+						<a href="http://pt.wikipedia.org/wiki/CAPTCHA" target="_blank">captcha </a>deles.
+						<br><br>
+						Por fim, de posse do endereço da empresa obtido junto à Receita Federal, mostramos a localização utilizando o 
+						tradicional <a href="http://maps.google.com">Google Maps</a>. Não está perfeito, dá pra visualizar muitas empresas.
+						<br><br>
+						Pretentemos atualizar a base de dados todos os meses. A última atualização ocorreu em 26 de outubro de 2013.
+						
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class=row>
+			<div class="span5">
+				<div class="widget">
+					<div class="widget-header">
+						<i class="icon-search"></i>
+						<h3>Quem Somos</h3>
+					</div>
+					<div class="widget-content">
+						<p><b>Criador do projeto:</b><br>
+							<a class="brand" href="http://kellytonbrito.wordpress.com">Kellyton Brito</a>
+							Professor de Computação no Departamento de Informática e Estatística da Universidade
+							Federal Rural de Pernambuco, e Doutorando em Engenharia de Software pela Universidade
+							Federal de Pernambuco.
+						</p>
+							
+						<p><b>Colaboradores:</b><br>
+							<a class="brand" href="https://twitter.com/misaelneto">+ Misael neto</a>
+							Desenvolvedor de Sistemas na <a href="http://www.sodet.biz">Sodet</a>. Um dos maiores
+							apoiadores do projeto, colabora tirando dúvidas e discutindo questões técnicas.
+							<br>
+							<a class="brand" href="http://dyegocarlos.com">+ Dyego Carlos</a>, colabora com ajustes
+							no design da página.
+							<br> 
+							<a class="brand" href="https://www.facebook.com/ivoromario">+ Ivo Lima</a>, colaborou
+							com o desenvolvimento da solução que busca as informações no site da Receita Federal.
+							<br>
+	 						<a class="brand" href="https://twitter.com/cristov4m">+ Cristovam Segundo</a>, criou
+	 						a imagem referência do site (no canto superior esquerdo);
+						</p>
+							
+							Também são importantes a <a href= "http://www.ufrpe.br">Universidade Federal Rural de Pernambuco</a>
+							e a <a href= "http://www.cin.ufpe.br">Universidade Federal de Pernambuco</a>, por proverem o ambiente
+							necessário para reflexão, discussõese implementação desta iniciativa.
+					</div>
+				</div>
+			</div>
+			<div class="span4">
+				<div class="widget">
+					<div class="widget-header">
+						<i class="icon-search"></i>
+						<h3>Contatos</h3>
+					</div>
+					<div class="widget-content">
+						O site está em constante desenvolvimento. Se deseja mais informações, ou colaborar com o projeto,
+						ou se tiver	qualquer dúvida, reclamação, crítica, sugestão, ou solicitação de dados relacionados 
+						aos parlamentares mas não constantes no site, envie um e-mail para o kellyton@@kellyton.com.br.
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class=row>
+			<div class="span9">
+				<div class="widget">
+					<div class="widget-header">
+						<i class="icon-search"></i>
+						<h3>Notícias na imprensa</h3>
+					</div>
+					<div class="widget-content">
+					</div>
+				</div>
+			</div>
+		</div>
+		
+	</div>
 
 }
 
-@rightheader(content)(0)
+@leftmenu(contentfull)(7)
