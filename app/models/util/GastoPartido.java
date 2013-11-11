@@ -12,41 +12,36 @@
 * junto com este programa, se não, acesse http://www.gnu.org/licenses/
 **/
 
-package models;
+package models.util;
 
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
 
-import javax.persistence.Entity;
+public class GastoPartido {
 
-public class TotalData {
-
-	int ano, mes;
-	double totalGasto;
+	String partido;
+	Double valor;
 	
-	public int getAno() {
-		return ano;
+	public String getPartido() {
+		return partido;
 	}
-	public void setAno(int ano) {
-		this.ano = ano;
+	public void setPartido(String partido) {
+		this.partido = partido;
 	}
-	public int getMes() {
-		return mes;
+	public double getMedia() {
+		return valor;
 	}
-	public void setMes(int mes) {
-		this.mes = mes;
-	}
-	public double getTotalGasto() {
-		return totalGasto;
-	}
-	public void setTotalGasto(double totalGasto) {
-		this.totalGasto = totalGasto;
-	}
-	public String getTotalGastoFormated() {
-		return new DecimalFormat("#,###.00").format(totalGasto);  
+	public void setMedia(double valor) {
+		this.valor = valor;
 	}
 	
-	public String toString(){
-		return ano + "/" + mes + ":" +  getTotalGastoFormated();
-	}
-	
+	public String getValorFormated(){
+		//return new DecimalFormat("#,###.00").format(valor);
+		Locale LOCAL = new Locale("pt","BR");
+		
+		DecimalFormat df = new DecimalFormat("###0.00", new DecimalFormatSymbols(LOCAL));  
+		String s = df.format(valor);  
+		return s;
+	}	   
 }

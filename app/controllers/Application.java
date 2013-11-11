@@ -1,3 +1,17 @@
+/* Copyright 2013 de Kellyton Brito. Este arquivo é parte 
+* do programa MeuCongressoNacional.com . O MeuCongressoNacional.com 
+* é um software livre; você pode redistribuí-lo e/ou modificá-lo 
+* dentro dos termos da GNU Affero General Public License como 
+* publicada pela Fundação do Software Livre (FSF) na versão 3 
+* da Licença. Este programa é distribuído na esperança que possa 
+* ser útil, mas SEM NENHUMA GARANTIA; sem uma garantia implícita 
+* de ADEQUAÇÃO a qualquer MERCADO ou APLICAÇÃO EM PARTICULAR. Veja 
+* a licença para maiores detalhes, disponível em 
+* meucongressonacional.com/license. Você deve ter recebido uma cópia 
+* da GNU Affero General Public License, sob o título "LICENCA.txt", 
+* junto com este programa, se não, acesse http://www.gnu.org/licenses/
+**/
+
 package controllers;
 
 import java.util.List;
@@ -8,6 +22,8 @@ import play.mvc.*;
 import play.db.jpa.Transactional;
 
 import views.html.*;
+
+
 
 public class Application extends Controller {
   
@@ -29,7 +45,7 @@ public class Application extends Controller {
 	}  
 	
 	public static Result code(){
-		return ok("Em breve... (antes de 11/11/2013)");
+		return redirect("https://github.com/misawsneto/politicianrating");
 	}  
 	
 	public static Result docs(){
@@ -38,6 +54,10 @@ public class Application extends Controller {
 	
 	public static Result license(){
 		return ok("Em breve... (antes de 11/11/2013");
-	}  
+	}
+	
+	public static Result sobre(){
+		return ok("Em breve... (antes de 11/11/2013");
+	} 
 	
 }
