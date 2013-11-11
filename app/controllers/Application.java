@@ -49,7 +49,7 @@ public class Application extends Controller {
 	}  
 	
 	public static Result docs(){
-		return redirect("http://bit.ly/kbhackv");
+		return ok(views.html.sobre.render());
 	}  
 	
 	public static Result license(){
