@@ -1,4 +1,4 @@
-@(totalDeputado:String)(listDeputado:List[util.GastoPartido])(totalSenador:String)(listSenador:List[util.GastoPartido])
+@(gastoDep: String)(gastoSen: String)(listDeputado:List[util.GastoPartido])(listSenador:List[util.GastoPartido])
 
 @* Copyright 2013 de Kellyton Brito. Este arquivo é parte 
 do programa MeuCongressoNacional.com . O MeuCongressoNacional.com 
@@ -29,6 +29,27 @@ junto com este programa, se não, acesse http://www.gnu.org/licenses/ *@
 		</div>
 	</div>
 </div>	
+
+<div class="row">
+	<div class="span5">
+		<div class="widget">
+			<div class="widget-header">
+				<h3>Distribuição dos gastos da Câmara</h3>
+			</div>
+			<div id="container_camara"></div>
+		</div>
+	</div>
+	
+	<div class="span4">
+		<div class="widget">
+			<div class="widget-header">
+				<h3>Distribuição dos gastos do Senado</h3>
+			</div>
+			<div id="container_senado"></div>
+				<!-- <div id="container_senado" style="min-width: 310px; height: 300px; margin: 0 auto"></div> -->
+		</div>
+	</div>
+</div>
 
 <div class="row">
 	<div class="span5">
@@ -86,6 +107,72 @@ junto com este programa, se não, acesse http://www.gnu.org/licenses/ *@
 		</div>
 	</div>
 </div>
+
+<script type="text/javascript">
+(function($){ // encapsulate jQuery
+$(function () {
+    $('#container_camara').highcharts({
+        chart: {
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        title: {
+            text: 'Distribuição dos gastos da Câmara'
+        },
+        plotOptions: {
+            pie: {
+                dataLabels: {
+                    enabled: false,
+                },
+                showInLegend: true
+            }
+        },
+        series: [{
+            type: 'pie',
+            name: 'Gastos',
+            innerSize: '10%',
+            data: [
+          		@for((dep, index) <- listDeputado.zipWithIndex){
+          		['@dep.getPartido()', @dep.getValorFormated],
+          		}
+            ]
+        }]
+    });
+    
+    $('#container_senado').highcharts({
+        chart: {
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        title: {
+            text: 'Distribuição dos gastos do Senado'
+        },
+        plotOptions: {
+            pie: {
+                dataLabels: {
+                    enabled: false,
+                },
+                showInLegend: true
+            }
+        },
+        series: [{
+            type: 'pie',
+            name: 'Gastos',
+            innerSize: '10%',
+            data: [
+          		@for((sen, index) <- listSenador.zipWithIndex){
+          		['@sen.getPartido()', @sen.getValorFormated],
+          		}
+            ]
+        }]
+    });
+    
+});
+})(jQuery);
+</script>
+
 
 }
 

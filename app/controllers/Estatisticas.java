@@ -28,6 +28,7 @@ import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
 import play.mvc.Controller;
 import play.mvc.Result;
+import util.NamesMap;
 
 public class Estatisticas extends Controller {
 	
@@ -36,26 +37,33 @@ public class Estatisticas extends Controller {
 		
 		List<GastoPartido> gastosTipoDeputado = getGastosTipoDeputado();
 		List<GastoPartido> gastosTipoSenador = getGastosTipoSenador();
+        
+		/**
+		 ['Firefox',   45.0],
+        ['IE',       26.8],
+        ['Chrome', 12.8],
+        ['Safari',    8.5],
+        ['Opera',     6.2],
+        ['Others',   0.7]
+		 */
 		
-		double totalGastosDeputado = 0;
-		double totalGastosSenador = 0;
+        String gastoDep = "";
+        for (GastoPartido gasto: gastosTipoDeputado){
+        	gastoDep += "['" + gasto.getPartido() + "'," + gasto.getValorFormated() + "],";
+        }
+        gastoDep = gastoDep.substring(0, gastoDep.length() - 1);
+        /*gastoDep = gastoDep.replace(",",".");
+        gastoDep = gastoDep.replace("#",",");*/
+        
+        String gastoSen = "";
+        for (GastoPartido gasto: gastosTipoSenador){
+        	gastoSen += "['" + gasto.getPartido() + "'," + gasto.getValorFormated() + "],";
+        }
+        gastoSen = gastoSen.substring(0, gastoSen.length() - 1);
+        /*gastoSen = gastoSen.replace(",",".");
+        gastoSen = gastoSen.replace("#",",");*/
 		
-		for (GastoPartido gasto: gastosTipoDeputado){
-			totalGastosDeputado += gasto.getValor();
-		}
-		
-		for (GastoPartido gasto: gastosTipoSenador){
-			totalGastosSenador += gasto.getValor();
-		}
-		
-		String totalDeputado, totalSenador;
-		totalDeputado = String.valueOf(totalGastosDeputado);
-		totalDeputado = totalDeputado.substring(0, totalDeputado.indexOf(".") + 2); 
-		
-		totalSenador = String.valueOf(totalGastosSenador);
-		totalSenador = totalSenador.substring(0, totalSenador.indexOf(".") + 2);
-		
-		return ok(views.html.cotas.render(totalDeputado, gastosTipoDeputado, totalSenador, gastosTipoSenador));
+		return ok(views.html.cotas.render(gastoDep, gastoSen, gastosTipoDeputado, gastosTipoSenador));
 	}
 	
 	 
@@ -76,7 +84,9 @@ public class Estatisticas extends Controller {
 			
 		    Object[] items = (Object[]) result;
 		    try {
-		    	gastoTipo.setPartido((String)items[0]);
+		    	gastoTipo.setPartido(
+		    			NamesMap.getShortName(NamesMap.DEPUTADO, (String)items[0])
+		    		);
 		    	gastoTipo.setMedia((Double)items[1]);
 		    	
 		    	gastosTipo.add(gastoTipo);
@@ -105,7 +115,9 @@ public class Estatisticas extends Controller {
 			
 		    Object[] items = (Object[]) result;
 		    try {
-		    	gastoTipo.setPartido((String)items[0]);
+		    	gastoTipo.setPartido(
+		    			NamesMap.getShortName(NamesMap.SENADOR, (String)items[0])
+		    		);
 		    	gastoTipo.setMedia((Double)items[1]);
 		    	
 		    	gastosTipo.add(gastoTipo);

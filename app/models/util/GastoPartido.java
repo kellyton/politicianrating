@@ -42,7 +42,7 @@ public class GastoPartido {
 		//return new DecimalFormat("#,###.00").format(valor);
 		Locale LOCAL = new Locale("pt","BR");
 		
-		DecimalFormat df = new DecimalFormat("###,##0.00", new DecimalFormatSymbols(LOCAL));  
+		DecimalFormat df = new DecimalFormat("#0", new DecimalFormatSymbols(LOCAL));  
 		String s = df.format(valor);  
 		return s;
 	}	   
