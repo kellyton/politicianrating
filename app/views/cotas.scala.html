@@ -118,7 +118,7 @@ $(function () {
             pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
         },
         title: {
-            text: 'Distribuição dos gastos da Câmara'
+            text: ''
         },
         plotOptions: {
             pie: {
@@ -134,7 +134,7 @@ $(function () {
             innerSize: '10%',
             data: [
           		@for((dep, index) <- listDeputado.zipWithIndex){
-          		['@dep.getPartido()', @dep.getValorFormated],
+          		['@dep.getPartido()', @dep.getValorInteger],
           		}
             ]
         }]
@@ -147,7 +147,7 @@ $(function () {
             pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
         },
         title: {
-            text: 'Distribuição dos gastos do Senado'
+            text: ''
         },
         plotOptions: {
             pie: {
@@ -163,7 +163,7 @@ $(function () {
             innerSize: '10%',
             data: [
           		@for((sen, index) <- listSenador.zipWithIndex){
-          		['@sen.getPartido()', @sen.getValorFormated],
+          		['@sen.getPartido()', @sen.getValorInteger],
           		}
             ]
         }]
