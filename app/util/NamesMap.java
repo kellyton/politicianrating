@@ -22,7 +22,7 @@ public class NamesMap {
 		namesDeputados.put("LOCAÇÃO DE VEÍCULOS AUTOMOTORES OU FRETAMENTO DE EMBARCAÇÕES","Locação de veículos");
 		namesDeputados.put("MANUTENÇÃO DE ESCRITÓRIO DE APOIO A ATIVIDADE PARLAMENTAR","Manutenção de escritório");
 		namesDeputados.put("PASSAGENS AÉREAS E FRETAMENTO DE AERONAVES","Passagens aéreas e fretamentos");
-		namesDeputados.put("SERVIÇO DE SEGURANÇA PRESTADO POR EMPRESA ESPECIALIZADA","Segurança");
+		namesDeputados.put("SERVIÇO DE SEGURANÇA PRESTADO POR EMPRESA ESPECIALIZADA","Segurança");
 		namesDeputados.put("SERVIÇOS POSTAIS","Serviços postais");
 		namesDeputados.put("TELEFONIA","Telefonia");
 		
@@ -36,12 +36,17 @@ public class NamesMap {
 	}
 	
 	public static String getShortName(int nameType, String name){
+		String result = null;
+		
 		if (nameType == DEPUTADO){
-			return namesDeputados.get(name);
+			result = namesDeputados.get(name);
 		} else if (nameType == SENADOR){
-			return namesSenadores.get(name);
+			result = namesSenadores.get(name);
+		}
+		if (result == null) {
+			return name;
 		} else {
-			return null;
+			return result;
 		}
 	}
 	
