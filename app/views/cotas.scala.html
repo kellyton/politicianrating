@@ -1,4 +1,4 @@
-@(gastoDep: String)(gastoSen: String)(listDeputado:List[util.GastoPartido])(listSenador:List[util.GastoPartido])
+@(gastoP: String)(gastoDep: String)(gastoSen: String)(listPartido:List[util.GastoPartido])(listDeputado:List[util.GastoPartido])(listSenador:List[util.GastoPartido])
 
 @* Copyright 2013 de Kellyton Brito. Este arquivo é parte 
 do programa MeuCongressoNacional.com . O MeuCongressoNacional.com 
@@ -20,10 +20,10 @@ junto com este programa, se não, acesse http://www.gnu.org/licenses/ *@
 		<div class="widget">
 			<div class="widget-header">
 				<i class="icon-signal"></i>
-				<h3>Gasto médio, por partido</h3>
+				<h3>Gasto médio, agrupado por partido, em 2013</h3>
 			</div>
 			<div class="widget-content" align="center">
-				<iframe src="@routes.Estatisticas.getGraficoCotas()" style="width: 550px; height: 375px; margin: 0 auto;"></iframe>
+				<div id="container_partido"></div>
 			</div>
 			
 		</div>
@@ -34,7 +34,7 @@ junto com este programa, se não, acesse http://www.gnu.org/licenses/ *@
 	<div class="span5">
 		<div class="widget">
 			<div class="widget-header">
-				<h3>Distribuição dos gastos da Câmara</h3>
+				<h3>Câmara dos Deputados: distribuição dos gastos, em 2013</h3>
 			</div>
 			<div id="container_camara"></div>
 		</div>
@@ -43,7 +43,7 @@ junto com este programa, se não, acesse http://www.gnu.org/licenses/ *@
 	<div class="span4">
 		<div class="widget">
 			<div class="widget-header">
-				<h3>Distribuição dos gastos do Senado</h3>
+				<h3>Senado Federal: distribuição dos gastos, em 2013</h3>
 			</div>
 			<div id="container_senado"></div>
 				<!-- <div id="container_senado" style="min-width: 310px; height: 300px; margin: 0 auto"></div> -->
@@ -56,7 +56,7 @@ junto com este programa, se não, acesse http://www.gnu.org/licenses/ *@
 		<div class="widget widget-table">
 			<div class="widget-header">
 				<i class="icon-signal"></i>
-				<h3>Gastos da Câmara, por tipo</h3>
+				<h3>Câmara dos Deputados: tipo dos gastos, em 2013</h3>
 			</div>
 			<div class="widget-content" align="center">
 				<table class="table table-striped table-bordered">
@@ -83,7 +83,7 @@ junto com este programa, se não, acesse http://www.gnu.org/licenses/ *@
 		<div class="widget widget-table">
 			<div class="widget-header">
 				<i class="icon-signal"></i>
-				<h3>Gastos do Senado, por tipo</h3>
+				<h3>Senado Federal: tipo dos gastos, em 2013</h3>
 			</div>
 			<div class="widget-content" align="center">
 				<table class="table table-striped table-bordered">
@@ -111,6 +111,33 @@ junto com este programa, se não, acesse http://www.gnu.org/licenses/ *@
 <script type="text/javascript">
 (function($){ // encapsulate jQuery
 $(function () {
+	
+	$('#container_partido').highcharts({
+        chart: {
+        },
+        
+        title: {
+            text: ''
+        },
+        
+        xAxis: {
+            categories: [
+			@for((partido, index) <- listPartido.zipWithIndex){
+				@if(index != listPartido.size()-1){
+					'@partido.getPartido()',
+				} else {
+					'@partido.getPartido()'
+				}
+			}
+			]
+        },
+        
+        series: [{
+        	name: 'Gasto médio dos parlamentares por partido, por dia, em 2013',
+            data: [@gastoP]
+        }]
+    });
+	
     $('#container_camara').highcharts({
         chart: {
         },

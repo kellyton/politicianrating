@@ -35,17 +35,20 @@ public class Estatisticas extends Controller {
 	@Transactional
 	public static Result estatisticas(){
 		
+		List<GastoPartido> gastosPartidos = getGastosPartidos();
 		List<GastoPartido> gastosTipoDeputado = getGastosTipoDeputado();
 		List<GastoPartido> gastosTipoSenador = getGastosTipoSenador();
         
-		/**
-		 ['Firefox',   45.0],
-        ['IE',       26.8],
-        ['Chrome', 12.8],
-        ['Safari',    8.5],
-        ['Opera',     6.2],
-        ['Others',   0.7]
-		 */
+		//I prepared the final string here because it was getting error on template
+		String gastosP = "";
+		for (GastoPartido gasto: gastosPartidos){
+			gastosP += gasto.getValorFormated() + "# ";
+		}
+		gastosP = gastosP.substring(0, gastosP.length() -2);
+		
+		//problems with locale
+		gastosP = gastosP.replace(",", ".");
+		gastosP = gastosP.replace("#", ",");
 		
         String gastoDep = "";
         for (GastoPartido gasto: gastosTipoDeputado){
@@ -63,10 +66,8 @@ public class Estatisticas extends Controller {
         /*gastoSen = gastoSen.replace(",",".");
         gastoSen = gastoSen.replace("#",",");*/
 		
-		return ok(views.html.cotas.render(gastoDep, gastoSen, gastosTipoDeputado, gastosTipoSenador));
+		return ok(views.html.cotas.render(gastosP, gastoDep, gastoSen, gastosPartidos, gastosTipoDeputado, gastosTipoSenador));
 	}
-	
-	 
 	
 	private static List<GastoPartido> getGastosTipoDeputado() {
 		String query = "SELECT txtDescricao, sum(vlrDocumento)" +
@@ -129,14 +130,7 @@ public class Estatisticas extends Controller {
 		return gastosTipo;
 	}
 
-
-
-	@Transactional
-	public static Result getGraficoCotas(){
-		//String partidos[] = { 
-    	//		"PR", "PT", "PSB", "PMN", "PMDB", "PSC", "PP", "PROS", "PDT", "PSDB", "PRB", "PV",
-    	//		"PPS", "DEM", "PSD", "PCdoB", "SDD", "PTB", "PTdoB", "PRP", "PSOL" };
-		
+	private static List<GastoPartido> getGastosPartidos(){
 		String query = "SELECT partido, avg(gastoPorDia)" +
 				" FROM deputadofederal" +
 				" WHERE gastoPorDia > 0" + //exclude people without expenses: everyone agree this situation is an error
@@ -162,18 +156,7 @@ public class Estatisticas extends Controller {
 		    }
 		}
 		
-		//I prepared the final string here because it was getting error on template
-		String gastos = "";
-		for (GastoPartido gasto: gastosPartidos){
-			gastos += gasto.getValorFormated() + "# ";
-		}
-		gastos = gastos.substring(0, gastos.length() -2);
-		
-		//problems with locale
-		gastos = gastos.replace(",", ".");
-		gastos = gastos.replace("#", ",");
-		
-		return ok(views.html.grafico_cotas.render(gastosPartidos, gastos));
+		return gastosPartidos;
 	}
 
 }

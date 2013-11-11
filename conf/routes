@@ -40,7 +40,7 @@ POST	/search						controllers.Search.search()
 
 #Methods to show iFrames
 GET		/map						controllers.MapService.showMap(lat: Double, lng: Double, fantasia: String)
-GET		/graph/cota					controllers.Estatisticas.getGraficoCotas()
+
 
 #Test
 #GET		/cotas						controllers.Cotas.getCotas()
