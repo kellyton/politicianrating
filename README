@@ -1,4 +1,36 @@
-This is your new Play 2.1 application
-=====================================
+MeuCongressoNacional.com
+================================
 
-This file will be packaged with your application, when using `play dist`.
+Aplicação cujo objetivo é a fácil visualização de dados isolados e,
+principalmente, consolidados sobre o congresso nacional, como os 
+dados da atividade parlamentar (comissões que os parlamentares participam,
+projetos de lei e de emenda à constituição apresentados), além do
+acompanhamento dos gastos com a cota parlamentar, com o fluxo completo
+do gasto: listagem do CNPJ da empresa e visualização da fachada da
+mesma pelo Google Maps.
+
+1. Instruções de execução
+=================================
+A aplicação foi desenvolvida em JAVA (7), utilizando o Play! Framework (versão
+2.1.3) e banco de dados MySQL.
+
+Para instalação, deve-se instalar cada uma das ferramentas conforme o
+procedimento padrão de cada uma. Após isso, configurar application.conf
+conforme procedimento padrão do Play! Framework e criar o banco de dados
+(vazio) no Mysql. Baixar o código e executar a aplicação também conforme
+procedimento padrão do Play! Framework ("play start").
+
+Dúvidas quanto aos procedimentos, consulte a documentação:
+http://www.playframework.com/
+
+2. Carga dos dados
+=================================
+Para carga dos dados, deve-se primeiro fazer o download dos arquivos
+referentes à cota parlamentar dos deputados e senadores, e descompacta-los
+na pasta ./data.
+Após isso, acessar os caminhos: <server>/deputado/update
+                                <server>/senador/update
+Observação: esses caminhos por default são comentados no código fonte,
+para evitar vandalismo e/ou tentativas de atualização duplicadas.
+
+Dúvidas, sugestões, problemas, etc: contactar kellyton@kellyton.com.br
