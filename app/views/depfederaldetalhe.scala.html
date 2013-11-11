@@ -15,206 +15,211 @@ junto com este programa, se não, acesse http://www.gnu.org/licenses/ *@
 
 @content = {
 
-				<div class="row"><!--  Primeira linha = Foto, Profile e Indice -->
-				
-					<div class="span6">
-						<div class="widget">
-							<div class="widget-content">
-								<div class="account-container">
-									<div class="account-avatar">
-										@if((politico.getPhotoURL() == null)||(politico.getPhotoURL().length() > 0)) {
-										<img src="@routes.Assets.at("images/nophoto.jpg")" alt="Sem foto" class="thumbnail" />
-										} else {
-										<img src="politico.getPhotoURL()" alt="" class="thumbnail" />
-										}
-									</div> <!-- /account-avatar -->
-									<div class="account-details">
-										@if(!politico.isDeputado()){
-										<b>
-										<span class="account-role">***** Dados dos Senadores ainda em fase experimental. Para dados mais detalhados sobre os parlamentares, verifique os Deputados Federais *****</span>
-										</b>
-										}
-										
-										<span class="account-name">@politico.getNomeParlamentar()</span>
-										<span class="account-name">@politico.getNome()</span>
-										<span class="account-role">Partido: @politico.getPartido()</span>
-										<span class="account-role">Estado: @politico.getUf()</span>
-										<span class="account-role">Gastos Totais @politico.getGastoTotalFormated(): </span>
-										<span class="account-role">Dias em exercício considerado: @politico.getDiasTrabalhados()</span>
-										<span class="account-role">Gastos por dia em exercício considerado: @politico.getGastoPorDiaFormated()</span>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					
-					<div class="span3">
-						<div class="widget">
-							<div class="widget-content" title="100 representa o gabinete do Deputado com maior gasto no Congresso, e todos os outros são calculados proporcionalmente a ele. Portanto, quanto mais próximo de 100, maior o gasto do gabinete do parlamentar.">
-								<!-- <div id="index_graph" style="height: 150px; margin-left:auto; margin-right:auto;"></div> -->
-								<div id="index_graph" style="height: 65%; width: 65%; margin:0 auto;"></div>
-								
-							</div>
-						</div>	
-					</div>
-				
-				</div> <!--  /Primeira linha = Foto, Profile e Indice -->
-				
-				<div class="row"> <!-- Terceira linha: Tabelas com wordcloud à direita -->
-				
-					<div class="span6"><!-- Tabelas -->
-					
-						<!-- Tabela de comissões -->
-						@if(comissoes != null) {
-						<div class="widget widget-table">
-							<div class="widget-header">
-								<i class="icon-th-list"></i>
-								<h3>Participa (ou já participou) de @comissoes.size() comissões</h3>
-							</div> <!-- /widget-header -->
+<div class="row"><!--  Primeira linha = Foto, Profile e Indice -->
 
-							<div class="widget-content">
-								<table class="table table-striped table-bordered">
-									<thead>
-										<tr>
-											<th>Sigla</th>
-											<th>Nome</th>
-										</tr>
-									</thead>
-									<tbody>
-										@for((comissao, index) <- comissoes.zipWithIndex){
-										<tr>
-											<td>@comissao.getSigla()</td>
-											<td>@comissao.getNome()</td>
-										</tr>
-										}
-									</tbody>
-								</table>
-							</div>
-						</div>
+	<div class="span6">
+		<div class="widget">
+			<div class="widget-content">
+				<div class="account-container">
+					<div class="account-avatar">
+						@if((politico.getPhotoURL() == null)||(politico.getPhotoURL().length() > 0)) {
+						<img src="@routes.Assets.at("images/nophoto.jpg")" alt="Sem foto" class="thumbnail" />
+						} else {
+						<img src="politico.getPhotoURL()" alt="" class="thumbnail" />
+						}
+					</div> <!-- /account-avatar -->
+					<div class="account-details">
+						@if(!politico.isDeputado()){
+						<b>
+						<span class="account-role">***** Dados dos Senadores ainda em fase experimental. Para dados mais detalhados sobre os parlamentares, verifique os Deputados Federais *****</span>
+						</b>
 						}
 						
-						<!-- Tabela de projetos -->
-						@if(projetos != null) {
-						<div class="widget widget-table">
-							<div class="widget-header">
-								<i class="icon-th-list"></i>
-								<h3>@projetos.size() projetos de lei ou de emenda da constituição desde 2011</h3>
-							</div> <!-- /widget-header -->
+						<span class="account-name">@politico.getNomeParlamentar()</span>
+						<span class="account-name">@politico.getNome()</span>
+						<span class="account-role">Partido: @politico.getPartido()</span>
+						<span class="account-role">Estado: @politico.getUf()</span>
+						<span class="account-role">Gastos Totais @politico.getGastoTotalFormated(): </span>
+						<span class="account-role">Dias em exercício considerado: @politico.getDiasTrabalhados()</span>
+						<span class="account-role">Gastos por dia em exercício considerado: @politico.getGastoPorDiaFormated()</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="span3">
+		<div class="widget">
+			<div class="widget-content" title="100 representa o gabinete do Deputado com maior gasto no Congresso, e todos os outros são calculados proporcionalmente a ele. Portanto, quanto mais próximo de 100, maior o gasto do gabinete do parlamentar.">
+				<!-- <div id="index_graph" style="height: 150px; margin-left:auto; margin-right:auto;"></div> -->
+				<div id="index_graph" style="height: 65%; width: 65%; margin:0 auto;"></div>
+				
+			</div>
+		</div>	
+	</div>
 
-							<div class="widget-content">
-								<table class="table table-striped table-bordered">
-									<thead>
-										<tr>
-											<th>Sigla</th>
-											<th>Nome</th>
-											<th>Ementa</th>
-											<th>Data</th>
-										</tr>
-									</thead>
-									<tbody>
-										@for((projeto, index) <- projetos.zipWithIndex){
-										<tr>
-											<td>@projeto.getSigla()</td>
-											<td>@projeto.getNome()</td>
-											<td>@projeto.getEmenta()</td>
-											<td>@projeto.getDataApresentacao()</td>
-										</tr>
-										}
-									</tbody>
-								</table>
-							</div>
-						</div>
+</div>
+
+<div class="row"> <!-- Terceira linha: Tabelas textuais (projeto e comissão) com wordcloud à direita -->
+
+	<div class="span6"><!-- Tabelas da atividade textual -->
+	
+		<!-- Tabela de comissões -->
+		@if(comissoes != null) {
+		<div class="widget widget-table">
+			<div class="widget-header">
+				<i class="icon-th-list"></i>
+				<h3>Participa (ou já participou) de @comissoes.size() comissões</h3>
+			</div> <!-- /widget-header -->
+
+			<div class="widget-content">
+				<table class="table table-striped table-bordered">
+					<thead>
+						<tr>
+							<th>Sigla</th>
+							<th>Nome</th>
+						</tr>
+					</thead>
+					<tbody>
+						@for((comissao, index) <- comissoes.zipWithIndex){
+						<tr>
+							<td>@comissao.getSigla()</td>
+							<td>@comissao.getNome()</td>
+						</tr>
 						}
-					
-						<!-- Tabelas de totais por tipo -->
-						<div class="widget widget-table">
-							<div class="widget-header">
-								<i class="icon-th-list"></i>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		}
+		
+		<!-- Tabela de projetos -->
+		@if(projetos != null) {
+		<div class="widget widget-table">
+			<div class="widget-header">
+				<i class="icon-th-list"></i>
+				<h3>@projetos.size() projetos de lei ou de emenda da constituição desde 2011</h3>
+			</div> <!-- /widget-header -->
+
+			<div class="widget-content">
+				<table class="table table-striped table-bordered">
+					<thead>
+						<tr>
+							<th>Sigla</th>
+							<th>Nome</th>
+							<th>Ementa</th>
+							<th>Data</th>
+						</tr>
+					</thead>
+					<tbody>
+						@for((projeto, index) <- projetos.zipWithIndex){
+						<tr>
+							<td>@projeto.getSigla()</td>
+							<td>@projeto.getNome()</td>
+							<td>@projeto.getEmenta()</td>
+							<td>@projeto.getDataApresentacao()</td>
+						</tr>
+						}
+					</tbody>
+				</table>
+			</div>
+		</div>
+		}
+		
+	</div>
+	
+	<div class="span3"><!-- wordcloud -->
+	@if(words != null){
+		<div class="widget">
+			<div class="widget-header">
+				<i class="icon-th-list"></i>
+				<h3>Nuvem de palavras</h3>
+			</div> <!-- /widget-header -->
+
+			<div class="widget-content">
+				<div id="wordcloud"></div>
+			</div>
+		</div>
+	}
+	</div>
+</div>
+
+<div class="row"> <!-- Gastos -->	
+	<!-- Tabelas de totais por tipo -->
+	<div class="span6">
+		<div class="widget widget-table">
+			<div class="widget-header">
+				<i class="icon-th-list"></i>
+				@if(politico.isDeputado()){
+				<h3>Gastos da cota parlamentar em 2013</h3>
+				} else {
+				<h3>Gastos da cota parlamentar desde o início do mandato</h3>
+				}
+			</div> <!-- /widget-header -->
+		
+			<div class="widget-content">
+				<table class="table table-striped table-bordered">
+					<thead>
+						<tr>
+							<th>CNPJ / CPF</th>
+							<th>Tipo do gasto</th>
+							<th>Descrição do Gasto</th>
+							<th>Valor</th>
+						</tr>
+					</thead>
+					<tbody>
+						@for((totalt, index) <- totaisTipo.zipWithIndex){
+						<tr>
+							<td>
 								@if(politico.isDeputado()){
-								<h3>Gastos da cota parlamentar em 2013</h3>
-								} else {
-								<h3>Gastos da cota parlamentar desde o início do mandato</h3>
+								<a href="/empresa/@totalt.getCnpj()">
+									@totalt.getCnpj()
+								</a>
+								}else{
+								@totalt.getCnpj()
 								}
-							</div> <!-- /widget-header -->
+							</td>
+							<td>@totalt.getDescricao()</td>
+							<td>@totalt.getDetalhe()</td>
+							<td>@totalt.getTotalGastoFormated</td>
+						</tr>
+						}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	
+	<div class="span3"><!-- Tabela de totais por data -->
+		<div class="widget widget-table">
+			<div class="widget-header">
+				<i class="icon-th-list"></i>
+				<h3>Totais de gastos por data</h3>
+			</div> <!-- /widget-header -->
 
-							<div class="widget-content">
-								<table class="table table-striped table-bordered">
-									<thead>
-										<tr>
-											<th>CNPJ / CPF</th>
-											<th>Tipo do gasto</th>
-											<th>Descrição do Gasto</th>
-											<th>Valor</th>
-										</tr>
-									</thead>
-									<tbody>
-										@for((totalt, index) <- totaisTipo.zipWithIndex){
-										<tr>
-											<td>
-												@if(politico.isDeputado()){
-												<a href="/empresa/@totalt.getCnpj()">
-													@totalt.getCnpj()
-												</a>
-												}else{
-												@totalt.getCnpj()
-												}
-											</td>
-											<td>@totalt.getDescricao()</td>
-											<td>@totalt.getDetalhe()</td>
-											<td>@totalt.getTotalGastoFormated</td>
-										</tr>
-										}
-									</tbody>
-								</table>
-							</div>
-						</div>	
-					</div>
-					
-					@if(words == null) {
-					<div class="span3"><!-- Tabela de totais por data -->
-						<div class="widget widget-table">
-							<div class="widget-header">
-								<i class="icon-th-list"></i>
-								<h3>Totais de gastos por data</h3>
-							</div> <!-- /widget-header -->
-
-							<div class="widget-content">
-								<table class="table table-striped table-bordered">
-									<thead>
-										<tr>
-											<th>Ano</th>
-											<th>Mês</th>
-											<th>Valor</th>
-										</tr>
-									</thead>
-									<tbody>
-										@for((totald, index) <- totaisData.zipWithIndex){
-										<tr>
-											<td>@totald.getAno()</td>
-											<td>@totald.getMes()</td>
-											<td>@totald.getTotalGastoFormated</td>
-										</tr>
-										}
-									</tbody>
-								</table>
-							</div>
-						</div>	
-					</div>
-					} else {
-					<div class="span3"><!-- wordcloud -->
-						<div class="widget">
-							<div class="widget-header">
-								<i class="icon-th-list"></i>
-								<h3>Nuvem de palavras</h3>
-							</div> <!-- /widget-header -->
-
-							<div class="widget-content">
-								<div id="wordcloud"></div>
-							</div>
-						</div>
-					</div>
-					}
-				</div><!-- Terceira linha: Tabelas  -->
+			<div class="widget-content">
+				<table class="table table-striped table-bordered">
+					<thead>
+						<tr>
+							<th>Ano</th>
+							<th>Mês</th>
+							<th>Valor</th>
+						</tr>
+					</thead>
+					<tbody>
+						@for((totald, index) <- totaisData.zipWithIndex){
+						<tr>
+							<td>@totald.getAno()</td>
+							<td>@totald.getMes()</td>
+							<td>@totald.getTotalGastoFormated</td>
+						</tr>
+						}
+					</tbody>
+				</table>
+			</div>
+		</div>	
+	</div>
+</div>
 
 <script type="text/javascript">
 

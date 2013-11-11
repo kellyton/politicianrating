@@ -23,7 +23,7 @@ import java.util.TreeMap;
 import models.DeputadoFederal;
 import models.Empresa;
 import models.TotalTipo;
-import models.util.GastoPartido;
+import models.util.GastoTotal;
 import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
 import play.mvc.Controller;
@@ -35,57 +35,40 @@ public class Estatisticas extends Controller {
 	@Transactional
 	public static Result estatisticas(){
 		
-		List<GastoPartido> gastosPartidos = getGastosPartidos();
-		List<GastoPartido> gastosTipoDeputado = getGastosTipoDeputado();
-		List<GastoPartido> gastosTipoSenador = getGastosTipoSenador();
-        
+		List<GastoTotal> gastosPartidos = getGastosPartidos();
+		List<GastoTotal> gastosTipoDeputado = getGastosTipoDeputado();
+		List<GastoTotal> gastosTipoSenador = getGastosTipoSenador();
+		
 		//I prepared the final string here because it was getting error on template
 		String gastosP = "";
-		for (GastoPartido gasto: gastosPartidos){
+		for (GastoTotal gasto: gastosPartidos){
 			gastosP += gasto.getValorFormated() + "# ";
 		}
 		gastosP = gastosP.substring(0, gastosP.length() -2);
-		
 		//problems with locale
 		gastosP = gastosP.replace(",", ".");
 		gastosP = gastosP.replace("#", ",");
 		
-        String gastoDep = "";
-        for (GastoPartido gasto: gastosTipoDeputado){
-        	gastoDep += "['" + gasto.getPartido() + "'," + gasto.getValorFormated() + "],";
-        }
-        gastoDep = gastoDep.substring(0, gastoDep.length() - 1);
-        /*gastoDep = gastoDep.replace(",",".");
-        gastoDep = gastoDep.replace("#",",");*/
-        
-        String gastoSen = "";
-        for (GastoPartido gasto: gastosTipoSenador){
-        	gastoSen += "['" + gasto.getPartido() + "'," + gasto.getValorFormated() + "],";
-        }
-        gastoSen = gastoSen.substring(0, gastoSen.length() - 1);
-        /*gastoSen = gastoSen.replace(",",".");
-        gastoSen = gastoSen.replace("#",",");*/
-		
-		return ok(views.html.cotas.render(gastosP, gastoDep, gastoSen, gastosPartidos, gastosTipoDeputado, gastosTipoSenador));
+		return ok(views.html.cotas.render(gastosP, gastosPartidos, gastosTipoDeputado, gastosTipoSenador));
 	}
-	
-	private static List<GastoPartido> getGastosTipoDeputado() {
+
+	private static List<GastoTotal> getGastosTipoDeputado() {
 		String query = "SELECT txtDescricao, sum(vlrDocumento)" +
 				" FROM deputadofederalgasto" +
 				" GROUP BY txtDescricao" +
 				" ORDER BY 2 DESC";
 	
     	List<Object> resultList = JPA.em().createNativeQuery(query).getResultList();
-    	List<GastoPartido> gastosTipo = new ArrayList<GastoPartido>(15);
+    	List<GastoTotal> gastosTipo = new ArrayList<GastoTotal>(15);
     	
-    	GastoPartido gastoTipo;
+    	GastoTotal gastoTipo;
     	
 		for (Object result : resultList) {
-			gastoTipo = new GastoPartido();
+			gastoTipo = new GastoTotal();
 			
 		    Object[] items = (Object[]) result;
 		    try {
-		    	gastoTipo.setPartido(
+		    	gastoTipo.setNome(
 		    			NamesMap.getShortName(NamesMap.DEPUTADO, (String)items[0])
 		    		);
 		    	gastoTipo.setMedia((Double)items[1]);
@@ -99,7 +82,7 @@ public class Estatisticas extends Controller {
 		return gastosTipo;
 	}
 	
-	private static List<GastoPartido> getGastosTipoSenador() {
+	private static List<GastoTotal> getGastosTipoSenador() {
 		String query = "SELECT tipo_depesa, sum(valor_reembolsado)" +
 				" FROM senadorGasto WHERE ano = :ano" +
 				" GROUP BY tipo_depesa ORDER BY 2 DESC";
@@ -107,16 +90,16 @@ public class Estatisticas extends Controller {
     	List<Object> resultList = JPA.em().createNativeQuery(query)
     			.setParameter("ano", "2013")
     			.getResultList();
-    	List<GastoPartido> gastosTipo = new ArrayList<GastoPartido>(15);
+    	List<GastoTotal> gastosTipo = new ArrayList<GastoTotal>(15);
     	
-    	GastoPartido gastoTipo;
+    	GastoTotal gastoTipo;
     	
 		for (Object result : resultList) {
-			gastoTipo = new GastoPartido();
+			gastoTipo = new GastoTotal();
 			
 		    Object[] items = (Object[]) result;
 		    try {
-		    	gastoTipo.setPartido(
+		    	gastoTipo.setNome(
 		    			NamesMap.getShortName(NamesMap.SENADOR, (String)items[0])
 		    		);
 		    	gastoTipo.setMedia((Double)items[1]);
@@ -130,7 +113,7 @@ public class Estatisticas extends Controller {
 		return gastosTipo;
 	}
 
-	private static List<GastoPartido> getGastosPartidos(){
+	private static List<GastoTotal> getGastosPartidos(){
 		String query = "SELECT partido, avg(gastoPorDia)" +
 				" FROM deputadofederal" +
 				" WHERE gastoPorDia > 0" + //exclude people without expenses: everyone agree this situation is an error
@@ -138,16 +121,16 @@ public class Estatisticas extends Controller {
 				" ORDER BY 2 ASC";
     	
     	List<Object> resultList = JPA.em().createNativeQuery(query).getResultList();
-    	List<GastoPartido> gastosPartidos = new ArrayList<GastoPartido>(21);
+    	List<GastoTotal> gastosPartidos = new ArrayList<GastoTotal>(21);
     	
-    	GastoPartido partido;
+    	GastoTotal partido;
     	
 		for (Object result : resultList) {
-			partido = new GastoPartido();
+			partido = new GastoTotal();
 			
 		    Object[] items = (Object[]) result;
 		    try {
-		    	partido.setPartido((String)items[0]);
+		    	partido.setNome((String)items[0]);
 		    	partido.setMedia((Double)items[1]);
 		    	
 		    	gastosPartidos.add(partido);
