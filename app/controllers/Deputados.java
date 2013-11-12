@@ -59,6 +59,7 @@ import models.ProjetoDeLei;
 import models.TotalData;
 import models.TotalTipo;
 import models.util.ComissaoSimple;
+import models.util.GastoTotal;
 import models.util.WordFrequency;
 import play.data.DynamicForm;
 import play.db.jpa.JPA;
@@ -67,6 +68,7 @@ import play.libs.WS;
 import play.libs.F.Promise;
 import play.mvc.Controller;
 import play.mvc.Result;
+import util.NamesMap;
 
 public class Deputados extends Controller {
 
@@ -640,13 +642,51 @@ public class Deputados extends Controller {
 			return badRequest("Error getting Deputado  " + id + ". Message: " + e.getMessage() + " - " + e.getLocalizedMessage());
 		}
     	
+		/////
+		
 		List<WordFrequency> words = getWordFrequency(deputado, 30);
 		List<ComissaoSimple> comissoes = getComissoes(deputado);
 		List<ProjetoDeLei> projetos = getProjetosDeLei(deputado);
+		List<GastoTotal> categoriaGasto = getCategoriaGasto(deputado);
+		
+		if (categoriaGasto.size() == 0) categoriaGasto = null;
 		
 		//return ok(views.html.depfederaldetalhe.render(deputado, totalTipo, totalData));
-    	return ok(views.html.depfederaldetalhe.render(words, deputado, comissoes, projetos, totalTipo, totalData));
+    	return ok(views.html.depfederaldetalhe.render(words, deputado, comissoes, projetos, totalTipo, totalData, categoriaGasto));
     }
+	
+	private static List<GastoTotal> getCategoriaGasto(DeputadoFederal deputado){
+		String query = "SELECT txtDescricao, sum(vlrDocumento)" +
+				" FROM deputadofederalgasto" +
+				" WHERE nuCarteiraParlamentar = :matricula" +
+				" GROUP BY txtDescricao" +
+				" ORDER BY 2 DESC";
+	
+    	List<Object> resultList = JPA.em().createNativeQuery(query)
+    			.setParameter("matricula", deputado.getMatricula())
+    			.getResultList();
+    	List<GastoTotal> gastosTipo = new ArrayList<GastoTotal>(15);
+    	
+    	GastoTotal gastoTipo;
+    	
+		for (Object result : resultList) {
+			gastoTipo = new GastoTotal();
+			
+		    Object[] items = (Object[]) result;
+		    try {
+		    	gastoTipo.setNome(
+		    			NamesMap.getShortName(NamesMap.DEPUTADO, (String)items[0])
+		    		);
+		    	gastoTipo.setValor((Double)items[1]);
+		    	
+		    	gastosTipo.add(gastoTipo);
+		    } catch (Exception e){
+		    	e.printStackTrace();
+		    }
+		}
+		
+		return gastosTipo;
+	}
 	
 	private static List<ComissaoSimple> getComissoes(DeputadoFederal deputado) {
 		String query = 

@@ -1,4 +1,4 @@
-@(words: List[models.util.WordFrequency])(politico: IPolitico)(comissoes: List[models.util.ComissaoSimple])(projetos: List[ProjetoDeLei])(totaisTipo: List[TotalTipo])(totaisData: List[TotalData])
+@(words: List[models.util.WordFrequency])(politico: IPolitico)(comissoes: List[models.util.ComissaoSimple])(projetos: List[ProjetoDeLei])(totaisTipo: List[TotalTipo])(totaisData: List[TotalData])(categoriaGasto: List[util.GastoTotal])
 
 @* Copyright 2013 de Kellyton Brito. Este arquivo é parte 
 do programa MeuCongressoNacional.com . O MeuCongressoNacional.com 
@@ -191,6 +191,14 @@ junto com este programa, se não, acesse http://www.gnu.org/licenses/ *@
 	</div>
 	
 	<div class="span3"><!-- Tabela de totais por data -->
+		@if(categoriaGasto!=null){
+		<div class="widget-header">
+			<i class="icon-th-list"></i>
+			<h3>Categoria dos gastos</h3>
+		</div> <!-- /widget-header -->
+		<div id="graph_categoria_gasto"></div>
+		}
+	
 		<div class="widget widget-table">
 			<div class="widget-header">
 				<i class="icon-th-list"></i>
@@ -265,7 +273,7 @@ d3.layout.cloud().size([300, 300])
 	}
 }
 
-//Create and populate the data table.
+//Create and populate the data table - velocimeter. google graphs
 var data = google.visualization.arrayToDataTable([
   ['Gastos'],
   [@politico.getIndice()]
@@ -278,9 +286,46 @@ var options = {
         minorTicks: 5
       };
 
-// Create and draw the visualization.
+// Create and draw gauge visualization (velocimeter)
 new google.visualization.Gauge(document.getElementById('index_graph')).
     draw(data, options);
+
+
+//visualization of pie chart. highcharts.com
+@if(categoriaGasto!=null){
+(function($){ // encapsulate jQuery
+$(function () {
+    $('#graph_categoria_gasto').highcharts({
+        chart: {
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        title: {
+            text: ''
+        },
+        plotOptions: {
+            pie: {
+                dataLabels: {
+                    enabled: false,
+                },
+                showInLegend: true
+            }
+        },
+        series: [{
+            type: 'pie',
+            name: 'Gastos',
+            innerSize: '10%',
+            data: [ 
+          		@for((gasto, index) <- categoriaGasto.zipWithIndex){
+          		['@gasto.getNome()', @gasto.getValorInteger],
+          		}
+            ]
+        }]
+    });
+});
+})(jQuery);
+}
 
 
 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

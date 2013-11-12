@@ -71,7 +71,7 @@ public class Estatisticas extends Controller {
 		    	gastoTipo.setNome(
 		    			NamesMap.getShortName(NamesMap.DEPUTADO, (String)items[0])
 		    		);
-		    	gastoTipo.setMedia((Double)items[1]);
+		    	gastoTipo.setValor((Double)items[1]);
 		    	
 		    	gastosTipo.add(gastoTipo);
 		    } catch (Exception e){
@@ -102,7 +102,7 @@ public class Estatisticas extends Controller {
 		    	gastoTipo.setNome(
 		    			NamesMap.getShortName(NamesMap.SENADOR, (String)items[0])
 		    		);
-		    	gastoTipo.setMedia((Double)items[1]);
+		    	gastoTipo.setValor((Double)items[1]);
 		    	
 		    	gastosTipo.add(gastoTipo);
 		    } catch (Exception e){
@@ -131,7 +131,7 @@ public class Estatisticas extends Controller {
 		    Object[] items = (Object[]) result;
 		    try {
 		    	partido.setNome((String)items[0]);
-		    	partido.setMedia((Double)items[1]);
+		    	partido.setValor((Double)items[1]);
 		    	
 		    	gastosPartidos.add(partido);
 		    } catch (Exception e){

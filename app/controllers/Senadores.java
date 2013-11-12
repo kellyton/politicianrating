@@ -45,6 +45,7 @@ import models.Senador;
 import models.SenadorGasto;
 import models.TotalData;
 import models.TotalTipo;
+import models.util.GastoTotal;
 
 import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
@@ -52,6 +53,7 @@ import play.libs.WS;
 import play.libs.F.Promise;
 import play.mvc.Controller;
 import play.mvc.Result;
+import util.NamesMap;
 
 public class Senadores extends Controller {
 
@@ -160,9 +162,44 @@ public class Senadores extends Controller {
 			return badRequest("Error getting Deputado  " + id + ". Message: " + e.getMessage() + " - " + e.getLocalizedMessage());
 		}
 		
-    	return ok(views.html.depfederaldetalhe.render(null, senador, null, null, totalTipo, totalData));
+		List<GastoTotal> categoriaGasto = getCategoriaGasto(senador);
+		
+    	return ok(views.html.depfederaldetalhe.render(null, senador, null, null, totalTipo, totalData, categoriaGasto));
 	}
 	
+	private static List<GastoTotal> getCategoriaGasto(Senador senador) {
+		String query = "SELECT tipo_depesa, sum(valor_reembolsado)" +
+				" FROM senadorgasto" +
+				" WHERE senador = :senador" +
+				" GROUP BY tipo_depesa" +
+				" ORDER BY 2 DESC";
+	
+    	List<Object> resultList = JPA.em().createNativeQuery(query)
+    			.setParameter("senador", senador.getNomeParlamentar())
+    			.getResultList();
+    	List<GastoTotal> gastosTipo = new ArrayList<GastoTotal>(10);
+    	
+    	GastoTotal gastoTipo;
+    	
+		for (Object result : resultList) {
+			gastoTipo = new GastoTotal();
+			
+		    Object[] items = (Object[]) result;
+		    try {
+		    	gastoTipo.setNome(
+		    			NamesMap.getShortName(NamesMap.SENADOR, (String)items[0])
+		    		);
+		    	gastoTipo.setValor((Double)items[1]);
+		    	
+		    	gastosTipo.add(gastoTipo);
+		    } catch (Exception e){
+		    	e.printStackTrace();
+		    }
+		}
+		
+		return gastosTipo;
+	}
+
 	@Transactional
     public static Result senadores() {
 		

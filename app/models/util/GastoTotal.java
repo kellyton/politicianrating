@@ -32,7 +32,7 @@ public class GastoTotal {
 	public double getMedia() {
 		return valor;
 	}
-	public void setMedia(double valor) {
+	public void setValor(double valor) {
 		this.valor = valor;
 	}
 	public Double getValor(){
