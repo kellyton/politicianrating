@@ -16,7 +16,7 @@ junto com este programa, se não, acesse http://www.gnu.org/licenses/ *@
 @content = {
 
 	<div class="span9">
-				<h1 class="page-title">
+				@*<h1 class="page-title">
 					<i class="icon-home"></i>
 					Nossos Parlamentares					
 				</h1>
@@ -50,8 +50,17 @@ junto com este programa, se não, acesse http://www.gnu.org/licenses/ *@
 							Empresas							
 						</div> <!-- /stat -->						
 					</div> <!-- /stat-holder -->
-					
-				</div> <!-- /stat-container -->
+				</div> <!-- /stat-container --> *@
+				
+				<div class="row"> <!-- slideshow -->
+					<div class="rslides_container span9 ">
+						<ul class="rslides" id="slider3">
+					     <li><a href="@routes.Empresas.empresas()"><img src="@routes.Assets.at("images/estatisticas2.min.jpg")"></a></li>
+					     <li><a href="@routes.Application.sobre()"><img src="@routes.Assets.at("images/dados.min.jpg")"></a></li>
+					     <li><a href="@routes.Estatisticas.estatisticas()"><img src="@routes.Assets.at("images/estatisticas.min.jpg")"></a></li>
+					    </ul>
+					</div>
+				</div><!-- end slideshow -->
 				
 				<div class="widget">
 
@@ -243,7 +252,6 @@ junto com este programa, se não, acesse http://www.gnu.org/licenses/ *@
 			
 <div id='bigGraph' width="500" height="500"></div>
 
-
 <script type="text/javascript">
 @for((dep, index) <- deputados.zipWithIndex){
 	var graph = new Rickshaw.Graph( {
@@ -304,6 +312,36 @@ ga('create', 'UA-45372757-1', 'meucongressonacional.com');
 ga('send', 'pageview');
 
 </script>
+
+<!-- Slideshow da pagina inicial -->
+<script type="text/javascript">  
+	$(document).ready(function(){
+	    $("#report tr:odd").addClass("odd");
+	    $("#report tr:not(.odd)").hide();
+	    $("#report tr:first-child").show();
+	    $('#report > tbody > .odd .odd').removeClass("odd");
+	    
+	    $("#report tr.odd").click(function(){
+	        $(this).next("tr").toggle();
+	        $(this).find(".arrow").toggleClass("up");
+	    });
+	    //$("#report").jExpand();
+	});
+</script>
+   
+<script src="@routes.Assets.at("js/responsiveslides.min.js")"></script>
+  
+<script type="text/javascript">
+$(function () {
+	$("#slider3").responsiveSlides({
+        maxwidth: 870,
+        pager: true,
+        timeout: 8500, 
+        namespace: "centered-btns"
+    });
+});
+</script>
+
 }
 
 @leftmenu(content)(1)
