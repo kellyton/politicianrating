@@ -44,8 +44,10 @@ public class Estatisticas extends Controller {
 		for (GastoTotal gasto: gastosPartidos){
 			gastosP += gasto.getValorFormated() + "# ";
 		}
-		gastosP = gastosP.substring(0, gastosP.length() -2);
+		//gastosP = gastosP.substring(0, gastosP.length() -2);
+		
 		//problems with locale
+		gastosP = gastosP.replace(".", "");
 		gastosP = gastosP.replace(",", ".");
 		gastosP = gastosP.replace("#", ",");
 		

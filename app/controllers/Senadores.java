@@ -216,6 +216,8 @@ public class Senadores extends Controller {
 	@Transactional
     public static Result getAllData() {
 		try {
+			System.out.println("Iniciando atualização dos senadores: " + new Date());
+			
 			getProfileData();
 			JPA.em().getTransaction().commit();
 			
@@ -225,6 +227,9 @@ public class Senadores extends Controller {
 			
 			JPA.em().getTransaction().begin();
 			getTotalsData();
+			
+			System.out.println("Finalizada atualização dos senadores: " + new Date());
+			
 			return ok("Success");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

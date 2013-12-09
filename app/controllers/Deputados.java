@@ -85,6 +85,7 @@ public class Deputados extends Controller {
     public static Result getAllData() {
 		
 		try {
+			System.out.println("Iniciando atualização dos deputados: " + new Date());
 			getProfileData();
 			JPA.em().getTransaction().commit();
 			
@@ -102,6 +103,8 @@ public class Deputados extends Controller {
 
 			JPA.em().getTransaction().begin();
 			processCompaniesData();
+			
+			System.out.println("Finalizada atualização dos deputados: " + new Date());
 			
 			return ok("Completed. See log to details.");
 		} catch (Exception e) {
