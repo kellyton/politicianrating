@@ -18,7 +18,7 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
 
-public class GastoTotal {
+public class GastoTotal implements Comparable<GastoTotal>{
 
 	String nome;
 	Double valor;
@@ -53,5 +53,16 @@ public class GastoTotal {
 		DecimalFormat df = new DecimalFormat("#0", new DecimalFormatSymbols(LOCAL));  
 		String s = df.format(valor);  
 		return s;
+	}
+	@Override
+	public int compareTo(GastoTotal other) {
+		double result = this.valor - other.valor; 
+		if (result > 0){
+			return 1;
+		} else if (result == 0){
+			return 0;
+		} else {
+			return -1;
+		}
 	}
 }

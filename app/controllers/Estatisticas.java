@@ -15,6 +15,7 @@
 package controllers;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -54,6 +55,10 @@ public class Estatisticas extends Controller {
 		return ok(views.html.cotas.render(gastosP, gastosPartidos, gastosTipoDeputado, gastosTipoSenador));
 	}
 
+	/**
+	 * Alguns gastos são redundantes. Já retorno agrupado, usando uma HashMap
+	 * @return
+	 */
 	private static List<GastoTotal> getGastosTipoDeputado() {
 		String query = "SELECT txtDescricao, sum(vlrDocumento)" +
 				" FROM deputadofederalgasto" +
@@ -61,6 +66,7 @@ public class Estatisticas extends Controller {
 				" ORDER BY 2 DESC";
 	
     	List<Object> resultList = JPA.em().createNativeQuery(query).getResultList();
+    	HashMap<String, GastoTotal> gastosMap = new HashMap<String, GastoTotal>();
     	List<GastoTotal> gastosTipo = new ArrayList<GastoTotal>(15);
     	
     	GastoTotal gastoTipo;
@@ -75,11 +81,24 @@ public class Estatisticas extends Controller {
 		    		);
 		    	gastoTipo.setValor((Double)items[1]);
 		    	
-		    	gastosTipo.add(gastoTipo);
+		    	GastoTotal temp = gastosMap.get(gastoTipo.getNome());
+		    	if (temp == null){
+		    		gastosMap.put(gastoTipo.getNome(), gastoTipo);
+		    	} else {
+		    		gastoTipo.setValor(gastoTipo.getValor() + temp.getValor());
+		    		gastosMap.put(gastoTipo.getNome(), gastoTipo);
+		    	}
+		    	//gastosTipo.add(gastoTipo);
 		    } catch (Exception e){
 		    	e.printStackTrace();
 		    }
 		}
+		
+		for (GastoTotal g: gastosMap.values()){
+			gastosTipo.add(g);
+		}
+		
+		Collections.reverse(gastosTipo);
 		
 		return gastosTipo;
 	}
