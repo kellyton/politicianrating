@@ -79,7 +79,7 @@ public class Deputados extends Controller {
 	
 	public static final String pathObterDeputadosGastos = "./data/AnoAtual.xml";
 	
-	private static final Long timeout = 20000L;
+	private static final Long timeout = 50000L;
 	
 	@Transactional
     public static Result getAllData() {
@@ -306,6 +306,7 @@ public class Deputados extends Controller {
 		    			.setQueryParameter("codEstado", " ")
 		    			.setQueryParameter("codOrgaoEstado", " ")
 		    			.setQueryParameter("emTramitacao", " ")
+		    			.setQueryParameter("idTipoAutor", " ")
 		    			.get();
 				
 					// Quando não acha, retorna "proposição não encontrada". Vou lançar e pegar uma exceção
