@@ -35,7 +35,7 @@ junto com este programa, se não, acesse http://www.gnu.org/licenses/ *@
 					<div class="widget-content">
 						<div class="faq-container">
 							<form class="faq-search" method="post" action="@routes.Search.search()">
-								<input type="text" name="q" placeholder="Digite o nome ou parte do nome de um ou mais políticos (deputados ou senadores)">
+								<input type="text" name="q" placeholder="Digite o nome ou parte do nome de um ou mais políticos (ex: tiririca collor romario)">
 							</form>
 						</div>
 							
@@ -47,6 +47,21 @@ junto com este programa, se não, acesse http://www.gnu.org/licenses/ *@
 				<div class="row">
 					
 					<div class="span5">
+						
+						<div class="widget">
+							@if(flash.containsKey("message")) {
+							<div class="alert-message error">
+								<strong>@flash.get("message")</strong> 
+	   						</div>
+    						}
+						
+							Estamos sempre melhorando o site! Deseja receber atualizações (no máximo 1 por semana)?
+							Cadastre seu e-mail:
+							<form class="faq-search" method="post" action="@routes.Application.cadastraEmail()">
+								<input type="text" class="input-medium" name="email" placeholder="cadastre seu e-mail para receber atualizações">
+								<button type="submit" class="btn btn-primary">Cadastrar</button>
+							</form>
+						</div>
 									
 						<div class="widget">
 							

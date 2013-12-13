@@ -10,6 +10,8 @@ GET		/code						controllers.Application.code()
 GET		/docs						controllers.Application.docs()
 GET		/license					controllers.Application.license()
 GET		/sobre						controllers.Application.sobre()
+GET		/contato					controllers.Application.contato()
+POST	/cadastraEmail				controllers.Application.cadastraEmail()
 
 
 #Configuration

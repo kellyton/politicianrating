@@ -14,15 +14,21 @@
 
 package controllers;
 
+import static play.data.Form.form;
+
 import java.util.List;
 
 import models.DeputadoFederal;
+import models.Email;
 import models.Senador;
 import play.mvc.*;
+import play.data.DynamicForm;
+import play.db.jpa.JPA;
 import play.db.jpa.Transactional;
 
 import views.html.*;
 
+import java.util.regex.*; 
 
 
 public class Application extends Controller {
@@ -61,4 +67,27 @@ public class Application extends Controller {
 		return ok(views.html.sobre.render());
 	} 
 	
+	public static Result contato(){
+		return TODO;
+	}
+	
+	@Transactional
+	public static Result cadastraEmail(){
+		DynamicForm dynamicForm = form().bindFromRequest();
+		String email = dynamicForm.get("email");
+		
+		//valida o e-mail  
+	    Pattern pattern = Pattern.compile("^[\\w-]+(\\.[\\w-]+)*@([\\w-]+\\.)+[a-zA-Z]{2,7}$");   
+	    Matcher matcher = pattern.matcher(email);   
+	    if (matcher.find()){//ok
+	    	Email e = new Email();
+	    	e.setEmail(email);
+	    	JPA.em().persist(e);
+	    	flash("message", "E-mail cadastrado com sucesso");
+	    	return index();
+	    } else {//falhou
+	    	flash("message", "Erro na formatação do e-mail. Por favor verifique");
+	    	return index();
+	    }
+	}
 }

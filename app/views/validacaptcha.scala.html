@@ -15,12 +15,12 @@ junto com este programa, se não, acesse http://www.gnu.org/licenses/ *@
 
 @content = {
 
-    @if(flash.containsKey("error")) {
-        <div class="alert-message error">
-            <p>
-                <strong>Oops!</strong> @flash.get("error")
-            </p>
-        </div>
+    @if(flash.containsKey("message")) {
+	   <div class="alert-message error">
+	       <p>
+	           <strong>Oops!</strong> @flash.get("error")
+	       </p>
+	   </div>
     }
 
 	<img src="@routes.FileService.getFile(filename)" alt=""><br>
