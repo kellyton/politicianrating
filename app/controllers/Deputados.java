@@ -16,10 +16,14 @@ package controllers;
 
 import static play.data.Form.form;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.nio.charset.Charset;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -46,6 +50,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.Attributes;
+import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
@@ -80,6 +85,30 @@ public class Deputados extends Controller {
 	public static final String pathObterDeputadosGastos = "./data/AnoAtual.xml";
 	
 	private static final Long timeout = 50000L;
+	
+	@Transactional
+	public static Result getNewData() {
+		Date ini, fim;
+		ini = new Date();
+		System.out.println("Iniciando atualização dos deputados: " + ini);
+		
+		try {
+		
+			getExpensesData();
+			getTotalsData();
+			processProjetosDeLei();
+			processCompaniesData();
+			
+			fim = new Date();
+			long milis = fim.getTime() - ini.getTime();
+			System.out.println("Finalizada atualização dos deputados: " + fim + ". Tempo total: " + (milis/1000) + "s");
+			
+			return ok("Completed. See log to details.");
+		} catch (Exception e) {
+			e.printStackTrace();
+			return badRequest(e.getLocalizedMessage());
+		}
+	}
 	
 	@Transactional
     public static Result getAllData() {
@@ -347,6 +376,12 @@ public class Deputados extends Controller {
 		
 	}
 
+	@Transactional
+	public static Result updatePoliticiansExpenditures(){
+		getExpensesData();
+		return ok("Done");
+	}
+	
 	/**
      * Uses SAX instead of DOM because file is huge.
      * @return
@@ -356,14 +391,36 @@ public class Deputados extends Controller {
     	
     	try {
     		//charset é 'cp852'
-    		InputStream is = new FileInputStream(pathObterDeputadosGastos);
+    		/*InputStream is = new FileInputStream(pathObterDeputadosGastos);
     		
     		SAXParserFactory factory = SAXParserFactory.newInstance();
 			SAXParser saxParser = factory.newSAXParser();
 		
 			GastoDeputadoXMLHandler dhandler = new GastoDeputadoXMLHandler();
 			saxParser.parse(is, dhandler);			
-			System.out.println("Sucesso processando despesas dos deputados!");
+			System.out.println("Sucesso processando despesas dos deputados!");*/
+			
+			
+			/*SAXParserFactory factory = SAXParserFactory.newInstance();
+			SAXParser parser = factory.newSAXParser();
+			GastoDeputadoXMLHandler handler = new GastoDeputadoXMLHandler();
+			InputStream istream = new FileInputStream(pathObterDeputadosGastos);
+			//Reader isr = new InputStreamReader(istream);
+			InputSource is = new InputSource(istream);
+			//is.setCharacterStream(isr);
+			//is.setEncoding("cp852");
+			is.setEncoding("iso-8859-1");
+			parser.parse(is, handler);*/
+			
+    		SAXParserFactory factory = SAXParserFactory.newInstance();
+			SAXParser parser = factory.newSAXParser();
+			GastoDeputadoXMLHandler handler = new GastoDeputadoXMLHandler();
+    		
+    		Reader br = new BufferedReader(new InputStreamReader(new FileInputStream(pathObterDeputadosGastos), "cp852"));
+			InputSource is = new InputSource(br);
+			
+			parser.parse(is, handler);
+			
 		} catch (ParserConfigurationException e) {
 			//e.printStackTrace();
 			System.out.println("Error of response parse.");

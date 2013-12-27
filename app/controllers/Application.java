@@ -82,11 +82,15 @@ public class Application extends Controller {
 	    if (matcher.find()){//ok
 	    	Email e = new Email();
 	    	e.setEmail(email);
-	    	JPA.em().persist(e);
-	    	flash("message", "E-mail cadastrado com sucesso");
+	    	try {
+	    		JPA.em().persist(e);
+	    		flash("message", "E-mail cadastrado com sucesso! =D");
+	    	} catch (Exception ex){
+	    		flash("message", "Erro cadastrando e-mail. Ele já não foi cadastrado? =/");
+	    	}
 	    	return index();
 	    } else {//falhou
-	    	flash("message", "Erro na formatação do e-mail. Por favor verifique");
+	    	flash("message", "Erro na formatação. Isso é MESMO um e-mail? =D");
 	    	return index();
 	    }
 	}

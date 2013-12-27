@@ -20,9 +20,11 @@ package controllers;
  */
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -305,7 +307,9 @@ public class Senadores extends Controller {
 			
 			System.out.println("Processing file: " + filenames[i]);
 					
-			br = new BufferedReader(new FileReader(filenames[i]));
+			//br = new BufferedReader(new FileReader(filenames[i]));
+			//Senado é tudo ansi
+			br = new BufferedReader(new InputStreamReader(new FileInputStream(filenames[i]), "Cp1252"));
 			
 			//Jump 2 first lines: header
 			line = br.readLine();
