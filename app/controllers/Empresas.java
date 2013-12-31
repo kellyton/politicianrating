@@ -55,7 +55,7 @@ public class Empresas extends Controller{
 	
 	private static HashMap<String, Session> sessionMap = new HashMap<String, Session>();  
 	
-	private static final int PAGE_SIZE = 5000;
+	private static final int PAGE_SIZE = 1000;
 	
 	/**
 	 * Return a page with a list of all companies
