@@ -20,8 +20,8 @@ POST	/cadastraEmail				controllers.Application.cadastraEmail()
 #GET		/calculaGastoMedio			controllers.Application.calculaGastoMedio()
 
 # Update all data from deputados and senadores. Leave commented to avoid misuse
-GET		/deputado/update			controllers.Deputados.getAllData()
-GET		/senador/update				controllers.Senadores.getAllData()
+#GET		/deputado/update			controllers.Deputados.getAllData()
+#GET		/senador/update				controllers.Senadores.getAllData()
 
 #Included on /deputado/update. here only because I did it after load previous data
 #GET		/deputado/update/projetos	controllers.Deputados.startProcessProjetosDeLei()

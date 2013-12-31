@@ -86,7 +86,7 @@ public class Deputados extends Controller {
 	
 	private static final Long timeout = 50000L;
 	
-	@Transactional
+	/*@Transactional
 	public static Result getNewData() {
 		Date ini, fim;
 		ini = new Date();
@@ -108,10 +108,12 @@ public class Deputados extends Controller {
 			e.printStackTrace();
 			return badRequest(e.getLocalizedMessage());
 		}
-	}
+	}*/
 	
 	@Transactional
     public static Result getAllData() {
+		
+		System.out.println("Oi");
 		
 		try {
 			Date ini, fim;
