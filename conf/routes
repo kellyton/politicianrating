@@ -16,7 +16,7 @@ POST	/cadastraEmail				controllers.Application.cadastraEmail()
 
 #Configuration
 #GET		/updateDeputadosFederais	controllers.Application.updatePoliticiansProfile()
-GET		/updateGastosDeputadosFederais	controllers.Deputados.updatePoliticiansExpenditures()
+#GET		/updateGastosDeputadosFederais	controllers.Deputados.updatePoliticiansExpenditures()
 #GET		/calculaGastoMedio			controllers.Application.calculaGastoMedio()
 
 # Update all data from deputados and senadores. Leave commented to avoid misuse
@@ -28,26 +28,26 @@ GET		/senador/update				controllers.Senadores.getAllData()
 #GET		/deputado/update/empresas		controllers.Deputados.startProcessCompaniesData()
 
 #Application
-GET		/deputado					controllers.Deputados.deputados()
-GET		/senador					controllers.Senadores.senadores()
-GET		/empresa					controllers.Empresas.empresas()
-GET		/estatisticas				controllers.Estatisticas.estatisticas()
+#GET		/deputado					controllers.Deputados.deputados()
+#GET		/senador					controllers.Senadores.senadores()
+#GET		/empresa					controllers.Empresas.empresas()
+#GET		/estatisticas				controllers.Estatisticas.estatisticas()
 
-GET		/deputado/:id				controllers.Deputados.show(id: String)
-GET		/senador/:id				controllers.Senadores.show(id: String)
-GET		/estado/:id					controllers.Estados.estado(id: String)
-GET		/empresa/:id				controllers.Empresas.show(id: String)
+#GET		/deputado/:id				controllers.Deputados.show(id: String)
+#GET		/senador/:id				controllers.Senadores.show(id: String)
+#GET		/estado/:id					controllers.Estados.estado(id: String)
+#GET		/empresa/:id				controllers.Empresas.show(id: String)
 
-POST	/search						controllers.Search.search()
+#POST	/search						controllers.Search.search()
 
 #Methods to show iFrames
-GET		/map						controllers.MapService.showMap(lat: Double, lng: Double, fantasia: String)
+#GET		/map						controllers.MapService.showMap(lat: Double, lng: Double, fantasia: String)
 
 
 #Test
-#GET		/cotas						controllers.Cotas.getCotas()
-GET		/cnpj/:cnpj					controllers.Empresas.getCaptcha(cnpj: String)
-POST	/cnpj						controllers.Empresas.captchaValidado()	
+##GET		/cotas						controllers.Cotas.getCotas()
+#GET		/cnpj/:cnpj					controllers.Empresas.getCaptcha(cnpj: String)
+#POST	/cnpj						controllers.Empresas.captchaValidado()	
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
