@@ -20,8 +20,9 @@ import java.util.Locale;
 
 public class GastoTotal implements Comparable<GastoTotal>{
 
-	String nome;
 	Double valor;
+	String nome;
+	
 	
 	public String getNome() {
 		return nome;
@@ -56,13 +57,13 @@ public class GastoTotal implements Comparable<GastoTotal>{
 	}
 	@Override
 	public int compareTo(GastoTotal other) {
-		double result = this.valor - other.valor; 
-		if (result > 0){
+		if (this.valor > other.valor){
 			return 1;
-		} else if (result == 0){
+		} else if (this.valor == other.valor){
 			return 0;
 		} else {
 			return -1;
 		}
 	}
+
 }

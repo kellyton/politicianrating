@@ -66,7 +66,8 @@ public class Estatisticas extends Controller {
 				" ORDER BY 2 DESC";
 	
     	List<Object> resultList = JPA.em().createNativeQuery(query).getResultList();
-    	HashMap<String, GastoTotal> gastosMap = new HashMap<String, GastoTotal>();
+    	//HashMap<String, GastoTotal> gastosMap = new HashMap<String, GastoTotal>();
+    	TreeMap<String, GastoTotal> gastosMap = new TreeMap<String, GastoTotal>();
     	List<GastoTotal> gastosTipo = new ArrayList<GastoTotal>(15);
     	
     	GastoTotal gastoTipo;
@@ -98,6 +99,7 @@ public class Estatisticas extends Controller {
 			gastosTipo.add(g);
 		}
 		
+		Collections.sort(gastosTipo);
 		Collections.reverse(gastosTipo);
 		
 		return gastosTipo;
