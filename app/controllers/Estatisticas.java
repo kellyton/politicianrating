@@ -107,7 +107,7 @@ public class Estatisticas extends Controller {
 	
 	private static List<GastoTotal> getGastosTipoSenador() {
 		String query = "SELECT tipo_depesa, sum(valor_reembolsado)" +
-				" FROM senadorGasto WHERE ano = :ano" +
+				" FROM senadorgasto WHERE ano = :ano" +
 				" GROUP BY tipo_depesa ORDER BY 2 DESC";
 	
     	List<Object> resultList = JPA.em().createNativeQuery(query)
